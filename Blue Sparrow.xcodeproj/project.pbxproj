@@ -11,6 +11,7 @@
 		457DF47C23EBF1B200405E2D /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; };
 		457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF45523EBEA8D00405E2D /* libbox2d.a */; };
 		457DF47E23EBF20B00405E2D /* libSDL2-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF48223EBF45E00405E2D /* sdl_delete.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +33,9 @@
 		457DF44823EBD70E00405E2D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		457DF45523EBEA8D00405E2D /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../../../../../../../usr/local/lib/libbox2d.a; sourceTree = "<group>"; };
 		457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../../usr/local/Cellar/sdl2/2.0.10/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
+		457DF48123EBF43300405E2D /* sdl_check.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sdl_check.hpp; sourceTree = "<group>"; };
+		457DF48223EBF45E00405E2D /* sdl_delete.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdl_delete.cpp; sourceTree = "<group>"; };
+		457DF48323EBF45E00405E2D /* sdl_delete.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sdl_delete.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,7 @@
 		457DF44723EBD70E00405E2D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				457DF48023EBF40000405E2D /* utils */,
 				457DF44823EBD70E00405E2D /* main.cpp */,
 			);
 			path = src;
@@ -81,6 +86,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		457DF48023EBF40000405E2D /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				457DF48123EBF43300405E2D /* sdl_check.hpp */,
+				457DF48223EBF45E00405E2D /* sdl_delete.cpp */,
+				457DF48323EBF45E00405E2D /* sdl_delete.hpp */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -88,9 +103,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 457DF44C23EBD70E00405E2D /* Build configuration list for PBXNativeTarget "Blue Sparrow" */;
 			buildPhases = (
+				457DF47F23EBF20B00405E2D /* Embed Libraries */,
 				457DF44123EBD70E00405E2D /* Sources */,
 				457DF44223EBD70E00405E2D /* Frameworks */,
-				457DF47F23EBF20B00405E2D /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -138,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */,
 				457DF44923EBD70E00405E2D /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
