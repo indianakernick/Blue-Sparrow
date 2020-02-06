@@ -8,23 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		457DF44923EBD70E00405E2D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF44823EBD70E00405E2D /* main.cpp */; };
+		457DF47C23EBF1B200405E2D /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; };
+		457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF45523EBEA8D00405E2D /* libbox2d.a */; };
+		457DF47E23EBF20B00405E2D /* libSDL2-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		457DF44323EBD70E00405E2D /* CopyFiles */ = {
+		457DF47F23EBF20B00405E2D /* Embed Libraries */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				457DF47E23EBF20B00405E2D /* libSDL2-2.0.0.dylib in Embed Libraries */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		457DF44523EBD70E00405E2D /* Blue Sparrow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Blue Sparrow"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457DF44823EBD70E00405E2D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		457DF45523EBEA8D00405E2D /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../../../../../../../usr/local/lib/libbox2d.a; sourceTree = "<group>"; };
+		457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../../../usr/local/Cellar/sdl2/2.0.10/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +39,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */,
+				457DF47C23EBF1B200405E2D /* libSDL2-2.0.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,8 +50,9 @@
 		457DF43C23EBD70E00405E2D = {
 			isa = PBXGroup;
 			children = (
-				457DF44723EBD70E00405E2D /* Blue Sparrow */,
+				457DF44723EBD70E00405E2D /* src */,
 				457DF44623EBD70E00405E2D /* Products */,
+				457DF44F23EBE34E00405E2D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,12 +64,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		457DF44723EBD70E00405E2D /* Blue Sparrow */ = {
+		457DF44723EBD70E00405E2D /* src */ = {
 			isa = PBXGroup;
 			children = (
 				457DF44823EBD70E00405E2D /* main.cpp */,
 			);
-			path = "Blue Sparrow";
+			path = src;
+			sourceTree = "<group>";
+		};
+		457DF44F23EBE34E00405E2D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */,
+				457DF45523EBEA8D00405E2D /* libbox2d.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,7 +90,7 @@
 			buildPhases = (
 				457DF44123EBD70E00405E2D /* Sources */,
 				457DF44223EBD70E00405E2D /* Frameworks */,
-				457DF44323EBD70E00405E2D /* CopyFiles */,
+				457DF47F23EBF20B00405E2D /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -238,9 +257,33 @@
 		457DF44D23EBD70E00405E2D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++2a";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QY44MADGVC;
 				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LD_RUNPATH_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/sdl2/2.0.10/lib,
+					/usr/local/lib,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-Wall",
+					"-Wextra",
+					"-Weffc++",
+					"-Wpedantic",
+					"-Wshadow",
+					"-Wno-documentation",
+					"-Wnull-dereference",
+					"-Woverloaded-virtual",
+					"-Wreturn-type",
+					"-Wnonportable-include-path",
+					"-Wstrict-aliasing",
+					"-Wno-comma",
+				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -248,9 +291,33 @@
 		457DF44E23EBD70E00405E2D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++2a";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QY44MADGVC;
 				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LD_RUNPATH_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/sdl2/2.0.10/lib,
+					/usr/local/lib,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-Wall",
+					"-Wextra",
+					"-Weffc++",
+					"-Wpedantic",
+					"-Wshadow",
+					"-Wno-documentation",
+					"-Wnull-dereference",
+					"-Woverloaded-virtual",
+					"-Wreturn-type",
+					"-Wnonportable-include-path",
+					"-Wstrict-aliasing",
+					"-Wno-comma",
+				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
