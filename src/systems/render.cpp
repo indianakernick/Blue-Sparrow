@@ -13,7 +13,9 @@
 #include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
 
-void renderSprite(entt::registry &reg, SDL_Renderer *ren, SDL_Texture *tex) {
+void renderSprite(entt::registry &reg) {
+  auto ren = reg.ctx<SDL_Renderer *>();
+  auto tex = reg.ctx<SDL_Texture *>();
   reg.view<SpriteRect, Sprite>().each([=](auto rect, auto sprite) {
     const SDL_Rect srcrect = {0, 0, 1, 1};
     const SDL_FRect dstrect = {rect.x, rect.y, rect.width, rect.height};

@@ -11,8 +11,6 @@
 
 #include <entt/entity/fwd.hpp>
 
-class b2World;
-
-entt::entity makePlayer(entt::registry &, b2World &);
+entt::entity makePlayer(entt::registry &);
 
 #endif

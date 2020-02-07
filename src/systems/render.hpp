@@ -11,9 +11,6 @@
 
 #include <entt/entity/fwd.hpp>
 
-struct SDL_Texture;
-struct SDL_Renderer;
-
-void renderSprite(entt::registry &, SDL_Renderer *, SDL_Texture *);
+void renderSprite(entt::registry &);
 
 #endif

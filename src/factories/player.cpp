@@ -44,9 +44,9 @@ Physics makePhysics(b2World &world) {
 
 }
 
-entt::entity makePlayer(entt::registry &reg, b2World &world) {
+entt::entity makePlayer(entt::registry &reg) {
   entt::entity e = reg.create();
-  reg.assign<Physics>(e, makePhysics(world));
+  reg.assign<Physics>(e, makePhysics(reg.ctx<b2World>()));
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{63, 63, 191});
   reg.assign<KeyInput>(e);

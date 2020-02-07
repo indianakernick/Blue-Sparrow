@@ -44,9 +44,11 @@ int main() {
   ))};
   SDL::Texture texture = makeTexture(renderer.get());
   
-  b2World world{{0, 0}};
   entt::registry reg;
-  makePlayer(reg, world);
+  b2World &world = reg.set<b2World>(b2Vec2{0.0f, 0.0f});
+  reg.set<SDL_Renderer *>(renderer.get());
+  reg.set<SDL_Texture *>(texture.get());
+  makePlayer(reg);
   
   bool running = true;
   while (running) {
@@ -73,7 +75,7 @@ int main() {
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
     
-    renderSprite(reg, renderer.get(), texture.get());
+    renderSprite(reg);
     
     SDL_RenderPresent(renderer.get());
   }
