@@ -20,4 +20,10 @@ struct MoveInput {
   bool right = false;
 };
 
+/// Causes the blaster to be fired.
+/// Controlled by keyboard or AI.
+struct BlasterInput {
+  bool fire = false;
+};
+
 #endif

@@ -67,6 +67,7 @@ int main() {
     }
     
     applyMoveInput(reg);
+    applyBlasterInput(reg);
     
     world.Step(1.0f/60.0f, 8, 4);
     

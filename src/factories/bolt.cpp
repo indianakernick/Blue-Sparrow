@@ -1,15 +1,13 @@
 //
-//  player.cpp
+//  bolt.cpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 7/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#include "player.hpp"
+#include "bolt.hpp"
 
-#include "../comps/input.hpp"
-#include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../comps/graphics.hpp"
 
@@ -25,13 +23,11 @@ namespace {
 Physics makePhysics(b2World &world) {
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
-  bodyDef.angularDamping = 8.0f;
-  bodyDef.linearDamping = 0.1f;
-  bodyDef.position = {64.0f, 36.0f};
-  bodyDef.angle = 0;
+  bodyDef.bullet = true;
+  bodyDef.fixedRotation = true;
   
   b2PolygonShape shape;
-  shape.SetAsBox(1.5f, 1.0f);
+  shape.SetAsBox(0.5f, 0.1f);
   
   b2FixtureDef fixDef;
   fixDef.shape = &shape;
@@ -39,26 +35,15 @@ Physics makePhysics(b2World &world) {
   
   b2Body *body = world.CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
-  return {body, 3.0f, 2.0f};
+  return {body, 1.0f, 0.2f};
 }
 
 }
 
-entt::entity makePlayer(entt::registry &reg) {
+entt::entity makeBolt(entt::registry &reg) {
   entt::entity e = reg.create();
   reg.assign<Physics>(e, makePhysics(reg.ctx<b2World>()));
   reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{63, 63, 191});
-  reg.assign<KeyInput>(e);
-  reg.assign<MoveInput>(e);
-  MoveParams moveParams;
-  moveParams.thrustForce = 60.0f;
-  moveParams.turnTorque = 200.0f;
-  reg.assign<MoveParams>(e, moveParams);
-  reg.assign<BlasterInput>(e);
-  BlasterParams blasterParams;
-  blasterParams.fireTime = 1.0f;
-  blasterParams.speed = 50.0f;
-  reg.assign<BlasterParams>(e, blasterParams);
+  reg.assign<Sprite>(e, Sprite{255, 0, 0});
   return e;
 }

@@ -14,4 +14,7 @@
 /// Read the MoveInput and MoveParams to apply forces to the Physics body
 void applyMoveInput(entt::registry &);
 
+/// Read the BlasterInput and BlasterParams to fire the blaster
+void applyBlasterInput(entt::registry &);
+
 #endif

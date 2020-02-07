@@ -13,8 +13,9 @@
 
 namespace {
 
-void set(entt::registry &reg, bool MoveInput::*mem, const bool value) {
-  reg.view<MoveInput, KeyInput>().less([=](auto &input) {
+template <typename Input>
+void set(entt::registry &reg, bool Input::*mem, const bool value) {
+  reg.view<Input, KeyInput>().less([=](auto &input) {
     input.*mem = value;
   });
 }
@@ -29,6 +30,9 @@ bool handleKey(entt::registry &reg, const SDL_Scancode key, const bool press) {
       return true;
     case SDL_SCANCODE_RIGHT:
       set(reg, &MoveInput::right, press);
+      return true;
+    case SDL_SCANCODE_Z:
+      set(reg, &BlasterInput::fire, press);
       return true;
     default:
       return false;

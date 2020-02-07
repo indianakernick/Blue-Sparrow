@@ -12,6 +12,7 @@
 #include "../comps/input.hpp"
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
+#include "../factories/bolt.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
@@ -34,5 +35,22 @@ void applyMoveInput(entt::registry &reg) {
     if (input.right && !input.left) {
       phys.body->ApplyTorque(params.turnTorque, true);
     }
+  });
+}
+
+void applyBlasterInput(entt::registry &reg) {
+  reg.view<Physics, BlasterParams, BlasterInput>().each([&](Physics phys, BlasterParams params, BlasterInput &input) {
+    if (!input.fire) return;
+    input.fire = false;
+    
+    const b2Vec2 shipPos = phys.body->GetPosition();
+    const float shipAngle = phys.body->GetAngle();
+    const b2Vec2 shipDir = angleMag(shipAngle, 1.0f);
+    const b2Vec2 boltPos = shipPos + phys.width * shipDir;
+    
+    entt::entity bolt = makeBolt(reg);
+    b2Body *boltBody = reg.get<Physics>(bolt).body;
+    boltBody->SetTransform(boltPos, shipAngle);
+    boltBody->SetLinearVelocity(params.speed * shipDir);
   });
 }
