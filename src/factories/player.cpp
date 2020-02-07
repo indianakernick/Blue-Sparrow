@@ -8,6 +8,7 @@
 
 #include "player.hpp"
 
+#include "../comps/teams.hpp"
 #include "../comps/input.hpp"
 #include "../comps/timers.hpp"
 #include "../comps/params.hpp"
@@ -37,6 +38,8 @@ Physics makePhysics(b2World &world) {
   b2FixtureDef fixDef;
   fixDef.shape = &shape;
   fixDef.density = 1.0f;
+  fixDef.filter.categoryBits = shipCat(Team::ally);
+  fixDef.filter.maskBits = shipMsk(Team::ally);
   
   b2Body *body = world.CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
@@ -62,5 +65,6 @@ entt::entity makePlayer(entt::registry &reg) {
   blasterParams.speed = 50.0f;
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterTimer>(e, std::uint32_t{});
+  reg.assign<Team>(e, Team::ally);
   return e;
 }

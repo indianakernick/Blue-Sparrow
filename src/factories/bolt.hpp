@@ -9,8 +9,9 @@
 #ifndef bolt_hpp
 #define bolt_hpp
 
+#include "../comps/teams.hpp"
 #include <entt/entity/fwd.hpp>
 
-entt::entity makeBolt(entt::registry &);
+entt::entity makeBolt(entt::registry &, Team);
 
 #endif

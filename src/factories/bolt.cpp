@@ -23,7 +23,7 @@
 
 namespace {
 
-Physics makePhysics(b2World &world) {
+Physics makePhysics(b2World &world, const Team team) {
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
   bodyDef.bullet = true;
@@ -35,6 +35,8 @@ Physics makePhysics(b2World &world) {
   b2FixtureDef fixDef;
   fixDef.shape = &shape;
   fixDef.density = 1.0f;
+  fixDef.filter.categoryBits = bulletCat(team);
+  fixDef.filter.maskBits = bulletMsk(team);
   
   b2Body *body = world.CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
@@ -43,11 +45,12 @@ Physics makePhysics(b2World &world) {
 
 }
 
-entt::entity makeBolt(entt::registry &reg) {
+entt::entity makeBolt(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
-  reg.assign<Physics>(e, makePhysics(reg.ctx<b2World>()));
+  reg.assign<Physics>(e, makePhysics(reg.ctx<b2World>(), team));
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{255, 0, 0});
   reg.assign<ExpireTimer>(e, SDL_GetTicks() + 10000);
+  reg.assign<Team>(e, team);
   return e;
 }

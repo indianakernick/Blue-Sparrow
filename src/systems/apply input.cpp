@@ -10,6 +10,7 @@
 
 #include <box2d/b2_body.h>
 #include <SDL2/SDL_timer.h>
+#include "../comps/teams.hpp"
 #include "../comps/input.hpp"
 #include "../comps/timers.hpp"
 #include "../comps/params.hpp"
@@ -41,8 +42,8 @@ void applyMoveInput(entt::registry &reg) {
 }
 
 void applyBlasterInput(entt::registry &reg) {
-  auto view = reg.view<Physics, BlasterParams, BlasterInput, BlasterTimer>();
-  view.each([&](auto phys, auto params, auto input, auto &timer) {
+  auto view = reg.view<Physics, BlasterParams, BlasterInput, BlasterTimer, Team>();
+  view.each([&](auto phys, auto params, auto input, auto &timer, auto team) {
     if (!input.fire) return;
     const std::uint32_t now = SDL_GetTicks();
     if (!SDL_TICKS_PASSED(now, timer.done)) return;
@@ -50,12 +51,10 @@ void applyBlasterInput(entt::registry &reg) {
     
     const b2Vec2 shipPos = phys.body->GetPosition();
     const float shipAngle = phys.body->GetAngle();
-    const b2Vec2 shipDir = angleMag(shipAngle, 1.0f);
-    const b2Vec2 boltPos = shipPos + phys.width * shipDir;
     
-    entt::entity bolt = makeBolt(reg);
+    entt::entity bolt = makeBolt(reg, team);
     b2Body *boltBody = reg.get<Physics>(bolt).body;
-    boltBody->SetTransform(boltPos, shipAngle);
-    boltBody->SetLinearVelocity(params.speed * shipDir);
+    boltBody->SetTransform(shipPos, shipAngle);
+    boltBody->SetLinearVelocity(angleMag(shipAngle, params.speed));
   });
 }

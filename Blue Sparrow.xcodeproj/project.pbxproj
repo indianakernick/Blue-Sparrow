@@ -65,6 +65,7 @@
 		45C5CA3423ED07B6000B554D /* expire.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = expire.hpp; sourceTree = "<group>"; };
 		45C5CA3823ED16AF000B554D /* physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = physics.cpp; sourceTree = "<group>"; };
 		45C5CA3923ED16AF000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
+		45C5CA3B23ED2636000B554D /* teams.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = teams.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +137,7 @@
 				45C5CA1923ECE4FD000B554D /* input.hpp */,
 				45C5CA2423ECE8F2000B554D /* params.hpp */,
 				45C5CA3223ED06CC000B554D /* timers.hpp */,
+				45C5CA3B23ED2636000B554D /* teams.hpp */,
 			);
 			path = comps;
 			sourceTree = "<group>";
