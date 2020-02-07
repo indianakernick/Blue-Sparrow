@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef params_hpp
-#define params_hpp
+#ifndef comps_params_hpp
+#define comps_params_hpp
 
 /// Forces and torques used to move the physics body.
 /// Can be changed when the player upgrades their ship.

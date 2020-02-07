@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef input_hpp
-#define input_hpp
+#ifndef comps_input_hpp
+#define comps_input_hpp
 
 /// If present, the keyboard will control MoveInput
 struct KeyInput {};

@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef handle_input_hpp
-#define handle_input_hpp
+#ifndef systems_handle_input_hpp
+#define systems_handle_input_hpp
 
 #include <SDL2/SDL_scancode.h>
 #include <entt/entity/fwd.hpp>

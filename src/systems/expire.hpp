@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef expire_hpp
-#define expire_hpp
+#ifndef systems_expire_hpp
+#define systems_expire_hpp
 
 #include <entt/entity/fwd.hpp>
 

@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef render_hpp
-#define render_hpp
+#ifndef systems_render_hpp
+#define systems_render_hpp
 
 #include <entt/entity/fwd.hpp>
 

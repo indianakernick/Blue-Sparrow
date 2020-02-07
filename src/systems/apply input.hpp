@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef apply_input_hpp
-#define apply_input_hpp
+#ifndef systems_apply_input_hpp
+#define systems_apply_input_hpp
 
 #include <entt/entity/fwd.hpp>
 

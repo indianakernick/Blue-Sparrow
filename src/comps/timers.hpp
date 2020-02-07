@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef timers_hpp
-#define timers_hpp
+#ifndef comps_timers_hpp
+#define comps_timers_hpp
 
 #include <cstdint>
 

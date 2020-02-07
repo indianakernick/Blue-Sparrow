@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef player_hpp
-#define player_hpp
+#ifndef factories_player_hpp
+#define factories_player_hpp
 
 #include <entt/entity/fwd.hpp>
 

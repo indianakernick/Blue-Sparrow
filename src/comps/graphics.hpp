@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef graphics_hpp
-#define graphics_hpp
+#ifndef comps_graphics_hpp
+#define comps_graphics_hpp
 
 /// The position of a sprite on the screen as a rotated rectangle
 struct SpriteRect {

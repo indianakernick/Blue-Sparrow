@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef sdl_check_hpp
-#define sdl_check_hpp
+#ifndef utils_sdl_check_hpp
+#define utils_sdl_check_hpp
 
 #include <stdexcept>
 #include <SDL2/SDL_error.h>

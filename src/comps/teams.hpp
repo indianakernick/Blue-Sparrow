@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef teams_hpp
-#define teams_hpp
+#ifndef comps_teams_hpp
+#define comps_teams_hpp
 
 #include <cstdint>
 

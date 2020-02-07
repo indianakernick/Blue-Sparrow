@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef bolt_hpp
-#define bolt_hpp
+#ifndef factories_bolt_hpp
+#define factories_bolt_hpp
 
 #include "../comps/teams.hpp"
 #include <entt/entity/fwd.hpp>

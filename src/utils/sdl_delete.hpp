@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef sdl_delete_hpp
-#define sdl_delete_hpp
+#ifndef utils_sdl_delete_hpp
+#define utils_sdl_delete_hpp
 
 #include <memory>
 
