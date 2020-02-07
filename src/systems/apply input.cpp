@@ -10,6 +10,7 @@
 
 #include <box2d/b2_body.h>
 #include <SDL2/SDL_timer.h>
+#include "../utils/each.hpp"
 #include "../comps/teams.hpp"
 #include "../comps/input.hpp"
 #include "../comps/timers.hpp"
@@ -27,7 +28,7 @@ b2Vec2 angleMag(const float angle, const float mag) {
 }
 
 void applyMoveInput(entt::registry &reg) {
-  reg.view<Physics, MoveParams, MoveInput>().each([](auto phys, auto params, auto input) {
+  entt::each(reg, [](Physics phys, MoveParams params, MoveInput input) {
     if (input.forward) {
       const b2Vec2 force = angleMag(phys.body->GetAngle(), params.thrustForce);
       phys.body->ApplyForceToCenter(force, true);
@@ -42,8 +43,7 @@ void applyMoveInput(entt::registry &reg) {
 }
 
 void applyBlasterInput(entt::registry &reg) {
-  auto view = reg.view<Physics, BlasterParams, BlasterInput, BlasterTimer, Team>();
-  view.each([&](auto phys, auto params, auto input, auto &timer, auto team) {
+  entt::each(reg, [&](Physics phys, BlasterParams params, BlasterInput input, BlasterTimer &timer, Team team) {
     if (!input.fire) return;
     const std::uint32_t now = SDL_GetTicks();
     if (!SDL_TICKS_PASSED(now, timer.done)) return;

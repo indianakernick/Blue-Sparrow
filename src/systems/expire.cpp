@@ -10,10 +10,11 @@
 
 #include "timers.hpp"
 #include <SDL2/SDL_timer.h>
+#include "../utils/each.hpp"
 #include <entt/entity/registry.hpp>
 
 void expireTemporary(entt::registry &reg) {
-  reg.view<ExpireTimer>().each([&](entt::entity e, auto timer) {
+  entt::each(reg, [&](entt::entity e, ExpireTimer timer) {
     if (SDL_TICKS_PASSED(SDL_GetTicks(), timer.done)) {
       reg.destroy(e);
     }

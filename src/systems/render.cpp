@@ -10,13 +10,14 @@
 
 #include "sdl_check.hpp"
 #include <SDL2/SDL_render.h>
+#include "../utils/each.hpp"
 #include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
 
 void renderSprite(entt::registry &reg) {
   auto ren = reg.ctx<SDL_Renderer *>();
   auto tex = reg.ctx<SDL_Texture *>();
-  reg.view<SpriteRect, Sprite>().each([=](auto rect, auto sprite) {
+  entt::each(reg, [=](SpriteRect rect, Sprite sprite) {
     const SDL_Rect srcrect = {0, 0, 1, 1};
     const SDL_FRect dstrect = {rect.x, rect.y, rect.width, rect.height};
     SDL_CHECK(SDL_SetTextureColorMod(tex, sprite.r, sprite.g, sprite.b));

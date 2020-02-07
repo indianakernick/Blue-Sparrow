@@ -9,6 +9,7 @@
 #include "read physics.hpp"
 
 #include <box2d/b2_body.h>
+#include "../utils/each.hpp"
 #include "../comps/physics.hpp"
 #include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
@@ -16,7 +17,7 @@
 constexpr float rad2deg = 180.0f / b2_pi;
 
 void readPhysicsTransform(entt::registry &reg) {
-  reg.view<Physics, SpriteRect>().each([](auto phys, auto &rect) {
+  entt::each(reg, [](Physics phys, SpriteRect &rect) {
     const b2Vec2 pos = phys.body->GetPosition();
     const float angle = phys.body->GetAngle();
     rect.x = (pos.x - phys.width / 2.0) * 10.0;

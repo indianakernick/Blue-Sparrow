@@ -8,6 +8,7 @@
 
 #include "handle input.hpp"
 
+#include "../utils/each.hpp"
 #include "../comps/input.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -15,7 +16,7 @@ namespace {
 
 template <typename Input>
 void set(entt::registry &reg, bool Input::*mem, const bool value) {
-  reg.view<Input, KeyInput>().less([=](auto &input) {
+  entt::each(reg, [=](Input &input, KeyInput) {
     input.*mem = value;
   });
 }
