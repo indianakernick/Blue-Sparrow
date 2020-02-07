@@ -12,6 +12,11 @@
 		457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF45523EBEA8D00405E2D /* libbox2d.a */; };
 		457DF47E23EBF20B00405E2D /* libSDL2-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF48223EBF45E00405E2D /* sdl_delete.cpp */; };
+		45C5CA2023ECE5E6000B554D /* handle input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA1E23ECE5E6000B554D /* handle input.cpp */; };
+		45C5CA2323ECE7C3000B554D /* apply input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2123ECE7C3000B554D /* apply input.cpp */; };
+		45C5CA2723ECEA5E000B554D /* read physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2523ECEA5E000B554D /* read physics.cpp */; };
+		45C5CA2A23ECEE46000B554D /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2823ECEE46000B554D /* render.cpp */; };
+		45C5CA2E23ECF043000B554D /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2C23ECF043000B554D /* player.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +41,20 @@
 		457DF48123EBF43300405E2D /* sdl_check.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sdl_check.hpp; sourceTree = "<group>"; };
 		457DF48223EBF45E00405E2D /* sdl_delete.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdl_delete.cpp; sourceTree = "<group>"; };
 		457DF48323EBF45E00405E2D /* sdl_delete.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sdl_delete.hpp; sourceTree = "<group>"; };
+		45C5CA1723ECE3DA000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
+		45C5CA1823ECE41E000B554D /* graphics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = graphics.hpp; sourceTree = "<group>"; };
+		45C5CA1923ECE4FD000B554D /* input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
+		45C5CA1E23ECE5E6000B554D /* handle input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "handle input.cpp"; sourceTree = "<group>"; };
+		45C5CA1F23ECE5E6000B554D /* handle input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "handle input.hpp"; sourceTree = "<group>"; };
+		45C5CA2123ECE7C3000B554D /* apply input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "apply input.cpp"; sourceTree = "<group>"; };
+		45C5CA2223ECE7C3000B554D /* apply input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "apply input.hpp"; sourceTree = "<group>"; };
+		45C5CA2423ECE8F2000B554D /* params.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = params.hpp; sourceTree = "<group>"; };
+		45C5CA2523ECEA5E000B554D /* read physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "read physics.cpp"; sourceTree = "<group>"; };
+		45C5CA2623ECEA5E000B554D /* read physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "read physics.hpp"; sourceTree = "<group>"; };
+		45C5CA2823ECEE46000B554D /* render.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
+		45C5CA2923ECEE46000B554D /* render.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = render.hpp; sourceTree = "<group>"; };
+		45C5CA2C23ECF043000B554D /* player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
+		45C5CA2D23ECF043000B554D /* player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = player.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +90,9 @@
 		457DF44723EBD70E00405E2D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				45C5CA2B23ECF022000B554D /* factories */,
+				45C5CA1A23ECE54F000B554D /* systems */,
+				45C5CA1623ECE355000B554D /* comps */,
 				457DF48023EBF40000405E2D /* utils */,
 				457DF44823EBD70E00405E2D /* main.cpp */,
 			);
@@ -94,6 +116,41 @@
 				457DF48323EBF45E00405E2D /* sdl_delete.hpp */,
 			);
 			path = utils;
+			sourceTree = "<group>";
+		};
+		45C5CA1623ECE355000B554D /* comps */ = {
+			isa = PBXGroup;
+			children = (
+				45C5CA1723ECE3DA000B554D /* physics.hpp */,
+				45C5CA1823ECE41E000B554D /* graphics.hpp */,
+				45C5CA1923ECE4FD000B554D /* input.hpp */,
+				45C5CA2423ECE8F2000B554D /* params.hpp */,
+			);
+			path = comps;
+			sourceTree = "<group>";
+		};
+		45C5CA1A23ECE54F000B554D /* systems */ = {
+			isa = PBXGroup;
+			children = (
+				45C5CA1E23ECE5E6000B554D /* handle input.cpp */,
+				45C5CA1F23ECE5E6000B554D /* handle input.hpp */,
+				45C5CA2123ECE7C3000B554D /* apply input.cpp */,
+				45C5CA2223ECE7C3000B554D /* apply input.hpp */,
+				45C5CA2523ECEA5E000B554D /* read physics.cpp */,
+				45C5CA2623ECEA5E000B554D /* read physics.hpp */,
+				45C5CA2823ECEE46000B554D /* render.cpp */,
+				45C5CA2923ECEE46000B554D /* render.hpp */,
+			);
+			path = systems;
+			sourceTree = "<group>";
+		};
+		45C5CA2B23ECF022000B554D /* factories */ = {
+			isa = PBXGroup;
+			children = (
+				45C5CA2C23ECF043000B554D /* player.cpp */,
+				45C5CA2D23ECF043000B554D /* player.hpp */,
+			);
+			path = factories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,7 +211,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */,
+				45C5CA2723ECEA5E000B554D /* read physics.cpp in Sources */,
 				457DF44923EBD70E00405E2D /* main.cpp in Sources */,
+				45C5CA2A23ECEE46000B554D /* render.cpp in Sources */,
+				45C5CA2323ECE7C3000B554D /* apply input.cpp in Sources */,
+				45C5CA2023ECE5E6000B554D /* handle input.cpp in Sources */,
+				45C5CA2E23ECF043000B554D /* player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
