@@ -58,7 +58,7 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<MoveParams>(e, moveParams);
   reg.assign<BlasterInput>(e);
   BlasterParams blasterParams;
-  blasterParams.rof = 1.0f;
+  blasterParams.rof = 2.0f;
   blasterParams.speed = 50.0f;
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterTimer>(e, std::uint32_t{});

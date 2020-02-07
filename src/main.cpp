@@ -7,7 +7,7 @@
 //
 
 #include <SDL2/SDL.h>
-#include <box2d/box2d.h>
+#include <box2d/b2_world.h>
 #include <entt/entity/registry.hpp>
 
 #include "utils/sdl_check.hpp"
@@ -16,16 +16,10 @@
 
 #include "systems/render.hpp"
 #include "systems/expire.hpp"
+#include "systems/physics.hpp"
 #include "systems/apply input.hpp"
 #include "systems/handle input.hpp"
 #include "systems/read physics.hpp"
-
-#include "comps/physics.hpp"
-
-void destroyBody(entt::entity e, entt::registry &reg) {
-  b2Body *body = reg.get<Physics>(e).body;
-  if (body) body->GetWorld()->DestroyBody(body);
-}
 
 SDL::Texture makeTexture(SDL_Renderer *renderer) {
   SDL::Texture tex{SDL_CHECK(SDL_CreateTexture(
@@ -54,8 +48,8 @@ int main() {
   SDL::Texture texture = makeTexture(renderer.get());
   
   entt::registry reg;
-  reg.on_destroy<Physics>().connect<&destroyBody>();
-  b2World &world = reg.set<b2World>(b2Vec2{0.0f, 0.0f});
+  connectDestroyBody(reg);
+  reg.set<b2World>(b2Vec2{0.0f, 0.0f});
   reg.set<SDL_Renderer *>(renderer.get());
   reg.set<SDL_Texture *>(texture.get());
   makePlayer(reg);
@@ -79,9 +73,7 @@ int main() {
     applyMoveInput(reg);
     applyBlasterInput(reg);
     expireTemporary(reg);
-    
-    world.Step(1.0f/60.0f, 8, 4);
-    
+    stepPhysics(reg);
     readPhysicsTransform(reg);
     
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));

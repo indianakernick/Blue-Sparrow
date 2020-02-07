@@ -6,8 +6,8 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef physics_hpp
-#define physics_hpp
+#ifndef comps_physics_hpp
+#define comps_physics_hpp
 
 class b2Body;
 

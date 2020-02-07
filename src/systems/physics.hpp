@@ -1,0 +1,17 @@
+//
+//  physics.hpp
+//  Blue Sparrow
+//
+//  Created by Indi Kernick on 7/2/20.
+//  Copyright © 2020 Indiana Kernick. All rights reserved.
+//
+
+#ifndef systems_physics_hpp
+#define systems_physics_hpp
+
+#include <entt/entity/fwd.hpp>
+
+void stepPhysics(entt::registry &);
+void connectDestroyBody(entt::registry &);
+
+#endif
