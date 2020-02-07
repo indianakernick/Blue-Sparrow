@@ -25,8 +25,8 @@ namespace {
 Physics makePhysics(b2World &world) {
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
-  bodyDef.angularDamping = 10.0;
-  bodyDef.linearDamping = 0.2;
+  bodyDef.angularDamping = 8.0;
+  bodyDef.linearDamping = 0.1;
   bodyDef.position = {64, 36};
   bodyDef.angle = 0;
   
@@ -35,7 +35,7 @@ Physics makePhysics(b2World &world) {
   
   b2FixtureDef fixDef;
   fixDef.shape = &shape;
-  fixDef.density = 0.1;
+  fixDef.density = 1.0;
   
   b2Body *body = world.CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
@@ -52,8 +52,8 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<KeyInput>(e);
   reg.assign<MoveInput>(e);
   MoveParams moveParams;
-  moveParams.thrustForce = 10.0f;
-  moveParams.turnTorque = 20.0f;
+  moveParams.thrustForce = 60.0f;
+  moveParams.turnTorque = 200.0f;
   reg.assign<MoveParams>(e, moveParams);
   return e;
 }
