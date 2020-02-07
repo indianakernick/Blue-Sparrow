@@ -16,17 +16,17 @@
 b2Body *makeShip(b2World &world) {
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
-  bodyDef.angularDamping = 1.0;
-  bodyDef.linearDamping = 0.0;
-  bodyDef.position = {640, 360};
+  bodyDef.angularDamping = 10.0;
+  bodyDef.linearDamping = 0.2;
+  bodyDef.position = {64, 36};
   bodyDef.angle = 0;
   
   b2PolygonShape shape;
-  shape.SetAsBox(30, 20);
+  shape.SetAsBox(1.5, 1);
   
   b2FixtureDef fixDef;
   fixDef.shape = &shape;
-  fixDef.density = 0.00001;
+  fixDef.density = 0.1;
   
   b2Body *body = world.CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
@@ -75,6 +75,7 @@ int main() {
         running = false;
         break;
       } else if (e.type == SDL_KEYDOWN) {
+        if (e.key.repeat != 0) continue;
         switch (e.key.keysym.scancode) {
           case SDL_SCANCODE_UP:
             forward = true;
@@ -88,6 +89,7 @@ int main() {
           default: ;
         }
       } else if (e.type == SDL_KEYUP) {
+        if (e.key.repeat != 0) continue;
         switch (e.key.keysym.scancode) {
           case SDL_SCANCODE_UP:
             forward = false;
@@ -109,15 +111,15 @@ int main() {
     
     if (forward) {
       const float angle = ship->GetAngle();
-      const float mag = 80.0f;
+      const float mag = 10.0f;
       const b2Vec2 force {std::cos(angle) * mag, std::sin(angle) * mag};
       ship->ApplyForceToCenter(force, true);
     }
     if (left && !right) {
-      ship->ApplyTorque(-100.0f, true);
+      ship->ApplyTorque(-20.0f, true);
     }
     if (right && !left) {
-      ship->ApplyTorque(100.0f, true);
+      ship->ApplyTorque(20.0f, true);
     }
     
     world.Step(1.0f/60.0, 8, 4);
@@ -128,7 +130,7 @@ int main() {
     const b2Vec2 pos = ship->GetPosition();
     const float angle = ship->GetAngle();
     const SDL_Rect srcrect = {0, 0, 1, 1};
-    const SDL_FRect dstrect = {pos.x - 30, pos.y - 20, 60, 40};
+    const SDL_FRect dstrect = {(pos.x - 3) * 10, (pos.y - 2) * 10, 30, 20};
     SDL_CHECK(SDL_RenderCopyExF(
       renderer.get(), texture.get(), &srcrect, &dstrect, angle * 180.0 / 3.14159, nullptr, SDL_FLIP_NONE
     ));
