@@ -16,7 +16,7 @@
 constexpr float rad2deg = 180.0 / 3.14159;
 
 void readPhysicsTransform(entt::registry &reg) {
-  reg.view<Physics, SpriteRect>().each([](Physics phys, SpriteRect &rect) {
+  reg.view<Physics, SpriteRect>().each([](auto phys, auto &rect) {
     const b2Vec2 pos = phys.body->GetPosition();
     const float angle = phys.body->GetAngle();
     rect.x = (pos.x - phys.width / 2.0) * 10.0;

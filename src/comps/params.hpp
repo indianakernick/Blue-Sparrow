@@ -19,7 +19,7 @@ struct MoveParams {
 /// Properties of the players primary weapon.
 /// Can be changed when the player upgrades their ship.
 struct BlasterParams {
-  float fireTime;
+  float rof;
   float speed;
 };
 

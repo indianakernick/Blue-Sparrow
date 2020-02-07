@@ -9,7 +9,9 @@
 #include "apply input.hpp"
 
 #include <box2d/b2_body.h>
+#include <SDL2/SDL_timer.h>
 #include "../comps/input.hpp"
+#include "../comps/timers.hpp"
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../factories/bolt.hpp"
@@ -39,9 +41,12 @@ void applyMoveInput(entt::registry &reg) {
 }
 
 void applyBlasterInput(entt::registry &reg) {
-  reg.view<Physics, BlasterParams, BlasterInput>().each([&](Physics phys, BlasterParams params, BlasterInput &input) {
+  auto view = reg.view<Physics, BlasterParams, BlasterInput, BlasterTimer>();
+  view.each([&](auto phys, auto params, auto input, auto &timer) {
     if (!input.fire) return;
-    input.fire = false;
+    const std::uint32_t now = SDL_GetTicks();
+    if (!SDL_TICKS_PASSED(now, timer.done)) return;
+    timer.done = now + 1000 / params.rof;
     
     const b2Vec2 shipPos = phys.body->GetPosition();
     const float shipAngle = phys.body->GetAngle();

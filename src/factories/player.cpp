@@ -9,6 +9,7 @@
 #include "player.hpp"
 
 #include "../comps/input.hpp"
+#include "../comps/timers.hpp"
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../comps/graphics.hpp"
@@ -57,8 +58,9 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<MoveParams>(e, moveParams);
   reg.assign<BlasterInput>(e);
   BlasterParams blasterParams;
-  blasterParams.fireTime = 1.0f;
+  blasterParams.rof = 1.0f;
   blasterParams.speed = 50.0f;
   reg.assign<BlasterParams>(e, blasterParams);
+  reg.assign<BlasterTimer>(e, std::uint32_t{});
   return e;
 }

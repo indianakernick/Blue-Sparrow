@@ -18,6 +18,7 @@
 		45C5CA2A23ECEE46000B554D /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2823ECEE46000B554D /* render.cpp */; };
 		45C5CA2E23ECF043000B554D /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2C23ECF043000B554D /* player.cpp */; };
 		45C5CA3123ECFE1A000B554D /* bolt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2F23ECFE1A000B554D /* bolt.cpp */; };
+		45C5CA3523ED07B6000B554D /* expire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA3323ED07B6000B554D /* expire.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +59,9 @@
 		45C5CA2D23ECF043000B554D /* player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = player.hpp; sourceTree = "<group>"; };
 		45C5CA2F23ECFE1A000B554D /* bolt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bolt.cpp; sourceTree = "<group>"; };
 		45C5CA3023ECFE1A000B554D /* bolt.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = bolt.hpp; sourceTree = "<group>"; };
+		45C5CA3223ED06CC000B554D /* timers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = timers.hpp; sourceTree = "<group>"; };
+		45C5CA3323ED07B6000B554D /* expire.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = expire.cpp; sourceTree = "<group>"; };
+		45C5CA3423ED07B6000B554D /* expire.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = expire.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +132,7 @@
 				45C5CA1823ECE41E000B554D /* graphics.hpp */,
 				45C5CA1923ECE4FD000B554D /* input.hpp */,
 				45C5CA2423ECE8F2000B554D /* params.hpp */,
+				45C5CA3223ED06CC000B554D /* timers.hpp */,
 			);
 			path = comps;
 			sourceTree = "<group>";
@@ -143,6 +148,8 @@
 				45C5CA2623ECEA5E000B554D /* read physics.hpp */,
 				45C5CA2823ECEE46000B554D /* render.cpp */,
 				45C5CA2923ECEE46000B554D /* render.hpp */,
+				45C5CA3323ED07B6000B554D /* expire.cpp */,
+				45C5CA3423ED07B6000B554D /* expire.hpp */,
 			);
 			path = systems;
 			sourceTree = "<group>";
@@ -220,6 +227,7 @@
 				45C5CA3123ECFE1A000B554D /* bolt.cpp in Sources */,
 				457DF44923EBD70E00405E2D /* main.cpp in Sources */,
 				45C5CA2A23ECEE46000B554D /* render.cpp in Sources */,
+				45C5CA3523ED07B6000B554D /* expire.cpp in Sources */,
 				45C5CA2323ECE7C3000B554D /* apply input.cpp in Sources */,
 				45C5CA2023ECE5E6000B554D /* handle input.cpp in Sources */,
 				45C5CA2E23ECF043000B554D /* player.cpp in Sources */,

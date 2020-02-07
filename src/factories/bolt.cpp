@@ -8,6 +8,7 @@
 
 #include "bolt.hpp"
 
+#include "../comps/timers.hpp"
 #include "../comps/physics.hpp"
 #include "../comps/graphics.hpp"
 
@@ -17,6 +18,8 @@
 #include <box2d/b2_polygon_shape.h>
 
 #include <entt/entity/registry.hpp>
+
+#include <SDL2/SDL_timer.h>
 
 namespace {
 
@@ -45,5 +48,6 @@ entt::entity makeBolt(entt::registry &reg) {
   reg.assign<Physics>(e, makePhysics(reg.ctx<b2World>()));
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{255, 0, 0});
+  reg.assign<ExpireTimer>(e, SDL_GetTicks() + 10000);
   return e;
 }

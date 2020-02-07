@@ -1,17 +1,17 @@
 //
-//  render.hpp
+//  expire.hpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 7/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef render_hpp
-#define render_hpp
+#ifndef expire_hpp
+#define expire_hpp
 
 #include <entt/entity/fwd.hpp>
 
-/// Read SpriteRect and Sprite to render the texture
-void renderSprite(entt::registry &);
+/// Destroy temporary objects that have expired their lifetimes
+void expireTemporary(entt::registry &);
 
 #endif

@@ -10,19 +10,28 @@
 #include <box2d/box2d.h>
 #include <entt/entity/registry.hpp>
 
-#include "systems/render.hpp"
 #include "utils/sdl_check.hpp"
 #include "utils/sdl_delete.hpp"
 #include "factories/player.hpp"
+
+#include "systems/render.hpp"
+#include "systems/expire.hpp"
 #include "systems/apply input.hpp"
 #include "systems/handle input.hpp"
 #include "systems/read physics.hpp"
+
+#include "comps/physics.hpp"
+
+void destroyBody(entt::entity e, entt::registry &reg) {
+  b2Body *body = reg.get<Physics>(e).body;
+  if (body) body->GetWorld()->DestroyBody(body);
+}
 
 SDL::Texture makeTexture(SDL_Renderer *renderer) {
   SDL::Texture tex{SDL_CHECK(SDL_CreateTexture(
     renderer, SDL_PIXELFORMAT_ARGB32, SDL_TEXTUREACCESS_STATIC, 1, 1
   ))};
-  uint32_t pixels[] = {0xFFFFFFFF};
+  std::uint32_t pixels[] = {0xFFFFFFFF};
   SDL_CHECK(SDL_UpdateTexture(tex.get(), nullptr, pixels, 4));
   return tex;
 }
@@ -45,6 +54,7 @@ int main() {
   SDL::Texture texture = makeTexture(renderer.get());
   
   entt::registry reg;
+  reg.on_destroy<Physics>().connect<&destroyBody>();
   b2World &world = reg.set<b2World>(b2Vec2{0.0f, 0.0f});
   reg.set<SDL_Renderer *>(renderer.get());
   reg.set<SDL_Texture *>(texture.get());
@@ -68,6 +78,7 @@ int main() {
     
     applyMoveInput(reg);
     applyBlasterInput(reg);
+    expireTemporary(reg);
     
     world.Step(1.0f/60.0f, 8, 4);
     
