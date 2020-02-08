@@ -28,6 +28,7 @@ struct BlasterParams {
 /// Can be changed when the player upgrades their ship.
 struct MissileParams {
   float rof;
+  float speed;
   float forwardForce;
   float turnTorque;
 };

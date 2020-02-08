@@ -17,6 +17,7 @@
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../factories/bolt.hpp"
+#include "../comps/behaviour.hpp"
 #include "../factories/missile.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -77,11 +78,12 @@ void applyMissileInput(entt::registry &reg) {
     entt::entity missile = makeMissile(reg, team);
     b2Body *missileBody = reg.get<Physics>(missile).body;
     missileBody->SetTransform(shipPos, shipAngle);
-    missileBody->SetLinearVelocity(angleMag(shipAngle, 20.0f));
+    missileBody->SetLinearVelocity(angleMag(shipAngle, params.speed / 2.0f));
     MoveParams moveParams;
     moveParams.forwardForce = params.forwardForce;
     moveParams.reverseForce = 0.0f;
     moveParams.turnTorque = params.turnTorque;
     reg.assign<MoveParams>(missile, moveParams);
+    reg.assign<SeekBehaviour>(missile, params.speed);
   });
 }

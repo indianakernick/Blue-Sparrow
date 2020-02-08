@@ -19,6 +19,8 @@ struct OrbitBehaviour {
   float dist;
 };
 
-struct SeekBehaviour {};
+struct SeekBehaviour {
+  float speed;
+};
 
 #endif
