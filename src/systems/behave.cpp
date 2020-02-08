@@ -33,7 +33,7 @@ void rotateByAngle(MoveInput &move, float deltaAngle) {
 }
 
 b2Vec2 scaleToLength(const b2Vec2 vec, const float length) {
-  return ((length * length) / vec.LengthSquared()) * vec;
+  return (length / vec.Length()) * vec;
 }
 
 }

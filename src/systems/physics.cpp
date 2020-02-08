@@ -10,11 +10,22 @@
 
 #include <box2d/b2_body.h>
 #include <box2d/b2_world.h>
+#include "../utils/each.hpp"
 #include "../comps/physics.hpp"
 #include <entt/entity/registry.hpp>
 
 void stepPhysics(entt::registry &reg) {
   reg.ctx<b2World>().Step(1.0f/60.0f, 8, 4);
+}
+
+void limitVelocity(entt::registry &reg) {
+  entt::each(reg, [](Physics phys, VelocityLimit limit) {
+    const b2Vec2 vel = phys.body->GetLinearVelocity();
+    const float len = vel.Length();
+    if (len > limit.vel) {
+      phys.body->SetLinearVelocity((limit.vel / len) * vel);
+    }
+  });
 }
 
 namespace {

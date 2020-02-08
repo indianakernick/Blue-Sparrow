@@ -17,4 +17,8 @@ struct Physics {
   float width, height;
 };
 
+struct VelocityLimit {
+  float vel;
+};
+
 #endif

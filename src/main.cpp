@@ -82,6 +82,7 @@ int main() {
     applyMissileInput(reg);
     expireTemporary(reg);
     stepPhysics(reg);
+    limitVelocity(reg);
     readPhysicsTransform(reg);
     
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
