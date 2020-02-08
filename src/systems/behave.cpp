@@ -36,6 +36,11 @@ b2Vec2 scaleToLength(const b2Vec2 vec, const float length) {
   return (length / vec.Length()) * vec;
 }
 
+b2Vec2 normalized(b2Vec2 vec) {
+  vec.Normalize();
+  return vec;
+}
+
 }
 
 void behaveOrbit(entt::registry &reg) {
@@ -48,24 +53,30 @@ void behaveOrbit(entt::registry &reg) {
       blaster.fire = true;
     }
     
-    const b2Vec2 targetPos = reg.get<Physics>(target.e).body->GetPosition();
+    b2Body *targetBody = reg.get<Physics>(target.e).body;
+    const b2Vec2 targetPos = targetBody->GetPosition();
+    const b2Vec2 targetVel = targetBody->GetLinearVelocity();
     const b2Vec2 shipPos = phys.body->GetPosition();
-    const b2Vec2 toTarget = targetPos - shipPos;
+    const b2Vec2 shipVel = phys.body->GetLinearVelocity();
+    
+    const b2Vec2 toTarget = normalized(targetPos - shipPos);
+    const b2Vec2 relativeVel = targetVel - shipVel;
+    const b2Vec2 desiredPos = targetPos - behave.dist * toTarget + 0.5f * relativeVel;
+    const b2Vec2 desiredVel = scaleToLength(desiredPos - shipPos, behave.speed);
+    const b2Vec2 accel = desiredVel - shipVel;
+    const float forwardAccel = b2Dot(accel, toTarget);
     
     const float aimAngle = std::atan2(toTarget.y, toTarget.x);
     rotateByAngle(move, aimAngle - phys.body->GetAngle());
     
-    const float aimDist = behave.dist * behave.dist;
-    const float toAimDist = aimDist - (toTarget.x * toTarget.x + toTarget.y * toTarget.y);
-    
-    if (b2Abs(toAimDist) < 4.0f * 4.0f) {
+    if (b2Abs(forwardAccel) < 0.5f) {
       move.forward = move.reverse = false;
-    } else if (toAimDist < 0.0f) {
-      move.forward = true;
-      move.reverse = false;
-    } else {
+    } else if (forwardAccel < 0.0f) {
       move.reverse = true;
       move.forward = false;
+    } else {
+      move.forward = true;
+      move.reverse = false;
     }
   });
 }
@@ -82,6 +93,7 @@ void behaveSeek(entt::registry &reg) {
     const b2Vec2 targetVel = targetBody->GetLinearVelocity();
     const b2Vec2 shipPos = phys.body->GetPosition();
     const b2Vec2 shipVel = phys.body->GetLinearVelocity();
+    
     const float timeToReach = (targetPos - shipPos).Length() / shipVel.Length() * 0.6f;
     const b2Vec2 futureTargetPos = targetPos + timeToReach * targetVel;
     const b2Vec2 desiredVel = scaleToLength(futureTargetPos - shipPos, behave.speed);

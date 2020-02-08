@@ -17,6 +17,7 @@ struct Target {
 
 struct OrbitBehaviour {
   float dist;
+  float speed;
 };
 
 struct SeekBehaviour {

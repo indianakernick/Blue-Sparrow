@@ -40,7 +40,7 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<BlasterTimer>(e, std::uint32_t{});
   
   MissileParams missileParams;
-  missileParams.rof = 10.0f;
+  missileParams.rof = 0.5f;
   missileParams.speed = 20.0f;
   missileParams.forwardForce = 20.0f;
   missileParams.turnTorque = 3.0f;
