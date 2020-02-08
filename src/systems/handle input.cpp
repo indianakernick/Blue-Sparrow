@@ -23,12 +23,19 @@ void set(entt::registry &reg, bool Input::*mem, const bool value) {
 
 bool handleKey(entt::registry &reg, const SDL_Scancode key, const bool press) {
   switch (key) {
+    case SDL_SCANCODE_I:
     case SDL_SCANCODE_UP:
       set(reg, &MoveInput::forward, press);
       return true;
+    case SDL_SCANCODE_K:
+    case SDL_SCANCODE_DOWN:
+      set(reg, &MoveInput::reverse, press);
+      return true;
+    case SDL_SCANCODE_J:
     case SDL_SCANCODE_LEFT:
       set(reg, &MoveInput::left, press);
       return true;
+    case SDL_SCANCODE_L:
     case SDL_SCANCODE_RIGHT:
       set(reg, &MoveInput::right, press);
       return true;

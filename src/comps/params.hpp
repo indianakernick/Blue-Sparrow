@@ -12,7 +12,8 @@
 /// Forces and torques used to move the physics body.
 /// Can be changed when the player upgrades their ship.
 struct MoveParams {
-  float thrustForce;
+  float forwardForce;
+  float reverseForce;
   float turnTorque;
 };
 

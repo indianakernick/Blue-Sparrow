@@ -28,16 +28,15 @@ void behaveBasic(entt::registry &reg) {
     const b2Vec2 targetPos = reg.get<Physics>(target.e).body->GetPosition();
     const b2Vec2 shipPos = phys.body->GetPosition();
     const b2Vec2 toTarget = targetPos - shipPos;
-    const float aimAngle = std::atan2(toTarget.y, toTarget.x);
-    const float aimDist = toTarget.x * toTarget.x + toTarget.y * toTarget.y;
-    const float shipAngle = phys.body->GetAngle();
-    float toAim = aimAngle - shipAngle;
-    while (toAim < -b2_pi) toAim += 2.0f * b2_pi;
-    while (toAim > b2_pi) toAim -= 2.0f * b2_pi;
     
-    if (b2Abs(toAim) < 2.0f * b2_pi / 180.0f) {
+    const float aimAngle = std::atan2(toTarget.y, toTarget.x);
+    float toAimAngle = aimAngle - phys.body->GetAngle();
+    while (toAimAngle < -b2_pi) toAimAngle += 2.0f * b2_pi;
+    while (toAimAngle > b2_pi) toAimAngle -= 2.0f * b2_pi;
+    
+    if (b2Abs(toAimAngle) < 2.0f * b2_pi / 180.0f) {
       move.left = move.right = false;
-    } else if (toAim < 0.0f) {
+    } else if (toAimAngle < 0.0f) {
       move.right = false;
       move.left = true;
     } else {
@@ -45,9 +44,16 @@ void behaveBasic(entt::registry &reg) {
       move.right = true;
     }
     
-    if (aimDist > behave.dist * behave.dist) {
+    const float aimDist = behave.dist * behave.dist;
+    const float toAimDist = aimDist - (toTarget.x * toTarget.x + toTarget.y * toTarget.y);
+    
+    if (b2Abs(toAimDist) < 4.0f * 4.0f) {
+      move.forward = move.reverse = false;
+    } else if (toAimDist < 0.0f) {
       move.forward = true;
+      move.reverse = false;
     } else {
+      move.reverse = true;
       move.forward = false;
     }
   });

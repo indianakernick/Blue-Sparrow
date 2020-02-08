@@ -25,7 +25,8 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<KeyInput>(e);
   reg.assign<MoveInput>(e);
   MoveParams moveParams;
-  moveParams.thrustForce = 60.0f;
+  moveParams.forwardForce = 60.0f;
+  moveParams.reverseForce = 30.0f;
   moveParams.turnTorque = 200.0f;
   reg.assign<MoveParams>(e, moveParams);
   reg.assign<BlasterInput>(e);

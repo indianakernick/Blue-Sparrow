@@ -56,7 +56,7 @@ int main() {
   reg.set<SDL_Renderer *>(renderer.get());
   reg.set<SDL_Texture *>(texture.get());
   setTransform(reg, makePlayer(reg), {32.0f, 36.0f}, 0.0f);
-  setTransform(reg, makeEnemy(reg), {96.0f, 36.0f}, 0.0f);
+  setTransform(reg, makeEnemy(reg), {96.0f, 36.0f}, b2_pi);
   
   bool running = true;
   while (running) {

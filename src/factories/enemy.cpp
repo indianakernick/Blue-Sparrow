@@ -23,11 +23,12 @@ entt::entity makeEnemy(entt::registry &reg) {
   reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), Team::enemy));
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{191, 63, 0});
-  reg.assign<BasicBehaviour>(e, 80.0f);
+  reg.assign<BasicBehaviour>(e, 30.0f);
   reg.assign<Target>(e);
   reg.assign<MoveInput>(e);
   MoveParams moveParams;
-  moveParams.thrustForce = 60.0f;
+  moveParams.forwardForce = 60.0f;
+  moveParams.reverseForce = 30.0f;
   moveParams.turnTorque = 200.0f;
   reg.assign<MoveParams>(e, moveParams);
   reg.assign<BlasterInput>(e);

@@ -30,7 +30,11 @@ b2Vec2 angleMag(const float angle, const float mag) {
 void applyMoveInput(entt::registry &reg) {
   entt::each(reg, [](Physics phys, MoveParams params, MoveInput input) {
     if (input.forward) {
-      const b2Vec2 force = angleMag(phys.body->GetAngle(), params.thrustForce);
+      const b2Vec2 force = angleMag(phys.body->GetAngle(), params.forwardForce);
+      phys.body->ApplyForceToCenter(force, true);
+    }
+    if (input.reverse) {
+      const b2Vec2 force = angleMag(phys.body->GetAngle(), -params.reverseForce);
       phys.body->ApplyForceToCenter(force, true);
     }
     if (input.left && !input.right) {

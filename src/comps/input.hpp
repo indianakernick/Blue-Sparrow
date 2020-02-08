@@ -12,10 +12,11 @@
 /// If present, the keyboard will control MoveInput
 struct KeyInput {};
 
-/// Influences torque and forces applied to the physics body.
+/// Influences forces and torques applied to the physics body.
 /// Controlled by keyboard or AI.
 struct MoveInput {
   bool forward = false;
+  bool reverse = false;
   bool left = false;
   bool right = false;
 };
