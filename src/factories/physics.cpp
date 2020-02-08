@@ -13,6 +13,40 @@
 #include <box2d/b2_fixture.h>
 #include <box2d/b2_polygon_shape.h>
 
+namespace {
+
+constexpr float width = 128.0f;
+constexpr float height = 72.0f;
+constexpr float pad = 10.0f;
+
+const b2Vec2 arenaVerts[4][4] = {
+  // Top
+  {{-pad, -pad}, {width + pad, -pad}, {width + pad, 0.0f}, {-pad, 0.0f}},
+  // Right
+  {{width, 0.0f}, {width + pad, 0.0f}, {width + pad, height}, {width, height}},
+  // Bottom
+  {{-pad, height}, {width + pad, height}, {width + pad, height + pad}, {-pad, height + pad}},
+  // Left
+  {{-pad, 0.0f}, {0.0f, 0.0f}, {0.0f, height}, {-pad, height}}
+};
+
+}
+
+void makeArena(b2World &world) {
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_staticBody;
+  b2Body *body = world.CreateBody(&bodyDef);
+  
+  for (int i = 0; i != 4; ++i) {
+    b2PolygonShape shape;
+    shape.Set(arenaVerts[i], 4);
+    b2FixtureDef fixDef;
+    fixDef.shape = &shape;
+    fixDef.filter.categoryBits = arena_bit;
+    body->CreateFixture(&fixDef);
+  }
+}
+
 Physics makeSmallShip(b2World &world, const Team team) {
   const float halfWidth = 1.5f;
   const float halfHeight = 1.0f;

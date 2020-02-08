@@ -14,6 +14,7 @@
 #include "factories/enemy.hpp"
 #include "factories/player.hpp"
 #include "utils/sdl_delete.hpp"
+#include "factories/physics.hpp"
 
 #include "systems/render.hpp"
 #include "systems/expire.hpp"
@@ -57,6 +58,7 @@ int main() {
   reg.set<SDL_Texture *>(texture.get());
   setTransform(reg, makePlayer(reg), {32.0f, 36.0f}, 0.0f);
   setTransform(reg, makeEnemy(reg), {96.0f, 36.0f}, b2_pi);
+  makeArena(reg.ctx<b2World>());
   
   bool running = true;
   while (running) {
