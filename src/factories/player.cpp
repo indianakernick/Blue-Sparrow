@@ -41,8 +41,8 @@ entt::entity makePlayer(entt::registry &reg) {
   
   MissileParams missileParams;
   missileParams.rof = 0.5f;
-  missileParams.speed = 20.0f;
-  missileParams.forwardForce = 20.0f;
+  missileParams.speed = 25.0f;
+  missileParams.forwardForce = 25.0f;
   missileParams.turnTorque = 3.0f;
   reg.assign<MissileParams>(e, missileParams);
   reg.assign<MissileInput>(e);

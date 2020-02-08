@@ -99,7 +99,6 @@ Physics makeSmallMissile(b2World &world, const Team team) {
   
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
-  bodyDef.bullet = true;
   bodyDef.angularDamping = 10.0f;
   bodyDef.linearDamping = 0.1f;
   
