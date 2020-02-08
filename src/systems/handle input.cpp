@@ -42,6 +42,9 @@ bool handleKey(entt::registry &reg, const SDL_Scancode key, const bool press) {
     case SDL_SCANCODE_Z:
       set(reg, &BlasterInput::fire, press);
       return true;
+    case SDL_SCANCODE_X:
+      set(reg, &MissileInput::fire, press);
+      return true;
     default:
       return false;
   }

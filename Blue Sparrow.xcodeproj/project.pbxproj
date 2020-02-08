@@ -24,6 +24,7 @@
 		45C5CA4323EE385D000B554D /* physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4123EE385D000B554D /* physics.cpp */; };
 		45C5CA4623EE3B7A000B554D /* find target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4423EE3B7A000B554D /* find target.cpp */; };
 		45C5CA4923EE3E91000B554D /* behave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4723EE3E91000B554D /* behave.cpp */; };
+		45C5CA4C23EE599E000B554D /* missile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4A23EE599E000B554D /* missile.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -80,6 +81,8 @@
 		45C5CA4523EE3B7A000B554D /* find target.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "find target.hpp"; sourceTree = "<group>"; };
 		45C5CA4723EE3E91000B554D /* behave.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = behave.cpp; sourceTree = "<group>"; };
 		45C5CA4823EE3E91000B554D /* behave.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = behave.hpp; sourceTree = "<group>"; };
+		45C5CA4A23EE599E000B554D /* missile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = missile.cpp; sourceTree = "<group>"; };
+		45C5CA4B23EE599E000B554D /* missile.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = missile.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +195,8 @@
 				45C5CA3E23EE35F4000B554D /* enemy.hpp */,
 				45C5CA4123EE385D000B554D /* physics.cpp */,
 				45C5CA4223EE385D000B554D /* physics.hpp */,
+				45C5CA4A23EE599E000B554D /* missile.cpp */,
+				45C5CA4B23EE599E000B554D /* missile.hpp */,
 			);
 			path = factories;
 			sourceTree = "<group>";
@@ -253,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45C5CA4C23EE599E000B554D /* missile.cpp in Sources */,
 				457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */,
 				45C5CA2723ECEA5E000B554D /* read physics.cpp in Sources */,
 				45C5CA3123ECFE1A000B554D /* bolt.cpp in Sources */,

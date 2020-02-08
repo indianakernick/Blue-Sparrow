@@ -11,8 +11,13 @@
 
 #include <cstdint>
 
-/// Timer used for limited the ROF of a blaster
+/// Timer used for limiting the ROF of a blaster
 struct BlasterTimer {
+  std::uint32_t done;
+};
+
+/// Timer used for limiting the ROF of a missile
+struct MissileTimer {
   std::uint32_t done;
 };
 

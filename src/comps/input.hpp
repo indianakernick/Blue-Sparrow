@@ -13,7 +13,6 @@
 struct KeyInput {};
 
 /// Influences forces and torques applied to the physics body.
-/// Controlled by keyboard or AI.
 struct MoveInput {
   bool forward = false;
   bool reverse = false;
@@ -22,8 +21,12 @@ struct MoveInput {
 };
 
 /// Causes the blaster to be fired.
-/// Controlled by keyboard or AI.
 struct BlasterInput {
+  bool fire = false;
+};
+
+/// Causes a missile to be fired.
+struct MissileInput {
   bool fire = false;
 };
 

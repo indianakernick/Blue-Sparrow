@@ -58,3 +58,27 @@ Physics makeSmallBullet(b2World &world, const Team team) {
   body->CreateFixture(&fixDef);
   return {body, halfWidth * 2.0f, halfHeight * 2.0f};
 }
+
+Physics makeSmallMissile(b2World &world, const Team team) {
+  const float halfWidth = 0.5f;
+  const float halfHeight = 0.2f;
+  
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_dynamicBody;
+  bodyDef.bullet = true;
+  bodyDef.angularDamping = 10.0f;
+  bodyDef.linearDamping = 0.1f;
+  
+  b2PolygonShape shape;
+  shape.SetAsBox(halfWidth, halfHeight);
+  
+  b2FixtureDef fixDef;
+  fixDef.shape = &shape;
+  fixDef.density = 2.0f;
+  fixDef.filter.categoryBits = bulletCat(team);
+  fixDef.filter.maskBits = bulletMsk(team);
+  
+  b2Body *body = world.CreateBody(&bodyDef);
+  body->CreateFixture(&fixDef);
+  return {body, halfWidth * 2.0f, halfHeight * 2.0f};
+}

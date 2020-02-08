@@ -17,4 +17,7 @@ void applyMoveInput(entt::registry &);
 /// Read the BlasterInput and BlasterParams to fire the blaster
 void applyBlasterInput(entt::registry &);
 
+/// Read the MissileInput and MissileParams to fire a missile
+void applyMissileInput(entt::registry &);
+
 #endif

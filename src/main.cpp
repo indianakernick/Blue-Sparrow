@@ -75,9 +75,11 @@ int main() {
     }
     
     findTarget(reg);
-    behaveBasic(reg);
+    behaveOrbit(reg);
+    behaveSeek(reg);
     applyMoveInput(reg);
     applyBlasterInput(reg);
+    applyMissileInput(reg);
     expireTemporary(reg);
     stepPhysics(reg);
     readPhysicsTransform(reg);

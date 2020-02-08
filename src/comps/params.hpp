@@ -17,11 +17,19 @@ struct MoveParams {
   float turnTorque;
 };
 
-/// Properties of the players primary weapon.
+/// Properties of the primary weapon.
 /// Can be changed when the player upgrades their ship.
 struct BlasterParams {
   float rof;
   float speed;
+};
+
+/// Properties of the secondary weapon.
+/// Can be changed when the player upgrades their ship.
+struct MissileParams {
+  float rof;
+  float forwardForce;
+  float turnTorque;
 };
 
 #endif

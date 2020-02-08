@@ -17,6 +17,7 @@
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../factories/bolt.hpp"
+#include "../factories/missile.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
@@ -60,5 +61,27 @@ void applyBlasterInput(entt::registry &reg) {
     b2Body *boltBody = reg.get<Physics>(bolt).body;
     boltBody->SetTransform(shipPos, shipAngle);
     boltBody->SetLinearVelocity(angleMag(shipAngle, params.speed));
+  });
+}
+
+void applyMissileInput(entt::registry &reg) {
+  entt::each(reg, [&](Physics phys, MissileParams params, MissileInput input, MissileTimer &timer, Team team) {
+    if (!input.fire) return;
+    const std::uint32_t now = SDL_GetTicks();
+    if (!SDL_TICKS_PASSED(now, timer.done)) return;
+    timer.done = now + 1000 / params.rof;
+    
+    const b2Vec2 shipPos = phys.body->GetPosition();
+    const float shipAngle = phys.body->GetAngle();
+    
+    entt::entity missile = makeMissile(reg, team);
+    b2Body *missileBody = reg.get<Physics>(missile).body;
+    missileBody->SetTransform(shipPos, shipAngle);
+    missileBody->SetLinearVelocity(angleMag(shipAngle, 20.0f));
+    MoveParams moveParams;
+    moveParams.forwardForce = params.forwardForce;
+    moveParams.reverseForce = 0.0f;
+    moveParams.turnTorque = params.turnTorque;
+    reg.assign<MoveParams>(missile, moveParams);
   });
 }

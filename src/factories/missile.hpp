@@ -1,17 +1,17 @@
 //
-//  behave.hpp
+//  missile.hpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 8/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef systems_behave_hpp
-#define systems_behave_hpp
+#ifndef factories_missile_hpp
+#define factories_missile_hpp
 
+#include "../comps/teams.hpp"
 #include <entt/entity/fwd.hpp>
 
-void behaveOrbit(entt::registry &);
-void behaveSeek(entt::registry &);
+entt::entity makeMissile(entt::registry &, Team);
 
 #endif

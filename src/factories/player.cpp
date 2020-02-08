@@ -23,18 +23,29 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{63, 63, 191});
   reg.assign<KeyInput>(e);
-  reg.assign<MoveInput>(e);
+  
   MoveParams moveParams;
   moveParams.forwardForce = 60.0f;
   moveParams.reverseForce = 30.0f;
   moveParams.turnTorque = 200.0f;
   reg.assign<MoveParams>(e, moveParams);
-  reg.assign<BlasterInput>(e);
+  reg.assign<MoveInput>(e);
+  
   BlasterParams blasterParams;
   blasterParams.rof = 2.0f;
   blasterParams.speed = 50.0f;
   reg.assign<BlasterParams>(e, blasterParams);
+  reg.assign<BlasterInput>(e);
   reg.assign<BlasterTimer>(e, std::uint32_t{});
+  
+  MissileParams missileParams;
+  missileParams.rof = 0.5f;
+  missileParams.forwardForce = 10.0f;
+  missileParams.turnTorque = 2.0f;
+  reg.assign<MissileParams>(e, missileParams);
+  reg.assign<MissileInput>(e);
+  reg.assign<MissileTimer>(e, std::uint32_t{});
+  
   reg.assign<Team>(e, Team::ally);
   reg.assign<Type>(e, Type::ship);
   return e;

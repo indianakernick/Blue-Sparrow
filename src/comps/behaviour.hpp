@@ -15,8 +15,10 @@ struct Target {
   entt::entity e;
 };
 
-struct BasicBehaviour {
+struct OrbitBehaviour {
   float dist;
 };
+
+struct SeekBehaviour {};
 
 #endif
