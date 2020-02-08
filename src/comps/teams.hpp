@@ -21,6 +21,11 @@ enum class Team {
   ally
 };
 
+enum class Type {
+  ship,
+  bullet
+};
+
 constexpr std::uint16_t shipCat(const Team team) {
   switch (team) {
     case Team::ally: return ally_ship_bit;
@@ -44,8 +49,8 @@ constexpr std::uint16_t bulletCat(const Team team) {
 
 constexpr std::uint16_t bulletMsk(const Team team) {
   switch (team) {
-    case Team::ally: return enemy_ship_bit | enemy_bullet_bit;
-    case Team::enemy: return ally_ship_bit | ally_bullet_bit;
+    case Team::ally: return enemy_ship_bit;
+    case Team::enemy: return ally_ship_bit;
   }
 }
 

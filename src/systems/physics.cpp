@@ -29,3 +29,7 @@ void destroyBody(entt::entity e, entt::registry &reg) {
 void connectDestroyBody(entt::registry &reg) {
   reg.on_destroy<Physics>().connect<&destroyBody>();
 }
+
+void setTransform(entt::registry &reg, const entt::entity e, const b2Vec2 pos, const float angle) {
+  reg.get<Physics>(e).body->SetTransform(pos, angle);
+}

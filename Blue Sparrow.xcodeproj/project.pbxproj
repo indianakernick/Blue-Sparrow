@@ -20,6 +20,10 @@
 		45C5CA3123ECFE1A000B554D /* bolt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2F23ECFE1A000B554D /* bolt.cpp */; };
 		45C5CA3523ED07B6000B554D /* expire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA3323ED07B6000B554D /* expire.cpp */; };
 		45C5CA3A23ED16AF000B554D /* physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA3823ED16AF000B554D /* physics.cpp */; };
+		45C5CA3F23EE35F4000B554D /* enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA3D23EE35F4000B554D /* enemy.cpp */; };
+		45C5CA4323EE385D000B554D /* physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4123EE385D000B554D /* physics.cpp */; };
+		45C5CA4623EE3B7A000B554D /* find target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4423EE3B7A000B554D /* find target.cpp */; };
+		45C5CA4923EE3E91000B554D /* behave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4723EE3E91000B554D /* behave.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,6 +71,15 @@
 		45C5CA3923ED16AF000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA3B23ED2636000B554D /* teams.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = teams.hpp; sourceTree = "<group>"; };
 		45C5CA3C23ED54C9000B554D /* each.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = each.hpp; sourceTree = "<group>"; };
+		45C5CA3D23EE35F4000B554D /* enemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = enemy.cpp; sourceTree = "<group>"; };
+		45C5CA3E23EE35F4000B554D /* enemy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = enemy.hpp; sourceTree = "<group>"; };
+		45C5CA4023EE37FC000B554D /* behaviour.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = behaviour.hpp; sourceTree = "<group>"; };
+		45C5CA4123EE385D000B554D /* physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = physics.cpp; sourceTree = "<group>"; };
+		45C5CA4223EE385D000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
+		45C5CA4423EE3B7A000B554D /* find target.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "find target.cpp"; sourceTree = "<group>"; };
+		45C5CA4523EE3B7A000B554D /* find target.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "find target.hpp"; sourceTree = "<group>"; };
+		45C5CA4723EE3E91000B554D /* behave.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = behave.cpp; sourceTree = "<group>"; };
+		45C5CA4823EE3E91000B554D /* behave.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = behave.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +153,7 @@
 				45C5CA2423ECE8F2000B554D /* params.hpp */,
 				45C5CA3223ED06CC000B554D /* timers.hpp */,
 				45C5CA3B23ED2636000B554D /* teams.hpp */,
+				45C5CA4023EE37FC000B554D /* behaviour.hpp */,
 			);
 			path = comps;
 			sourceTree = "<group>";
@@ -159,6 +173,10 @@
 				45C5CA3423ED07B6000B554D /* expire.hpp */,
 				45C5CA3823ED16AF000B554D /* physics.cpp */,
 				45C5CA3923ED16AF000B554D /* physics.hpp */,
+				45C5CA4423EE3B7A000B554D /* find target.cpp */,
+				45C5CA4523EE3B7A000B554D /* find target.hpp */,
+				45C5CA4723EE3E91000B554D /* behave.cpp */,
+				45C5CA4823EE3E91000B554D /* behave.hpp */,
 			);
 			path = systems;
 			sourceTree = "<group>";
@@ -170,6 +188,10 @@
 				45C5CA2D23ECF043000B554D /* player.hpp */,
 				45C5CA2F23ECFE1A000B554D /* bolt.cpp */,
 				45C5CA3023ECFE1A000B554D /* bolt.hpp */,
+				45C5CA3D23EE35F4000B554D /* enemy.cpp */,
+				45C5CA3E23EE35F4000B554D /* enemy.hpp */,
+				45C5CA4123EE385D000B554D /* physics.cpp */,
+				45C5CA4223EE385D000B554D /* physics.hpp */,
 			);
 			path = factories;
 			sourceTree = "<group>";
@@ -235,9 +257,13 @@
 				45C5CA2723ECEA5E000B554D /* read physics.cpp in Sources */,
 				45C5CA3123ECFE1A000B554D /* bolt.cpp in Sources */,
 				457DF44923EBD70E00405E2D /* main.cpp in Sources */,
+				45C5CA4923EE3E91000B554D /* behave.cpp in Sources */,
 				45C5CA2A23ECEE46000B554D /* render.cpp in Sources */,
 				45C5CA3523ED07B6000B554D /* expire.cpp in Sources */,
 				45C5CA2323ECE7C3000B554D /* apply input.cpp in Sources */,
+				45C5CA4623EE3B7A000B554D /* find target.cpp in Sources */,
+				45C5CA4323EE385D000B554D /* physics.cpp in Sources */,
+				45C5CA3F23EE35F4000B554D /* enemy.cpp in Sources */,
 				45C5CA3A23ED16AF000B554D /* physics.cpp in Sources */,
 				45C5CA2023ECE5E6000B554D /* handle input.cpp in Sources */,
 				45C5CA2E23ECF043000B554D /* player.cpp in Sources */,

@@ -11,12 +11,15 @@
 #include <entt/entity/registry.hpp>
 
 #include "utils/sdl_check.hpp"
-#include "utils/sdl_delete.hpp"
+#include "factories/enemy.hpp"
 #include "factories/player.hpp"
+#include "utils/sdl_delete.hpp"
 
 #include "systems/render.hpp"
 #include "systems/expire.hpp"
+#include "systems/behave.hpp"
 #include "systems/physics.hpp"
+#include "systems/find target.hpp"
 #include "systems/apply input.hpp"
 #include "systems/handle input.hpp"
 #include "systems/read physics.hpp"
@@ -52,7 +55,8 @@ int main() {
   reg.set<b2World>(b2Vec2{0.0f, 0.0f});
   reg.set<SDL_Renderer *>(renderer.get());
   reg.set<SDL_Texture *>(texture.get());
-  makePlayer(reg);
+  setTransform(reg, makePlayer(reg), {32.0f, 36.0f}, 0.0f);
+  setTransform(reg, makeEnemy(reg), {96.0f, 36.0f}, 0.0f);
   
   bool running = true;
   while (running) {
@@ -70,6 +74,8 @@ int main() {
       }
     }
     
+    findTarget(reg);
+    behaveBasic(reg);
     applyMoveInput(reg);
     applyBlasterInput(reg);
     expireTemporary(reg);

@@ -1,12 +1,12 @@
 //
-//  player.cpp
+//  enemy.cpp
 //  Blue Sparrow
 //
-//  Created by Indi Kernick on 7/2/20.
+//  Created by Indi Kernick on 8/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#include "player.hpp"
+#include "enemy.hpp"
 
 #include "physics.hpp"
 #include "../comps/teams.hpp"
@@ -15,14 +15,16 @@
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../comps/graphics.hpp"
+#include "../comps/behaviour.hpp"
 #include <entt/entity/registry.hpp>
 
-entt::entity makePlayer(entt::registry &reg) {
+entt::entity makeEnemy(entt::registry &reg) {
   entt::entity e = reg.create();
-  reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), Team::ally));
+  reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), Team::enemy));
   reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{63, 63, 191});
-  reg.assign<KeyInput>(e);
+  reg.assign<Sprite>(e, Sprite{191, 63, 0});
+  reg.assign<BasicBehaviour>(e, 80.0f);
+  reg.assign<Target>(e);
   reg.assign<MoveInput>(e);
   MoveParams moveParams;
   moveParams.thrustForce = 60.0f;
@@ -30,11 +32,11 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<MoveParams>(e, moveParams);
   reg.assign<BlasterInput>(e);
   BlasterParams blasterParams;
-  blasterParams.rof = 2.0f;
-  blasterParams.speed = 50.0f;
+  blasterParams.rof = 1.5f;
+  blasterParams.speed = 40.0f;
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterTimer>(e, std::uint32_t{});
-  reg.assign<Team>(e, Team::ally);
+  reg.assign<Team>(e, Team::enemy);
   reg.assign<Type>(e, Type::ship);
   return e;
 }

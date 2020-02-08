@@ -9,9 +9,11 @@
 #ifndef systems_physics_hpp
 #define systems_physics_hpp
 
+#include <box2d/b2_math.h>
 #include <entt/entity/fwd.hpp>
 
 void stepPhysics(entt::registry &);
 void connectDestroyBody(entt::registry &);
+void setTransform(entt::registry &, entt::entity, b2Vec2, float);
 
 #endif
