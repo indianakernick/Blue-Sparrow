@@ -20,7 +20,7 @@
 entt::entity makePlayer(entt::registry &reg) {
   entt::entity e = reg.create();
   reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), Team::ally));
-  reg.assign<VelocityLimit>(e, 20.0f);
+  reg.assign<VelocityLimit>(e, 15.0f);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{63, 63, 191});
   reg.assign<KeyInput>(e);
@@ -40,10 +40,10 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<BlasterTimer>(e, std::uint32_t{});
   
   MissileParams missileParams;
-  missileParams.rof = 0.5f;
+  missileParams.rof = 10.0f;
   missileParams.speed = 20.0f;
-  missileParams.forwardForce = 10.0f;
-  missileParams.turnTorque = 2.0f;
+  missileParams.forwardForce = 20.0f;
+  missileParams.turnTorque = 3.0f;
   reg.assign<MissileParams>(e, missileParams);
   reg.assign<MissileInput>(e);
   reg.assign<MissileTimer>(e, std::uint32_t{});

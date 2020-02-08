@@ -79,11 +79,12 @@ void behaveSeek(entt::registry &reg) {
     
     b2Body *targetBody = reg.get<Physics>(target.e).body;
     const b2Vec2 targetPos = targetBody->GetPosition();
-    // TODO: account for target velocity
-    // const b2Vec2 targetVel = targetBody->GetLinearVelocity();
+    const b2Vec2 targetVel = targetBody->GetLinearVelocity();
     const b2Vec2 shipPos = phys.body->GetPosition();
     const b2Vec2 shipVel = phys.body->GetLinearVelocity();
-    const b2Vec2 desiredVel = scaleToLength(targetPos - shipPos, behave.speed);
+    const float timeToReach = (targetPos - shipPos).Length() / shipVel.Length() * 0.6f;
+    const b2Vec2 futureTargetPos = targetPos + timeToReach * targetVel;
+    const b2Vec2 desiredVel = scaleToLength(futureTargetPos - shipPos, behave.speed);
     const b2Vec2 accel = desiredVel - shipVel;
     
     const float aimAngle = std::atan2(accel.y, accel.x);

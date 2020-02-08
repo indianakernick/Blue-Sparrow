@@ -23,7 +23,7 @@ entt::entity makeMissile(entt::registry &reg, const Team team) {
   reg.assign<Physics>(e, makeSmallMissile(reg.ctx<b2World>(), team));
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{191, 191, 191});
-  reg.assign<ExpireTimer>(e, SDL_GetTicks() + 20000);
+  reg.assign<ExpireTimer>(e, SDL_GetTicks() + 10000);
   reg.assign<Target>(e);
   reg.assign<MoveInput>(e);
   reg.assign<Team>(e, team);

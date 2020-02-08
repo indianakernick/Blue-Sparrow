@@ -21,7 +21,7 @@
 entt::entity makeEnemy(entt::registry &reg) {
   entt::entity e = reg.create();
   reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), Team::enemy));
-  reg.assign<VelocityLimit>(e, 20.0f);
+  reg.assign<VelocityLimit>(e, 15.0f);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{191, 63, 0});
   reg.assign<OrbitBehaviour>(e, 30.0f);
