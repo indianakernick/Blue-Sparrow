@@ -9,6 +9,9 @@
 #ifndef comps_graphics_hpp
 #define comps_graphics_hpp
 
+struct SDL_Renderer;
+struct SDL_Texture;
+
 /// The position of a sprite on the screen as a rotated rectangle
 struct SpriteRect {
   float x, y;
@@ -31,6 +34,12 @@ struct Camera {
   int height;
   int arenaWidth;
   int arenaHeight;
+};
+
+struct Drawing {
+  SDL_Renderer *ren;
+  SDL_Texture *fgTex;
+  SDL_Texture *bgTex;
 };
 
 #endif

@@ -6,6 +6,7 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
+#include <string>
 #include <SDL2/SDL.h>
 #include <box2d/b2_world.h>
 #include <entt/entity/registry.hpp>
@@ -16,6 +17,7 @@
 #include "factories/player.hpp"
 #include "utils/sdl_delete.hpp"
 #include "factories/physics.hpp"
+#include "utils/load texture.hpp"
 
 #include "systems/render.hpp"
 #include "systems/expire.hpp"
@@ -35,6 +37,10 @@ SDL::Texture makeTexture(SDL_Renderer *renderer) {
   return tex;
 }
 
+std::string res(const char *path) {
+  return std::string(SDL_CHECK(SDL_GetBasePath())) + path;
+}
+
 int main() {
   SDL_CHECK(SDL_Init(SDL_INIT_VIDEO));
   
@@ -48,15 +54,19 @@ int main() {
   // THIS DOESN'T DO ANYTHING !!!!!!!!!!!!!!!
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
   SDL::Renderer renderer{SDL_CHECK(SDL_CreateRenderer(
-    window.get(), -1, SDL_RENDERER_ACCELERATED // | SDL_RENDERER_PRESENTVSYNC
+    window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
   ))};
-  SDL::Texture texture = makeTexture(renderer.get());
+  SDL::Texture foreground = makeTexture(renderer.get());
+  SDL::Texture background = loadTexture(renderer.get(), res("stars.png").c_str());
   
   entt::registry reg;
   connectDestroyBody(reg);
   reg.set<b2World>(b2Vec2{0.0f, 0.0f});
-  reg.set<SDL_Renderer *>(renderer.get());
-  reg.set<SDL_Texture *>(texture.get());
+  Drawing drawing;
+  drawing.ren = renderer.get();
+  drawing.fgTex = foreground.get();
+  drawing.bgTex = background.get();
+  reg.set<Drawing>(drawing);
   reg.set<Camera>(0.0f, 0.0f, 1280, 720, 2000, 2000);
   setTransform(reg, makePlayer(reg), {32.0f, 36.0f}, 0.0f);
   setTransform(reg, makeEnemy(reg), {96.0f, 36.0f}, b2_pi);
@@ -93,11 +103,10 @@ int main() {
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
     
+    renderBackground(reg);
     renderSprite(reg);
     
     SDL_RenderPresent(renderer.get());
-    
-    SDL_Delay(16);
   }
   
   SDL_Quit();

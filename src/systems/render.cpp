@@ -26,29 +26,42 @@ void moveCamera(entt::registry &reg) {
   });
 }
 
+void renderBackground(entt::registry &reg) {
+  auto draw = reg.ctx<Drawing>();
+  auto cam = reg.ctx<Camera>();
+  
+  const int x = cam.centerX - cam.width / 2.0f + cam.arenaWidth / 2.0f;
+  const int y = cam.centerY - cam.height / 2.0f + cam.arenaHeight / 2.0f;
+  const SDL_Rect srcrect = {x, y, cam.width, cam.height};
+  const SDL_Rect dstrect = {0, 0, cam.width, cam.height};
+  
+  SDL_CHECK(SDL_RenderCopy(draw.ren, draw.bgTex, &srcrect, &dstrect));
+}
+
 void renderSprite(entt::registry &reg) {
-  auto ren = reg.ctx<SDL_Renderer *>();
-  auto tex = reg.ctx<SDL_Texture *>();
+  auto draw = reg.ctx<Drawing>();
   auto cam = reg.ctx<Camera>();
   entt::each(reg, [=](SpriteRect rect, Sprite sprite) {
     const SDL_Rect srcrect = {0, 0, 1, 1};
     const float x = rect.x - cam.centerX + cam.width / 2.0f;
     const float y = rect.y - cam.centerY + cam.height / 2.0f;
     const SDL_FRect dstrect = {x, y, rect.width, rect.height};
-    SDL_CHECK(SDL_SetTextureColorMod(tex, sprite.r, sprite.g, sprite.b));
+    SDL_CHECK(SDL_SetTextureColorMod(draw.fgTex, sprite.r, sprite.g, sprite.b));
     SDL_CHECK(SDL_RenderCopyExF(
-      ren, tex, &srcrect, &dstrect, rect.angle, nullptr, SDL_FLIP_NONE
+      draw.ren, draw.fgTex, &srcrect, &dstrect, rect.angle, nullptr, SDL_FLIP_NONE
     ));
   });
-  SDL_CHECK(SDL_SetTextureColorMod(tex, 255, 255, 255));
+  SDL_CHECK(SDL_SetTextureColorMod(draw.fgTex, 255, 255, 255));
   
   // Just for debugging
+  /*
   const SDL_FRect arena = {
     -cam.arenaWidth / 2.0f - cam.centerX + cam.width / 2.0f,
     -cam.arenaHeight / 2.0f - cam.centerY + cam.height / 2.0f,
     static_cast<float>(cam.arenaWidth),
     static_cast<float>(cam.arenaHeight)
   };
-  SDL_CHECK(SDL_SetRenderDrawColor(ren, 255, 255, 255, 255));
-  SDL_CHECK(SDL_RenderDrawRectF(ren, &arena));
+  SDL_CHECK(SDL_SetRenderDrawColor(draw.ren, 255, 255, 255, 255));
+  SDL_CHECK(SDL_RenderDrawRectF(draw.ren, &arena));
+  */
 }

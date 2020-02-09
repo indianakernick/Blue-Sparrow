@@ -14,6 +14,9 @@
 /// Move the Camera to focus on the object width CameraFocus
 void moveCamera(entt::registry &);
 
+/// Render the background texture
+void renderBackground(entt::registry &);
+
 /// Read SpriteRect and Sprite to render the texture
 void renderSprite(entt::registry &);
 

@@ -25,6 +25,9 @@
 		45C5CA4623EE3B7A000B554D /* find target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4423EE3B7A000B554D /* find target.cpp */; };
 		45C5CA4923EE3E91000B554D /* behave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4723EE3E91000B554D /* behave.cpp */; };
 		45C5CA4C23EE599E000B554D /* missile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4A23EE599E000B554D /* missile.cpp */; };
+		45C5CA4F23EF8E93000B554D /* load texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4D23EF8E93000B554D /* load texture.cpp */; };
+		45C5CA5223EF8EE2000B554D /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5123EF8EE2000B554D /* stb_image.c */; };
+		45C5CA5823EF919E000B554D /* stars.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45C5CA5423EF8FD1000B554D /* stars.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +40,16 @@
 				457DF47E23EBF20B00405E2D /* libSDL2-2.0.0.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45C5CA5723EF9195000B554D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				45C5CA5823EF919E000B554D /* stars.png in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -83,6 +96,11 @@
 		45C5CA4823EE3E91000B554D /* behave.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = behave.hpp; sourceTree = "<group>"; };
 		45C5CA4A23EE599E000B554D /* missile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = missile.cpp; sourceTree = "<group>"; };
 		45C5CA4B23EE599E000B554D /* missile.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = missile.hpp; sourceTree = "<group>"; };
+		45C5CA4D23EF8E93000B554D /* load texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "load texture.cpp"; sourceTree = "<group>"; };
+		45C5CA4E23EF8E93000B554D /* load texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "load texture.hpp"; sourceTree = "<group>"; };
+		45C5CA5023EF8ED5000B554D /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		45C5CA5123EF8EE2000B554D /* stb_image.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_image.c; sourceTree = "<group>"; };
+		45C5CA5423EF8FD1000B554D /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +119,7 @@
 		457DF43C23EBD70E00405E2D = {
 			isa = PBXGroup;
 			children = (
+				45C5CA5323EF8FBF000B554D /* assets */,
 				457DF44723EBD70E00405E2D /* src */,
 				457DF44623EBD70E00405E2D /* Products */,
 				457DF44F23EBE34E00405E2D /* Frameworks */,
@@ -139,10 +158,14 @@
 		457DF48023EBF40000405E2D /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				45C5CA5123EF8EE2000B554D /* stb_image.c */,
+				45C5CA5023EF8ED5000B554D /* stb_image.h */,
 				457DF48123EBF43300405E2D /* sdl_check.hpp */,
 				457DF48223EBF45E00405E2D /* sdl_delete.cpp */,
 				457DF48323EBF45E00405E2D /* sdl_delete.hpp */,
 				45C5CA3C23ED54C9000B554D /* each.hpp */,
+				45C5CA4D23EF8E93000B554D /* load texture.cpp */,
+				45C5CA4E23EF8E93000B554D /* load texture.hpp */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -201,6 +224,14 @@
 			path = factories;
 			sourceTree = "<group>";
 		};
+		45C5CA5323EF8FBF000B554D /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				45C5CA5423EF8FD1000B554D /* stars.png */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -211,6 +242,7 @@
 				457DF47F23EBF20B00405E2D /* Embed Libraries */,
 				457DF44123EBD70E00405E2D /* Sources */,
 				457DF44223EBD70E00405E2D /* Frameworks */,
+				45C5CA5723EF9195000B554D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -260,6 +292,8 @@
 			files = (
 				45C5CA4C23EE599E000B554D /* missile.cpp in Sources */,
 				457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */,
+				45C5CA5223EF8EE2000B554D /* stb_image.c in Sources */,
+				45C5CA4F23EF8E93000B554D /* load texture.cpp in Sources */,
 				45C5CA2723ECEA5E000B554D /* read physics.cpp in Sources */,
 				45C5CA3123ECFE1A000B554D /* bolt.cpp in Sources */,
 				457DF44923EBD70E00405E2D /* main.cpp in Sources */,
@@ -395,6 +429,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QY44MADGVC;
 				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					STBI_ONLY_PNG,
+				);
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
@@ -429,6 +467,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QY44MADGVC;
 				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					STBI_ONLY_PNG,
+				);
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
