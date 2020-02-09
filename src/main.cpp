@@ -63,6 +63,8 @@ int main() {
   
   // THIS DOESN'T DO ANYTHING !!!!!!!!!!!!!!!
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+  // Workaround for crash when exiting fullscreen
+  SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
   SDL::Renderer renderer{SDL_CHECK(SDL_CreateRenderer(
     window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
   ))};
