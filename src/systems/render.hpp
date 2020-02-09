@@ -11,9 +11,6 @@
 
 #include <entt/entity/fwd.hpp>
 
-/// Move the Camera to focus on the object width CameraFocus
-void moveCamera(entt::registry &);
-
 /// Render the background texture
 void renderBackground(entt::registry &);
 

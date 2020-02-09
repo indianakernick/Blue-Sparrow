@@ -14,7 +14,7 @@
 
 class b2World;
 
-void makeArena(b2World &);
+Physics makeArena(b2World &, float, float);
 Physics makeSmallShip(b2World &, Team);
 Physics makeSmallBullet(b2World &, Team);
 Physics makeSmallMissile(b2World &, Team);

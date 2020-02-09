@@ -14,11 +14,12 @@
 #include "comps/graphics.hpp"
 #include "utils/sdl_check.hpp"
 #include "factories/enemy.hpp"
+#include "factories/arena.hpp"
 #include "factories/player.hpp"
 #include "utils/sdl_delete.hpp"
-#include "factories/physics.hpp"
 #include "utils/load_texture.hpp"
 
+#include "systems/camera.hpp"
 #include "systems/render.hpp"
 #include "systems/expire.hpp"
 #include "systems/behave.hpp"
@@ -26,7 +27,6 @@
 #include "systems/find_target.hpp"
 #include "systems/apply_input.hpp"
 #include "systems/handle_input.hpp"
-#include "systems/read_physics.hpp"
 
 SDL::Texture makeTexture(SDL_Renderer *renderer) {
   SDL::Texture tex{SDL_CHECK(SDL_CreateTexture(
@@ -39,6 +39,16 @@ SDL::Texture makeTexture(SDL_Renderer *renderer) {
 
 std::string res(const char *path) {
   return std::string(SDL_CHECK(SDL_GetBasePath())) + path;
+}
+
+void setMaxZoom(SDL_Texture *tex, Camera &cam) {
+  int width, height;
+  SDL_CHECK(SDL_QueryTexture(tex, nullptr, nullptr, &width, &height));
+  cam.maxZoom = std::min(width / cam.arenaWidth, height / cam.arenaHeight);
+}
+
+void setMinZoom(Camera &cam) {
+  cam.minZoom = std::max(cam.width / cam.arenaWidth, cam.height / cam.arenaHeight);
 }
 
 int main() {
@@ -62,15 +72,28 @@ int main() {
   entt::registry reg;
   connectDestroyBody(reg);
   reg.set<b2World>(b2Vec2{0.0f, 0.0f});
+  
   Drawing drawing;
   drawing.ren = renderer.get();
   drawing.fgTex = foreground.get();
   drawing.bgTex = background.get();
   reg.set<Drawing>(drawing);
-  reg.set<Camera>(0.0f, 0.0f, 1280, 720, 2000, 2000);
-  setTransform(reg, makePlayer(reg), {32.0f, 36.0f}, 0.0f);
-  setTransform(reg, makeEnemy(reg), {96.0f, 36.0f}, b2_pi);
-  makeArena(reg.ctx<b2World>());
+  
+  Camera camera;
+  camera.x = 0.0f;
+  camera.y = 0.0f;
+  camera.width = 1280;
+  camera.height = 720;
+  camera.arenaWidth = 200.0f;
+  camera.arenaHeight = 200.0f;
+  setMaxZoom(background.get(), camera);
+  setMinZoom(camera);
+  camera.zoom = camera.maxZoom;
+  reg.set<Camera>(camera);
+  
+  setTransform(reg, makePlayer(reg), {0.0f, 0.0f}, 0.0f);
+  setTransform(reg, makeEnemy(reg), {20.0f, 0.0f}, b2_pi);
+  makeArena(reg, 200.0f, 200.0f);
   
   bool running = true;
   while (running) {
@@ -88,6 +111,15 @@ int main() {
       }
     }
     
+    /*
+    const float top = camera.maxZoom;
+    const float bottom = camera.minZoom;
+    const float period = 10000.0f;
+    const float radians = (2.0f * b2_pi * SDL_GetTicks()) / period;
+    const float scale = (top - bottom) / 2.0;
+    reg.ctx<Camera>().zoom = (std::cos(radians) + 1.0f) * scale + bottom;
+    */
+    
     findTarget(reg);
     behaveOrbit(reg);
     behaveSeek(reg);
@@ -97,8 +129,8 @@ int main() {
     expireTemporary(reg);
     stepPhysics(reg);
     limitVelocity(reg);
-    readPhysicsTransform(reg);
     moveCamera(reg);
+    readPhysicsTransform(reg);
     
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));

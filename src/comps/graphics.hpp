@@ -24,16 +24,21 @@ struct Sprite {
   unsigned char r, g, b;
 };
 
+struct BackgroundSprite {};
+
 /// Indicates which object the camera should focus on
 struct CameraFocus {};
 
 struct Camera {
-  float centerX;
-  float centerY;
-  int width;
-  int height;
-  int arenaWidth;
-  int arenaHeight;
+  float x;           // offset meters
+  float y;           // offset meters
+  int width;         // viewport pixels
+  int height;        // viewport pixels
+  float arenaWidth;  // arena meters
+  float arenaHeight; // arena meters
+  float zoom;        // pixels per meter
+  float minZoom;     // pixels per meter
+  float maxZoom;     // pixels per meter
 };
 
 struct Drawing {

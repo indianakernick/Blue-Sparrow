@@ -13,39 +13,37 @@
 #include <box2d/b2_fixture.h>
 #include <box2d/b2_polygon_shape.h>
 
-namespace {
+Physics makeArena(b2World &world, const float width, const float height) {
+  const float pad = 10.0f;
+  b2Vec2 arenaVerts[4][4] = {
+    // Top
+    {{-pad, -pad}, {width + pad, -pad}, {width + pad, 0.0f}, {-pad, 0.0f}},
+    // Right
+    {{width, 0.0f}, {width + pad, 0.0f}, {width + pad, height}, {width, height}},
+    // Bottom
+    {{-pad, height}, {width + pad, height}, {width + pad, height + pad}, {-pad, height + pad}},
+    // Left
+    {{-pad, 0.0f}, {0.0f, 0.0f}, {0.0f, height}, {-pad, height}}
+  };
 
-constexpr float width = 200.0f;
-constexpr float height = 200.0f;
-constexpr float pad = 10.0f;
-
-const b2Vec2 arenaVerts[4][4] = {
-  // Top
-  {{-pad, -pad}, {width + pad, -pad}, {width + pad, 0.0f}, {-pad, 0.0f}},
-  // Right
-  {{width, 0.0f}, {width + pad, 0.0f}, {width + pad, height}, {width, height}},
-  // Bottom
-  {{-pad, height}, {width + pad, height}, {width + pad, height + pad}, {-pad, height + pad}},
-  // Left
-  {{-pad, 0.0f}, {0.0f, 0.0f}, {0.0f, height}, {-pad, height}}
-};
-
-}
-
-void makeArena(b2World &world) {
   b2BodyDef bodyDef;
   bodyDef.type = b2_staticBody;
-  bodyDef.position = {-width / 2.0f, -height / 2.0f};
   b2Body *body = world.CreateBody(&bodyDef);
   
+  const b2Vec2 offset = {width / 2.0f, height / 2.0f};
   for (int i = 0; i != 4; ++i) {
     b2PolygonShape shape;
+    for (int j = 0; j != 4; ++j) {
+      arenaVerts[i][j] -= offset;
+    }
     shape.Set(arenaVerts[i], 4);
     b2FixtureDef fixDef;
     fixDef.shape = &shape;
     fixDef.filter.categoryBits = arena_bit;
     body->CreateFixture(&fixDef);
   }
+  
+  return {body, width, height};
 }
 
 Physics makeSmallShip(b2World &world, const Team team) {
