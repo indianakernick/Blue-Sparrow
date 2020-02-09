@@ -15,8 +15,8 @@
 
 namespace {
 
-constexpr float width = 128.0f;
-constexpr float height = 72.0f;
+constexpr float width = 200.0f;
+constexpr float height = 200.0f;
 constexpr float pad = 10.0f;
 
 const b2Vec2 arenaVerts[4][4] = {
@@ -35,6 +35,7 @@ const b2Vec2 arenaVerts[4][4] = {
 void makeArena(b2World &world) {
   b2BodyDef bodyDef;
   bodyDef.type = b2_staticBody;
+  bodyDef.position = {-width / 2.0f, -height / 2.0f};
   b2Body *body = world.CreateBody(&bodyDef);
   
   for (int i = 0; i != 4; ++i) {

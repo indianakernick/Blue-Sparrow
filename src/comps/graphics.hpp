@@ -21,4 +21,16 @@ struct Sprite {
   unsigned char r, g, b;
 };
 
+/// Indicates which object the camera should focus on
+struct CameraFocus {};
+
+struct Camera {
+  float centerX;
+  float centerY;
+  int width;
+  int height;
+  int arenaWidth;
+  int arenaHeight;
+};
+
 #endif

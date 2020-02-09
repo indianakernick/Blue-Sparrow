@@ -94,6 +94,12 @@ void behaveSeek(entt::registry &reg) {
     const b2Vec2 shipPos = phys.body->GetPosition();
     const b2Vec2 shipVel = phys.body->GetLinearVelocity();
     
+    // TODO: could be improved
+    // parametric equation for moving point
+    // parametric equation for growing circle
+    // find point of intersection
+    // fails if missile cannot catch up to target
+    
     const float timeToReach = (targetPos - shipPos).Length() / shipVel.Length() * 0.6f;
     const b2Vec2 futureTargetPos = targetPos + timeToReach * targetVel;
     const b2Vec2 desiredVel = scaleToLength(futureTargetPos - shipPos, behave.speed);

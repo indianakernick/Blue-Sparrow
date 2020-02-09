@@ -11,6 +11,9 @@
 
 #include <entt/entity/fwd.hpp>
 
+/// Move the Camera to focus on the object width CameraFocus
+void moveCamera(entt::registry &);
+
 /// Read SpriteRect and Sprite to render the texture
 void renderSprite(entt::registry &);
 

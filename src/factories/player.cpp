@@ -23,6 +23,7 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<VelocityLimit>(e, 15.0f);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{63, 63, 191});
+  reg.assign<CameraFocus>(e);
   reg.assign<KeyInput>(e);
   
   MoveParams moveParams;

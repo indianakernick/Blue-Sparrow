@@ -10,6 +10,7 @@
 #include <box2d/b2_world.h>
 #include <entt/entity/registry.hpp>
 
+#include "comps/graphics.hpp"
 #include "utils/sdl_check.hpp"
 #include "factories/enemy.hpp"
 #include "factories/player.hpp"
@@ -47,7 +48,7 @@ int main() {
   // THIS DOESN'T DO ANYTHING !!!!!!!!!!!!!!!
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
   SDL::Renderer renderer{SDL_CHECK(SDL_CreateRenderer(
-    window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+    window.get(), -1, SDL_RENDERER_ACCELERATED // | SDL_RENDERER_PRESENTVSYNC
   ))};
   SDL::Texture texture = makeTexture(renderer.get());
   
@@ -56,6 +57,7 @@ int main() {
   reg.set<b2World>(b2Vec2{0.0f, 0.0f});
   reg.set<SDL_Renderer *>(renderer.get());
   reg.set<SDL_Texture *>(texture.get());
+  reg.set<Camera>(0.0f, 0.0f, 1280, 720, 2000, 2000);
   setTransform(reg, makePlayer(reg), {32.0f, 36.0f}, 0.0f);
   setTransform(reg, makeEnemy(reg), {96.0f, 36.0f}, b2_pi);
   makeArena(reg.ctx<b2World>());
@@ -86,6 +88,7 @@ int main() {
     stepPhysics(reg);
     limitVelocity(reg);
     readPhysicsTransform(reg);
+    moveCamera(reg);
     
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
@@ -93,6 +96,8 @@ int main() {
     renderSprite(reg);
     
     SDL_RenderPresent(renderer.get());
+    
+    SDL_Delay(16);
   }
   
   SDL_Quit();
