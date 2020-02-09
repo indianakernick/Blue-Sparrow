@@ -58,7 +58,7 @@ int main() {
     "Blue Sparrow",
     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     1280, 720,
-    SDL_WINDOW_SHOWN
+    SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
   ))};
   
   // THIS DOESN'T DO ANYTHING !!!!!!!!!!!!!!!
@@ -88,28 +88,45 @@ int main() {
   camera.arenaHeight = 200.0f;
   setMaxZoom(background.get(), camera);
   setMinZoom(camera);
-  camera.zoom = camera.maxZoom;
+  camera.zoom = camera.minZoom;
   reg.set<Camera>(camera);
   
   setTransform(reg, makePlayer(reg), {0.0f, 0.0f}, 0.0f);
   setTransform(reg, makeEnemy(reg), {20.0f, 0.0f}, b2_pi);
   makeArena(reg, 200.0f, 200.0f);
   
-  bool running = true;
-  while (running) {
+  while (true) {
     SDL_Event e;
+    bool quit = false;
     while (SDL_PollEvent(&e)) {
-      if (e.type == SDL_QUIT) {
-        running = false;
-        break;
-      } else if (e.type == SDL_KEYDOWN) {
-        if (e.key.repeat != 0) continue;
-        handleKeyDown(reg, e.key.keysym.scancode);
-      } else if (e.type == SDL_KEYUP) {
-        if (e.key.repeat != 0) continue;
-        handleKeyUp(reg, e.key.keysym.scancode);
+      switch (e.type) {
+        case SDL_QUIT:
+          quit = true;
+          break;
+        case SDL_KEYDOWN:
+          if (e.key.repeat == 0) {
+            handleKeyDown(reg, e.key.keysym.scancode);
+          }
+          break;
+        case SDL_KEYUP:
+          if (e.key.repeat == 0) {
+            handleKeyUp(reg, e.key.keysym.scancode);
+          }
+          break;
+        case SDL_WINDOWEVENT:
+          if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
+            Camera &cam = reg.ctx<Camera>();
+            cam.width = e.window.data1;
+            cam.height = e.window.data2;
+            setMinZoom(cam);
+            cam.zoom = cam.minZoom;
+          }
+          break;
+        default: ;
       }
+      if (quit) break;
     }
+    if (quit) break;
     
     /*
     const float top = camera.maxZoom;
