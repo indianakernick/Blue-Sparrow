@@ -1,5 +1,5 @@
 //
-//  load texture.hpp
+//  load_texture.hpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 9/2/20.

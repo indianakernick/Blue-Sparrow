@@ -1,12 +1,12 @@
 //
-//  load texture.cpp
+//  load_texture.cpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 9/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#include "load texture.hpp"
+#include "load_texture.hpp"
 
 #include <memory>
 #include "stb_image.h"

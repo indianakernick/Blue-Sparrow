@@ -1,12 +1,12 @@
 //
-//  find target.cpp
+//  find_target.cpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 8/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#include "find target.hpp"
+#include "find_target.hpp"
 
 #include <box2d/b2_body.h>
 #include "../utils/each.hpp"

@@ -17,16 +17,16 @@
 #include "factories/player.hpp"
 #include "utils/sdl_delete.hpp"
 #include "factories/physics.hpp"
-#include "utils/load texture.hpp"
+#include "utils/load_texture.hpp"
 
 #include "systems/render.hpp"
 #include "systems/expire.hpp"
 #include "systems/behave.hpp"
 #include "systems/physics.hpp"
-#include "systems/find target.hpp"
-#include "systems/apply input.hpp"
-#include "systems/handle input.hpp"
-#include "systems/read physics.hpp"
+#include "systems/find_target.hpp"
+#include "systems/apply_input.hpp"
+#include "systems/handle_input.hpp"
+#include "systems/read_physics.hpp"
 
 SDL::Texture makeTexture(SDL_Renderer *renderer) {
   SDL::Texture tex{SDL_CHECK(SDL_CreateTexture(

@@ -1,12 +1,12 @@
 //
-//  read physics.cpp
+//  read_physics.cpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 7/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#include "read physics.hpp"
+#include "read_physics.hpp"
 
 #include <box2d/b2_body.h>
 #include "../utils/each.hpp"

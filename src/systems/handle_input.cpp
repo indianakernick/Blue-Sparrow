@@ -1,12 +1,12 @@
 //
-//  handle input.cpp
+//  handle_input.cpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 7/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#include "handle input.hpp"
+#include "handle_input.hpp"
 
 #include "../utils/each.hpp"
 #include "../comps/input.hpp"

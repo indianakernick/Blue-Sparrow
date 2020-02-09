@@ -1,12 +1,12 @@
 //
-//  apply input.cpp
+//  apply_input.cpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 7/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#include "apply input.hpp"
+#include "apply_input.hpp"
 
 #include <box2d/b2_body.h>
 #include <SDL2/SDL_timer.h>
