@@ -19,10 +19,13 @@
 
 namespace {
 
+float normalizeAngle(float angle) {
+  while (angle < -b2_pi) angle += 2.0f * b2_pi;
+  while (angle > b2_pi) angle -= 2.0f * b2_pi;
+  return angle;
+}
+
 void rotateByAngle(MoveInput &move, float deltaAngle) {
-  while (deltaAngle < -b2_pi) deltaAngle += 2.0f * b2_pi;
-  while (deltaAngle > b2_pi) deltaAngle -= 2.0f * b2_pi;
-  
   if (b2Abs(deltaAngle) < 0.5f * deg2rad) {
     move.left = move.right = false;
   } else if (deltaAngle < 0.0f) {
@@ -118,7 +121,7 @@ void behaveOrbit(entt::registry &reg) {
     b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, params.speed);
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
-    rotateByAngle(move, aimAngle - phys.body->GetAngle());
+    rotateByAngle(move, normalizeAngle(aimAngle - phys.body->GetAngle()));
   });
 }
 
@@ -145,9 +148,10 @@ void behaveSeek(entt::registry &reg) {
     const b2Vec2 accel = desiredVel - shipVel;
     
     const float aimAngle = std::atan2(accel.y, accel.x);
-    rotateByAngle(move, aimAngle - phys.body->GetAngle());
+    const float angleChange = normalizeAngle(aimAngle - phys.body->GetAngle());
+    rotateByAngle(move, angleChange);
     
-    move.forward = true;
+    move.forward = (b2Abs(angleChange) < b2_pi / 4.0f);
     move.reverse = false;
   });
 }

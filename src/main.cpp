@@ -88,8 +88,8 @@ int main() {
   camera.y = 0.0f;
   camera.width = 1280;
   camera.height = 720;
-  camera.arenaWidth = 200.0f;
-  camera.arenaHeight = 200.0f;
+  camera.arenaWidth = 150.0f;
+  camera.arenaHeight = 150.0f;
   setMaxZoom(background.get(), camera);
   setMinZoom(camera);
   camera.zoom = camera.maxZoom;
