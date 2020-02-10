@@ -31,9 +31,10 @@ void readPhysicsTransform(entt::registry &reg) {
 void moveCamera(entt::registry &reg) {
   auto &cam = reg.ctx<Camera>();
   entt::each(reg, [&](Physics phys, CameraFocus) {
+    // TODO: Make this less jittery
     const b2Vec2 pos = phys.body->GetPosition();
     const b2Vec2 vel = phys.body->GetLinearVelocity();
-    const b2Vec2 futurePos = pos + 1.0f * vel;
+    const b2Vec2 futurePos = pos + 0.0f * vel;
     const float width = cam.width / cam.zoom;
     const float height = cam.height / cam.zoom;
     

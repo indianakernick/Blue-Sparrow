@@ -23,7 +23,7 @@ void rotateByAngle(MoveInput &move, float deltaAngle) {
   while (deltaAngle < -b2_pi) deltaAngle += 2.0f * b2_pi;
   while (deltaAngle > b2_pi) deltaAngle -= 2.0f * b2_pi;
   
-  if (b2Abs(deltaAngle) < 2.0f * deg2rad) {
+  if (b2Abs(deltaAngle) < 0.5f * deg2rad) {
     move.left = move.right = false;
   } else if (deltaAngle < 0.0f) {
     move.right = false;
@@ -41,6 +41,32 @@ b2Vec2 scaleToLength(const b2Vec2 vec, const float length) {
 b2Vec2 normalized(b2Vec2 vec) {
   vec.Normalize();
   return vec;
+}
+
+b2Vec2 interseptPoint(
+  const b2Vec2 targetPos,
+  const b2Vec2 targetVel,
+  const b2Vec2 launchPos,
+  const float bulletSpeed
+) {
+  // https://gamedev.stackexchange.com/a/25292/72999
+  // TODO: Check the determinent
+  // This causes a divide by zero if the bullet can't catch up to the target
+  
+  const b2Vec2 toTarget = targetPos - launchPos;
+
+  const float a = b2Dot(targetVel, targetVel) - bulletSpeed * bulletSpeed;
+  const float b = 2.0f * b2Dot(targetVel, toTarget);
+  const float c = b2Dot(toTarget, toTarget);
+
+  const float p = -b / (2.0f * a);
+  const float q = std::sqrt((b * b) - 4.0f * a * c) / (2.0f * a);
+
+  const float t1 = p - q;
+  const float t2 = p + q;
+  const float t = (t1 > t2 && t2 > 0.0f ? t2 : t1);
+
+  return targetPos + t * targetVel;
 }
 
 }
@@ -71,10 +97,15 @@ void behaveOrbit(entt::registry &reg) {
     const b2Vec2 accel = desiredVel - shipVel;
     const float forwardAccel = b2Dot(accel, toTarget);
     
+    /*
+    TODO: Maybe put this into a dumber bot
     const float timeToReach = (targetPos - shipPos).Length() / params.speed * 1.5f;
-    const b2Vec2 futureTargetPos = targetPos + timeToReach * targetVel;
-    const b2Vec2 toFutureTarget = futureTargetPos - shipPos;
-    const float aimAngle = std::atan2(toFutureTarget.y, toFutureTarget.x);
+    const b2Vec2 aimPos = targetPos + timeToReach * targetVel;
+    */
+    
+    b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, params.speed);
+    const b2Vec2 toAim = aimPos - shipPos;
+    const float aimAngle = std::atan2(toAim.y, toAim.x);
     rotateByAngle(move, aimAngle - phys.body->GetAngle());
     
     if (b2Abs(forwardAccel) < 0.5f) {
@@ -102,15 +133,13 @@ void behaveSeek(entt::registry &reg) {
     const b2Vec2 shipPos = phys.body->GetPosition();
     const b2Vec2 shipVel = phys.body->GetLinearVelocity();
     
-    // TODO: could be improved
-    // parametric equation for moving point
-    // parametric equation for growing circle
-    // find point of intersection
-    // fails if missile cannot catch up to target
-    
+    /*
     const float timeToReach = (targetPos - shipPos).Length() / shipVel.Length() * 0.6f;
-    const b2Vec2 futureTargetPos = targetPos + timeToReach * targetVel;
-    const b2Vec2 desiredVel = scaleToLength(futureTargetPos - shipPos, behave.speed);
+    const b2Vec2 aimPos = targetPos + timeToReach * targetVel;
+    */
+    
+    b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, behave.speed);
+    const b2Vec2 desiredVel = scaleToLength(aimPos - shipPos, behave.speed);
     const b2Vec2 accel = desiredVel - shipVel;
     
     const float aimAngle = std::atan2(accel.y, accel.x);
