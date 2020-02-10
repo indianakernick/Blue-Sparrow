@@ -26,7 +26,7 @@ entt::entity makeEnemy(entt::registry &reg) {
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{191, 63, 0});
   reg.assign<OrbitBehaviour>(e, 30.0f, 20.0f);
-  reg.assign<Target>(e);
+  reg.assign<Target>(e, true);
   reg.assign<Hull>(e, 100);
   
   MoveParams moveParams;

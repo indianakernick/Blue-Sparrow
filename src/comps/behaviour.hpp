@@ -13,6 +13,7 @@
 #include <entt/entity/entity.hpp>
 
 struct Target {
+  bool eager = false;
   entt::entity e = entt::null;
 };
 

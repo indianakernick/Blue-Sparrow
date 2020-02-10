@@ -38,7 +38,7 @@ entt::entity nearestShip(entt::registry &reg, b2Vec2 fromPos, Team fromTeam) {
 
 void findTarget(entt::registry &reg) {
   entt::each(reg, [&](Physics phys, Team team, Target &target) {
-    if (!reg.valid(target.e)) {
+    if (target.eager || !reg.valid(target.e)) {
       target.e = nearestShip(reg, phys.body->GetPosition(), team);
     }
   });
