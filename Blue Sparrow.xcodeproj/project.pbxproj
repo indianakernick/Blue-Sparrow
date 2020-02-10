@@ -30,6 +30,7 @@
 		45C5CA5823EF919E000B554D /* stars.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45C5CA5423EF8FD1000B554D /* stars.png */; };
 		45C5CA5B23EF9A0C000B554D /* arena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5923EF9A0C000B554D /* arena.cpp */; };
 		45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5D23F0E020000B554D /* collisions.cpp */; };
+		45C5CA6223F10652000B554D /* aim_assist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA6023F10652000B554D /* aim_assist.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -108,6 +109,9 @@
 		45C5CA5C23F0DC85000B554D /* ammo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ammo.hpp; sourceTree = "<group>"; };
 		45C5CA5D23F0E020000B554D /* collisions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = collisions.cpp; sourceTree = "<group>"; };
 		45C5CA5E23F0E020000B554D /* collisions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = collisions.hpp; sourceTree = "<group>"; };
+		45C5CA6023F10652000B554D /* aim_assist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = aim_assist.cpp; sourceTree = "<group>"; };
+		45C5CA6123F10652000B554D /* aim_assist.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = aim_assist.hpp; sourceTree = "<group>"; };
+		45C5CA6323F107D8000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +177,7 @@
 				45C5CA3C23ED54C9000B554D /* each.hpp */,
 				45C5CA4D23EF8E93000B554D /* load_texture.cpp */,
 				45C5CA4E23EF8E93000B554D /* load_texture.hpp */,
+				45C5CA6323F107D8000B554D /* physics.hpp */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -213,6 +218,8 @@
 				45C5CA4823EE3E91000B554D /* behave.hpp */,
 				45C5CA5D23F0E020000B554D /* collisions.cpp */,
 				45C5CA5E23F0E020000B554D /* collisions.hpp */,
+				45C5CA6023F10652000B554D /* aim_assist.cpp */,
+				45C5CA6123F10652000B554D /* aim_assist.hpp */,
 			);
 			path = systems;
 			sourceTree = "<group>";
@@ -303,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45C5CA4C23EE599E000B554D /* missile.cpp in Sources */,
+				45C5CA6223F10652000B554D /* aim_assist.cpp in Sources */,
 				457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */,
 				45C5CA5223EF8EE2000B554D /* stb_image.c in Sources */,
 				45C5CA4F23EF8E93000B554D /* load_texture.cpp in Sources */,

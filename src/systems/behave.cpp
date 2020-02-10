@@ -13,6 +13,7 @@
 #include "../comps/input.hpp"
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
+#include "../utils/physics.hpp"
 #include "../comps/behaviour.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -22,7 +23,7 @@ void rotateByAngle(MoveInput &move, float deltaAngle) {
   while (deltaAngle < -b2_pi) deltaAngle += 2.0f * b2_pi;
   while (deltaAngle > b2_pi) deltaAngle -= 2.0f * b2_pi;
   
-  if (b2Abs(deltaAngle) < 2.0f * b2_pi / 180.0f) {
+  if (b2Abs(deltaAngle) < 2.0f * deg2rad) {
     move.left = move.right = false;
   } else if (deltaAngle < 0.0f) {
     move.right = false;

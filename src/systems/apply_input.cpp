@@ -8,7 +8,10 @@
 
 #include "apply_input.hpp"
 
+#include "aim_assist.hpp"
 #include <box2d/b2_body.h>
+#include <box2d/b2_world.h>
+#include <box2d/b2_fixture.h>
 #include <SDL2/SDL_timer.h>
 #include "../utils/each.hpp"
 #include "../comps/ammo.hpp"
@@ -17,18 +20,11 @@
 #include "../comps/timers.hpp"
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
+#include "../utils/physics.hpp"
 #include "../factories/bolt.hpp"
 #include "../comps/behaviour.hpp"
 #include "../factories/missile.hpp"
 #include <entt/entity/registry.hpp>
-
-namespace {
-
-b2Vec2 angleMag(const float angle, const float mag) {
-  return {std::cos(angle) * mag, std::sin(angle) * mag};
-}
-
-}
 
 void applyMoveInput(entt::registry &reg) {
   entt::each(reg, [](Physics phys, MoveParams params, MoveInput input) {
@@ -50,7 +46,7 @@ void applyMoveInput(entt::registry &reg) {
 }
 
 void applyBlasterInput(entt::registry &reg) {
-  entt::each(reg, [&](Physics phys, BlasterParams params, BlasterInput input, BlasterTimer &timer, Team team) {
+  entt::each(reg, [&](entt::entity e, Physics phys, BlasterParams params, BlasterInput input, BlasterTimer &timer, Team team) {
     if (!input.fire) return;
     const std::uint32_t now = SDL_GetTicks();
     if (!SDL_TICKS_PASSED(now, timer.done)) return;
@@ -62,7 +58,8 @@ void applyBlasterInput(entt::registry &reg) {
     entt::entity bolt = makeBolt(reg, team);
     b2Body *boltBody = reg.get<Physics>(bolt).body;
     boltBody->SetTransform(shipPos, shipAngle);
-    boltBody->SetLinearVelocity(angleMag(shipAngle, params.speed));
+    const float aim = reg.has<AimAssist>(e) ? assistAim(reg, e) : shipAngle;
+    boltBody->SetLinearVelocity(angleMag(aim, params.speed));
     reg.assign<Damage>(bolt, params.damage);
   });
 }

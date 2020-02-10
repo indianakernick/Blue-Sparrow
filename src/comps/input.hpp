@@ -12,6 +12,9 @@
 /// If present, the keyboard will control MoveInput
 struct KeyInput {};
 
+/// If present, the blaster bolts are nudged toward the nearest target
+struct AimAssist {};
+
 /// Influences forces and torques applied to the physics body.
 struct MoveInput {
   bool forward = false;

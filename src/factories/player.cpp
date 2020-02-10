@@ -27,6 +27,7 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<CameraFocus>(e);
   reg.assign<KeyInput>(e);
   reg.assign<Hull>(e, 50000); // for testing
+  reg.assign<AimAssist>(e);
   
   MoveParams moveParams;
   moveParams.forwardForce = 60.0f;
@@ -37,7 +38,7 @@ entt::entity makePlayer(entt::registry &reg) {
   
   BlasterParams blasterParams;
   blasterParams.rof = 2.0f;
-  blasterParams.speed = 50.0f;
+  blasterParams.speed = 60.0f;
   blasterParams.damage = 5;
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterInput>(e);

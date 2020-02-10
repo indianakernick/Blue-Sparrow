@@ -11,19 +11,9 @@
 #include <box2d/b2_body.h>
 #include <box2d/b2_world.h>
 #include <box2d/b2_fixture.h>
+#include "../utils/physics.hpp"
 #include <entt/entity/entity.hpp>
 #include <box2d/b2_polygon_shape.h>
-
-namespace {
-
-void *toUserData(const entt::entity e) {
-  static_assert(sizeof(void *) >= sizeof(entt::entity));
-  void *userData = nullptr;
-  std::memcpy(&userData, &e, sizeof(entt::entity));
-  return userData;
-}
-
-}
 
 Physics makeArena(b2World &world, const float width, const float height) {
   const float pad = 10.0f;

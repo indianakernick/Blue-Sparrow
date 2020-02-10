@@ -38,7 +38,7 @@ entt::entity makeEnemy(entt::registry &reg, const Team team) {
   
   BlasterParams blasterParams;
   blasterParams.rof = 1.5f;
-  blasterParams.speed = 40.0f;
+  blasterParams.speed = 60.0f;
   blasterParams.damage = 5;
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterInput>(e);

@@ -11,7 +11,9 @@
 
 #include <entt/entity/fwd.hpp>
 
+/// Maintain a fixed distance from the target and shoot
 void behaveOrbit(entt::registry &);
+/// Collide with the target
 void behaveSeek(entt::registry &);
 
 #endif

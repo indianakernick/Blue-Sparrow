@@ -12,6 +12,7 @@
 #include <box2d/b2_world.h>
 #include "../utils/each.hpp"
 #include <box2d/b2_contact.h>
+#include "../utils/physics.hpp"
 #include "../comps/physics.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -47,13 +48,7 @@ namespace {
 using CollisionPair = std::pair<entt::entity, entt::entity>;
 using Collisions = std::vector<CollisionPair>;
 
-entt::entity fromUserData(void *userData) {
-  entt::entity e;
-  std::memcpy(&e, &userData, sizeof(entt::entity));
-  return e;
-}
-
-entt::entity fromUserData(b2Fixture *fixture) {
+entt::entity fromFixture(b2Fixture *fixture) {
   return fromUserData(fixture->GetBody()->GetUserData());
 }
 
@@ -65,8 +60,8 @@ public:
   }
 
   void BeginContact(b2Contact *contact) override {
-    const entt::entity a = fromUserData(contact->GetFixtureA());
-    const entt::entity b = fromUserData(contact->GetFixtureB());
+    const entt::entity a = fromFixture(contact->GetFixtureA());
+    const entt::entity b = fromFixture(contact->GetFixtureB());
     reg.ctx<Collisions>().emplace_back(a, b);
   }
 

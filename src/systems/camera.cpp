@@ -10,11 +10,10 @@
 
 #include <box2d/b2_body.h>
 #include "../utils/each.hpp"
+#include "../utils/physics.hpp"
 #include "../comps/physics.hpp"
 #include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
-
-constexpr float rad2deg = 180.0f / b2_pi;
 
 void readPhysicsTransform(entt::registry &reg) {
   auto cam = reg.ctx<Camera>();

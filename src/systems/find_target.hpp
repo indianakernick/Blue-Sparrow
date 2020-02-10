@@ -11,6 +11,7 @@
 
 #include <entt/entity/fwd.hpp>
 
+/// Search for the nearest opposing ship and set that as the Target
 void findTarget(entt::registry &);
 
 #endif
