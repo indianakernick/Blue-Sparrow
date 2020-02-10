@@ -34,6 +34,18 @@ void rotateByAngle(MoveInput &move, float deltaAngle) {
   }
 }
 
+void moveByAccel(MoveInput &move, float accel) {
+  if (b2Abs(accel) < 0.5f) {
+    move.forward = move.reverse = false;
+  } else if (accel < 0.0f) {
+    move.reverse = true;
+    move.forward = false;
+  } else {
+    move.forward = true;
+    move.reverse = false;
+  }
+}
+
 b2Vec2 scaleToLength(const b2Vec2 vec, const float length) {
   return (length / vec.Length()) * vec;
 }
@@ -95,7 +107,7 @@ void behaveOrbit(entt::registry &reg) {
     const b2Vec2 desiredPos = targetPos - behave.dist * toTarget + 0.5f * relativeVel;
     const b2Vec2 desiredVel = scaleToLength(desiredPos - shipPos, behave.speed);
     const b2Vec2 accel = desiredVel - shipVel;
-    const float forwardAccel = b2Dot(accel, toTarget);
+    moveByAccel(move, b2Dot(accel, toTarget));
     
     /*
     TODO: Maybe put this into a dumber bot
@@ -103,20 +115,11 @@ void behaveOrbit(entt::registry &reg) {
     const b2Vec2 aimPos = targetPos + timeToReach * targetVel;
     */
     
+    // TODO: account for angular velocity to minimise wobble
     b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, params.speed);
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
     rotateByAngle(move, aimAngle - phys.body->GetAngle());
-    
-    if (b2Abs(forwardAccel) < 0.5f) {
-      move.forward = move.reverse = false;
-    } else if (forwardAccel < 0.0f) {
-      move.reverse = true;
-      move.forward = false;
-    } else {
-      move.forward = true;
-      move.reverse = false;
-    }
   });
 }
 
