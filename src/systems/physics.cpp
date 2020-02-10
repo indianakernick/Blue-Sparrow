@@ -11,6 +11,7 @@
 #include <box2d/b2_body.h>
 #include <box2d/b2_world.h>
 #include "../utils/each.hpp"
+#include <box2d/b2_contact.h>
 #include "../comps/physics.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -39,6 +40,45 @@ void destroyBody(entt::entity e, entt::registry &reg) {
 
 void connectDestroyBody(entt::registry &reg) {
   reg.on_destroy<Physics>().connect<&destroyBody>();
+}
+
+namespace {
+
+using CollisionPair = std::pair<entt::entity, entt::entity>;
+using Collisions = std::vector<CollisionPair>;
+
+entt::entity fromUserData(void *userData) {
+  entt::entity e;
+  std::memcpy(&e, &userData, sizeof(entt::entity));
+  return e;
+}
+
+entt::entity fromUserData(b2Fixture *fixture) {
+  return fromUserData(fixture->GetBody()->GetUserData());
+}
+
+class ContactListener final : public b2ContactListener {
+public:
+  explicit ContactListener(entt::registry &reg)
+    : reg{reg} {
+    reg.set<Collisions>();
+  }
+
+  void BeginContact(b2Contact *contact) override {
+    const entt::entity a = fromUserData(contact->GetFixtureA());
+    const entt::entity b = fromUserData(contact->GetFixtureB());
+    reg.ctx<Collisions>().emplace_back(a, b);
+  }
+
+private:
+  entt::registry &reg;
+};
+
+}
+
+void connectContactListener(entt::registry &reg) {
+  static ContactListener listener{reg};
+  reg.ctx<b2World>().SetContactListener(&listener);
 }
 
 void setTransform(entt::registry &reg, const entt::entity e, const b2Vec2 pos, const float angle) {

@@ -24,6 +24,7 @@
 #include "systems/expire.hpp"
 #include "systems/behave.hpp"
 #include "systems/physics.hpp"
+#include "systems/collisions.hpp"
 #include "systems/find_target.hpp"
 #include "systems/apply_input.hpp"
 #include "systems/handle_input.hpp"
@@ -72,8 +73,9 @@ int main() {
   SDL::Texture background = loadTexture(renderer.get(), res("stars.png").c_str());
   
   entt::registry reg;
-  connectDestroyBody(reg);
   reg.set<b2World>(b2Vec2{0.0f, 0.0f});
+  connectDestroyBody(reg);
+  connectContactListener(reg);
   
   Drawing drawing;
   drawing.ren = renderer.get();
@@ -90,11 +92,13 @@ int main() {
   camera.arenaHeight = 200.0f;
   setMaxZoom(background.get(), camera);
   setMinZoom(camera);
-  camera.zoom = camera.minZoom;
+  camera.zoom = camera.maxZoom;
   reg.set<Camera>(camera);
   
   setTransform(reg, makePlayer(reg), {0.0f, 0.0f}, 0.0f);
   setTransform(reg, makeEnemy(reg), {20.0f, 0.0f}, b2_pi);
+  setTransform(reg, makeEnemy(reg), {20.0f, 10.0f}, b2_pi);
+  setTransform(reg, makeEnemy(reg), {20.0f, -10.0f}, b2_pi);
   makeArena(reg, 200.0f, 200.0f);
   
   while (true) {
@@ -121,7 +125,7 @@ int main() {
             cam.width = e.window.data1;
             cam.height = e.window.data2;
             setMinZoom(cam);
-            cam.zoom = cam.minZoom;
+            cam.zoom = std::max(cam.zoom, cam.minZoom);
           }
           break;
         default: ;
@@ -146,8 +150,11 @@ int main() {
     applyBlasterInput(reg);
     applyMissileInput(reg);
     expireTemporary(reg);
+    
     stepPhysics(reg);
+    
     limitVelocity(reg);
+    handleCollisions(reg);
     moveCamera(reg);
     readPhysicsTransform(reg);
     

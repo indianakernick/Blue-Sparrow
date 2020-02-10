@@ -9,6 +9,7 @@
 #include "enemy.hpp"
 
 #include "physics.hpp"
+#include "../comps/ammo.hpp"
 #include "../comps/teams.hpp"
 #include "../comps/input.hpp"
 #include "../comps/timers.hpp"
@@ -20,12 +21,13 @@
 
 entt::entity makeEnemy(entt::registry &reg) {
   entt::entity e = reg.create();
-  reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), Team::enemy));
+  reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), Team::enemy, e));
   reg.assign<VelocityLimit>(e, 15.0f);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{191, 63, 0});
   reg.assign<OrbitBehaviour>(e, 30.0f, 20.0f);
   reg.assign<Target>(e);
+  reg.assign<Hull>(e, 100);
   
   MoveParams moveParams;
   moveParams.forwardForce = 60.0f;
@@ -37,6 +39,7 @@ entt::entity makeEnemy(entt::registry &reg) {
   BlasterParams blasterParams;
   blasterParams.rof = 1.5f;
   blasterParams.speed = 40.0f;
+  blasterParams.damage = 5;
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterInput>(e);
   reg.assign<BlasterTimer>(e, std::uint32_t{});

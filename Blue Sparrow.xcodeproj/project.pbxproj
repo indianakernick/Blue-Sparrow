@@ -29,6 +29,7 @@
 		45C5CA5223EF8EE2000B554D /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5123EF8EE2000B554D /* stb_image.c */; };
 		45C5CA5823EF919E000B554D /* stars.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45C5CA5423EF8FD1000B554D /* stars.png */; };
 		45C5CA5B23EF9A0C000B554D /* arena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5923EF9A0C000B554D /* arena.cpp */; };
+		45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5D23F0E020000B554D /* collisions.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -104,6 +105,9 @@
 		45C5CA5423EF8FD1000B554D /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
 		45C5CA5923EF9A0C000B554D /* arena.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arena.cpp; sourceTree = "<group>"; };
 		45C5CA5A23EF9A0C000B554D /* arena.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = arena.hpp; sourceTree = "<group>"; };
+		45C5CA5C23F0DC85000B554D /* ammo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ammo.hpp; sourceTree = "<group>"; };
+		45C5CA5D23F0E020000B554D /* collisions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = collisions.cpp; sourceTree = "<group>"; };
+		45C5CA5E23F0E020000B554D /* collisions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = collisions.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +187,7 @@
 				45C5CA3223ED06CC000B554D /* timers.hpp */,
 				45C5CA3B23ED2636000B554D /* teams.hpp */,
 				45C5CA4023EE37FC000B554D /* behaviour.hpp */,
+				45C5CA5C23F0DC85000B554D /* ammo.hpp */,
 			);
 			path = comps;
 			sourceTree = "<group>";
@@ -206,6 +211,8 @@
 				45C5CA4523EE3B7A000B554D /* find_target.hpp */,
 				45C5CA4723EE3E91000B554D /* behave.cpp */,
 				45C5CA4823EE3E91000B554D /* behave.hpp */,
+				45C5CA5D23F0E020000B554D /* collisions.cpp */,
+				45C5CA5E23F0E020000B554D /* collisions.hpp */,
 			);
 			path = systems;
 			sourceTree = "<group>";
@@ -312,6 +319,7 @@
 				45C5CA3F23EE35F4000B554D /* enemy.cpp in Sources */,
 				45C5CA3A23ED16AF000B554D /* physics.cpp in Sources */,
 				45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */,
+				45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */,
 				45C5CA2E23ECF043000B554D /* player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

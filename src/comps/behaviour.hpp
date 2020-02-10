@@ -10,9 +10,10 @@
 #define comps_behaviour_hpp
 
 #include <entt/entity/fwd.hpp>
+#include <entt/entity/entity.hpp>
 
 struct Target {
-  entt::entity e;
+  entt::entity e = entt::null;
 };
 
 struct OrbitBehaviour {

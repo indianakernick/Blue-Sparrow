@@ -22,6 +22,7 @@ struct MoveParams {
 struct BlasterParams {
   float rof;
   float speed;
+  int damage;
 };
 
 /// Properties of the secondary weapon.
@@ -31,6 +32,13 @@ struct MissileParams {
   float speed;
   float forwardForce;
   float turnTorque;
+  int damage;
 };
+
+/*
+struct HullParams {
+  int durability;
+};
+*/
 
 #endif

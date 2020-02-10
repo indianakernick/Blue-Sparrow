@@ -15,6 +15,7 @@
 void stepPhysics(entt::registry &);
 void limitVelocity(entt::registry &);
 void connectDestroyBody(entt::registry &);
+void connectContactListener(entt::registry &);
 void setTransform(entt::registry &, entt::entity, b2Vec2, float);
 
 #endif

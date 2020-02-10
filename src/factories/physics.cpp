@@ -11,7 +11,19 @@
 #include <box2d/b2_body.h>
 #include <box2d/b2_world.h>
 #include <box2d/b2_fixture.h>
+#include <entt/entity/entity.hpp>
 #include <box2d/b2_polygon_shape.h>
+
+namespace {
+
+void *toUserData(const entt::entity e) {
+  static_assert(sizeof(void *) >= sizeof(entt::entity));
+  void *userData = nullptr;
+  std::memcpy(&userData, &e, sizeof(entt::entity));
+  return userData;
+}
+
+}
 
 Physics makeArena(b2World &world, const float width, const float height) {
   const float pad = 10.0f;
@@ -28,6 +40,7 @@ Physics makeArena(b2World &world, const float width, const float height) {
 
   b2BodyDef bodyDef;
   bodyDef.type = b2_staticBody;
+  bodyDef.userData = toUserData(entt::null);
   b2Body *body = world.CreateBody(&bodyDef);
   
   const b2Vec2 offset = {width / 2.0f, height / 2.0f};
@@ -46,7 +59,7 @@ Physics makeArena(b2World &world, const float width, const float height) {
   return {body, width, height};
 }
 
-Physics makeSmallShip(b2World &world, const Team team) {
+Physics makeSmallShip(b2World &world, const Team team, const entt::entity e) {
   const float halfWidth = 1.5f;
   const float halfHeight = 1.0f;
   
@@ -54,6 +67,7 @@ Physics makeSmallShip(b2World &world, const Team team) {
   bodyDef.type = b2_dynamicBody;
   bodyDef.angularDamping = 8.0f;
   bodyDef.linearDamping = 0.1f;
+  bodyDef.userData = toUserData(e);
   
   b2PolygonShape shape;
   shape.SetAsBox(halfWidth, halfHeight);
@@ -69,7 +83,7 @@ Physics makeSmallShip(b2World &world, const Team team) {
   return {body, halfWidth * 2.0f, halfHeight * 2.0f};
 }
 
-Physics makeSmallBullet(b2World &world, const Team team) {
+Physics makeSmallBullet(b2World &world, const Team team, const entt::entity e) {
   const float halfWidth = 0.5f;
   const float halfHeight = 0.1f;
   
@@ -77,6 +91,7 @@ Physics makeSmallBullet(b2World &world, const Team team) {
   bodyDef.type = b2_dynamicBody;
   bodyDef.bullet = true;
   bodyDef.fixedRotation = true;
+  bodyDef.userData = toUserData(e);
   
   b2PolygonShape shape;
   shape.SetAsBox(halfWidth, halfHeight);
@@ -92,7 +107,7 @@ Physics makeSmallBullet(b2World &world, const Team team) {
   return {body, halfWidth * 2.0f, halfHeight * 2.0f};
 }
 
-Physics makeSmallMissile(b2World &world, const Team team) {
+Physics makeSmallMissile(b2World &world, const Team team, const entt::entity e) {
   const float halfWidth = 0.5f;
   const float halfHeight = 0.2f;
   
@@ -100,6 +115,7 @@ Physics makeSmallMissile(b2World &world, const Team team) {
   bodyDef.type = b2_dynamicBody;
   bodyDef.angularDamping = 10.0f;
   bodyDef.linearDamping = 0.1f;
+  bodyDef.userData = toUserData(e);
   
   b2PolygonShape shape;
   shape.SetAsBox(halfWidth, halfHeight);

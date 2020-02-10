@@ -11,6 +11,7 @@
 #include <box2d/b2_body.h>
 #include <SDL2/SDL_timer.h>
 #include "../utils/each.hpp"
+#include "../comps/ammo.hpp"
 #include "../comps/teams.hpp"
 #include "../comps/input.hpp"
 #include "../comps/timers.hpp"
@@ -62,6 +63,7 @@ void applyBlasterInput(entt::registry &reg) {
     b2Body *boltBody = reg.get<Physics>(bolt).body;
     boltBody->SetTransform(shipPos, shipAngle);
     boltBody->SetLinearVelocity(angleMag(shipAngle, params.speed));
+    reg.assign<Damage>(bolt, params.damage);
   });
 }
 
@@ -86,5 +88,6 @@ void applyMissileInput(entt::registry &reg) {
     reg.assign<MoveParams>(missile, moveParams);
     reg.assign<SeekBehaviour>(missile, params.speed);
     reg.assign<VelocityLimit>(missile, params.speed * 0.75f);
+    reg.assign<Damage>(missile, params.damage);
   });
 }
