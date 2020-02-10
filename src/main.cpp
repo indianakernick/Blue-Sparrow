@@ -100,7 +100,7 @@ int main() {
   setTransform(reg, makeEnemy(reg, Team::enemy), {20.0f, 10.0f}, b2_pi);
   setTransform(reg, makeEnemy(reg, Team::enemy), {20.0f, -10.0f}, b2_pi);
   setTransform(reg, makeEnemy(reg, Team::ally), {-20.0f, 0.0f}, 0.0f);
-  makeArena(reg, 200.0f, 200.0f);
+  makeArena(reg, camera.arenaWidth, camera.arenaHeight);
   
   while (true) {
     SDL_Event e;
