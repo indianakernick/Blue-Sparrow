@@ -115,7 +115,6 @@ void behaveOrbit(entt::registry &reg) {
     const b2Vec2 aimPos = targetPos + timeToReach * targetVel;
     */
     
-    // TODO: account for angular velocity to minimise wobble
     b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, params.speed);
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
