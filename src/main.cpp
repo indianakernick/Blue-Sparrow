@@ -96,9 +96,10 @@ int main() {
   reg.set<Camera>(camera);
   
   setTransform(reg, makePlayer(reg), {0.0f, 0.0f}, 0.0f);
-  setTransform(reg, makeEnemy(reg), {20.0f, 0.0f}, b2_pi);
-  setTransform(reg, makeEnemy(reg), {20.0f, 10.0f}, b2_pi);
-  setTransform(reg, makeEnemy(reg), {20.0f, -10.0f}, b2_pi);
+  setTransform(reg, makeEnemy(reg, Team::enemy), {20.0f, 0.0f}, b2_pi);
+  setTransform(reg, makeEnemy(reg, Team::enemy), {20.0f, 10.0f}, b2_pi);
+  setTransform(reg, makeEnemy(reg, Team::enemy), {20.0f, -10.0f}, b2_pi);
+  setTransform(reg, makeEnemy(reg, Team::ally), {-20.0f, 0.0f}, 0.0f);
   makeArena(reg, 200.0f, 200.0f);
   
   while (true) {

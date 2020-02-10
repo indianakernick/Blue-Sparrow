@@ -9,8 +9,9 @@
 #ifndef factories_enemy_hpp
 #define factories_enemy_hpp
 
+#include "../comps/teams.hpp"
 #include <entt/entity/fwd.hpp>
 
-entt::entity makeEnemy(entt::registry &);
+entt::entity makeEnemy(entt::registry &, Team);
 
 #endif

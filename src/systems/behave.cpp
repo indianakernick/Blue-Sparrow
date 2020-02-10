@@ -11,6 +11,7 @@
 #include <box2d/b2_body.h>
 #include "../utils/each.hpp"
 #include "../comps/input.hpp"
+#include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../comps/behaviour.hpp"
 #include <entt/entity/registry.hpp>
@@ -43,8 +44,11 @@ b2Vec2 normalized(b2Vec2 vec) {
 
 }
 
+// TODO: I wonder if I could use the genetic algorithm to train the ultimate bot
+
 void behaveOrbit(entt::registry &reg) {
-  entt::each(reg, [&](Physics phys, Target target, MoveInput &move, BlasterInput &blaster, OrbitBehaviour behave) {
+  auto view = reg.view<Physics, Target, MoveInput, BlasterInput, OrbitBehaviour, BlasterParams>();
+  view.each([&](auto phys, auto target, auto &move, auto &blaster, auto behave, auto params) {
     if (target.e == entt::null) {
       blaster.fire = false;
       move.forward = move.reverse = move.left = move.right = false;
@@ -66,7 +70,10 @@ void behaveOrbit(entt::registry &reg) {
     const b2Vec2 accel = desiredVel - shipVel;
     const float forwardAccel = b2Dot(accel, toTarget);
     
-    const float aimAngle = std::atan2(toTarget.y, toTarget.x);
+    const float timeToReach = (targetPos - shipPos).Length() / params.speed * 1.5f;
+    const b2Vec2 futureTargetPos = targetPos + timeToReach * targetVel;
+    const b2Vec2 toFutureTarget = futureTargetPos - shipPos;
+    const float aimAngle = std::atan2(toFutureTarget.y, toFutureTarget.x);
     rotateByAngle(move, aimAngle - phys.body->GetAngle());
     
     if (b2Abs(forwardAccel) < 0.5f) {

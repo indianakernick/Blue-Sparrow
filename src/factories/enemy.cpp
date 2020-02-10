@@ -19,9 +19,9 @@
 #include "../comps/behaviour.hpp"
 #include <entt/entity/registry.hpp>
 
-entt::entity makeEnemy(entt::registry &reg) {
+entt::entity makeEnemy(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
-  reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), Team::enemy, e));
+  reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), team, e));
   reg.assign<VelocityLimit>(e, 15.0f);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{191, 63, 0});
@@ -44,7 +44,7 @@ entt::entity makeEnemy(entt::registry &reg) {
   reg.assign<BlasterInput>(e);
   reg.assign<BlasterTimer>(e, std::uint32_t{});
   
-  reg.assign<Team>(e, Team::enemy);
+  reg.assign<Team>(e, team);
   reg.assign<Type>(e, Type::ship);
   return e;
 }
