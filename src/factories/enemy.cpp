@@ -62,13 +62,13 @@ entt::entity makeSniper(entt::registry &reg, const Team team) {
   MoveParams moveParams;
   moveParams.forwardForce = 30.0f;
   moveParams.reverseForce = 30.0f;
-  moveParams.turnTorque = 80.0f;
+  moveParams.turnTorque = 100.0f;
   reg.assign<MoveParams>(e, moveParams);
   reg.assign<MoveInput>(e);
   
   BlasterParams blasterParams;
   blasterParams.rof = 0.25f;
-  blasterParams.speed = 140.0f;
+  blasterParams.speed = 160.0f;
   blasterParams.damage = 50;
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterInput>(e);

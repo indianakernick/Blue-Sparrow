@@ -191,12 +191,12 @@ void behaveSniper(entt::registry &reg) {
     const b2Vec2 targetPos = targetBody->GetPosition();
     const b2Vec2 targetVel = targetBody->GetLinearVelocity();
     const b2Vec2 shipPos = phys.body->GetPosition();
-    const float shipAngle = phys.body->GetAngle() + phys.body->GetAngularVelocity() / 60.0f;
+    const float shipAngle = phys.body->GetAngle();
     
     const b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, params.speed);
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
-    rotateByAngle(move, normalizeAngle(aimAngle - shipAngle), 0.05f);
+    rotateByAngle(move, normalizeAngle(aimAngle - shipAngle), 0.1f);
   });
 }
 

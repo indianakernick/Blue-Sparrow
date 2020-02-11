@@ -80,7 +80,7 @@ Physics makeSniper(b2World &world, const Team team, const entt::entity e) {
   
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
-  bodyDef.angularDamping = 4.0f;
+  bodyDef.angularDamping = 9.0f;
   bodyDef.linearDamping = 0.1f;
   bodyDef.userData = toUserData(e);
   
