@@ -97,16 +97,21 @@ int main() {
   reg.set<Camera>(camera);
   
   setTransform(reg, makePlayer(reg), {0.0f, 0.0f}, 0.0f);
-  setTransform(reg, makeEnemy(reg, Team::enemy), {20.0f, 0.0f}, b2_pi);
-  setTransform(reg, makeEnemy(reg, Team::enemy), {20.0f, 10.0f}, b2_pi);
-  setTransform(reg, makeEnemy(reg, Team::enemy), {20.0f, -10.0f}, b2_pi);
-  setTransform(reg, makeEnemy(reg, Team::ally), {-20.0f, 0.0f}, 0.0f);
+  setTransform(reg, makeSniper(reg, Team::enemy), {20.0f, 0.0f}, b2_pi);
+  setTransform(reg, makeScout(reg, Team::enemy), {20.0f, 10.0f}, b2_pi);
+  setTransform(reg, makeScout(reg, Team::enemy), {20.0f, -10.0f}, b2_pi);
+  setTransform(reg, makeScout(reg, Team::ally), {-20.0f, 0.0f}, 0.0f);
   makeArena(reg, camera.arenaWidth, camera.arenaHeight);
   entt::entity rock = makeAsteroid(reg);
   setTransform(reg, rock, {-30.0f, -40.0f}, 1.0f);
   setMotion(reg, rock, {1.0f, 1.3f}, 0.1f);
   
+  const std::uint64_t lowerFrameTime = SDL_GetPerformanceFrequency() / 100;
+  const std::uint64_t targetFrameTime = SDL_GetPerformanceFrequency() / 60;
+  const std::uint64_t toMilli = SDL_GetPerformanceFrequency() / 1000;
+  
   while (true) {
+    const std::uint64_t frameStart = SDL_GetPerformanceCounter();
     SDL_Event e;
     bool quit = false;
     while (SDL_PollEvent(&e)) {
@@ -182,6 +187,13 @@ int main() {
     renderSprite(reg);
     
     SDL_RenderPresent(renderer.get());
+    
+    const std::uint64_t frameEnd = SDL_GetPerformanceCounter();
+    const std::uint64_t frameLen = frameEnd - frameStart;
+    if (frameLen < lowerFrameTime) {
+      const std::uint64_t delayTime = (targetFrameTime - frameLen) / toMilli;
+      SDL_Delay(static_cast<std::uint32_t>(delayTime));
+    }
   }
   
   SDL_Quit();
