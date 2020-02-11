@@ -12,13 +12,11 @@
 #include <entt/entity/registry.hpp>
 
 #include "comps/graphics.hpp"
-#include "utils/sdl_check.hpp"
-#include "factories/enemy.hpp"
+#include "factories/ships.hpp"
 #include "factories/arena.hpp"
-#include "factories/player.hpp"
+#include "utils/sdl_check.hpp"
 #include "utils/sdl_delete.hpp"
 #include "utils/load_texture.hpp"
-#include "factories/asteroid.hpp"
 
 #include "systems/camera.hpp"
 #include "systems/render.hpp"

@@ -11,17 +11,11 @@
 
 #include "../comps/teams.hpp"
 #include <entt/entity/fwd.hpp>
-#include "../comps/physics.hpp"
 
-class b2World;
-
-Physics makeArena(b2World &, float, float);
-Physics makeScout(b2World &, Team, entt::entity);
-Physics makeSniper(b2World &, Team, entt::entity);
-Physics makeSmallBullet(b2World &, Team, entt::entity);
-Physics makeSmallMissile(b2World &, Team, entt::entity);
-Physics makeAsteroid(b2World &, entt::entity);
-
-//void setUserData(b2Body *, entt::entity);
+void setArenaPhysics(entt::registry &, entt::entity, float, float);
+void setSmallShipPhysics(entt::registry &, entt::entity, Team);
+void setSmallBoltPhysics(entt::registry &, entt::entity, Team);
+void setSmallMissilePhysics(entt::registry &, entt::entity, Team);
+void setAsteroidPhysics(entt::registry &, entt::entity);
 
 #endif

@@ -12,5 +12,6 @@
 #include <entt/entity/fwd.hpp>
 
 entt::entity makeArena(entt::registry &, float, float);
+entt::entity makeAsteroid(entt::registry &);
 
 #endif

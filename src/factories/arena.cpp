@@ -14,8 +14,16 @@
 
 entt::entity makeArena(entt::registry &reg, const float width, const float height) {
   entt::entity e = reg.create();
-  reg.assign<Physics>(e, makeArena(reg.ctx<b2World>(), width, height));
+  setArenaPhysics(reg, e, width, height);
   reg.assign<BackgroundSprite>(e);
   reg.assign<SpriteRect>(e);
+  return e;
+}
+
+entt::entity makeAsteroid(entt::registry &reg) {
+  entt::entity e = reg.create();
+  setAsteroidPhysics(reg, e);
+  reg.assign<SpriteRect>(e);
+  reg.assign<Sprite>(e, Sprite{129, 76, 38});
   return e;
 }

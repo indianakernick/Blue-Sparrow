@@ -16,22 +16,19 @@
 		45C5CA2323ECE7C3000B554D /* apply_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2123ECE7C3000B554D /* apply_input.cpp */; };
 		45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2523ECEA5E000B554D /* camera.cpp */; };
 		45C5CA2A23ECEE46000B554D /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2823ECEE46000B554D /* render.cpp */; };
-		45C5CA2E23ECF043000B554D /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2C23ECF043000B554D /* player.cpp */; };
-		45C5CA3123ECFE1A000B554D /* bolt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2F23ECFE1A000B554D /* bolt.cpp */; };
 		45C5CA3523ED07B6000B554D /* expire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA3323ED07B6000B554D /* expire.cpp */; };
 		45C5CA3A23ED16AF000B554D /* physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA3823ED16AF000B554D /* physics.cpp */; };
-		45C5CA3F23EE35F4000B554D /* enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA3D23EE35F4000B554D /* enemy.cpp */; };
+		45C5CA3F23EE35F4000B554D /* ships.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA3D23EE35F4000B554D /* ships.cpp */; };
 		45C5CA4323EE385D000B554D /* physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4123EE385D000B554D /* physics.cpp */; };
 		45C5CA4623EE3B7A000B554D /* find_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4423EE3B7A000B554D /* find_target.cpp */; };
 		45C5CA4923EE3E91000B554D /* behave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4723EE3E91000B554D /* behave.cpp */; };
-		45C5CA4C23EE599E000B554D /* missile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4A23EE599E000B554D /* missile.cpp */; };
+		45C5CA4C23EE599E000B554D /* weapons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4A23EE599E000B554D /* weapons.cpp */; };
 		45C5CA4F23EF8E93000B554D /* load_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA4D23EF8E93000B554D /* load_texture.cpp */; };
 		45C5CA5223EF8EE2000B554D /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5123EF8EE2000B554D /* stb_image.c */; };
 		45C5CA5B23EF9A0C000B554D /* arena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5923EF9A0C000B554D /* arena.cpp */; };
 		45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5D23F0E020000B554D /* collisions.cpp */; };
 		45C5CA6223F10652000B554D /* aim_assist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA6023F10652000B554D /* aim_assist.cpp */; };
 		45C5CA6523F22487000B554D /* stars.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45C5CA6423F22455000B554D /* stars.png */; };
-		45C5CA6823F24118000B554D /* asteroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA6623F24118000B554D /* asteroid.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -78,10 +75,6 @@
 		45C5CA2623ECEA5E000B554D /* camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
 		45C5CA2823ECEE46000B554D /* render.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
 		45C5CA2923ECEE46000B554D /* render.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = render.hpp; sourceTree = "<group>"; };
-		45C5CA2C23ECF043000B554D /* player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
-		45C5CA2D23ECF043000B554D /* player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = player.hpp; sourceTree = "<group>"; };
-		45C5CA2F23ECFE1A000B554D /* bolt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bolt.cpp; sourceTree = "<group>"; };
-		45C5CA3023ECFE1A000B554D /* bolt.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = bolt.hpp; sourceTree = "<group>"; };
 		45C5CA3223ED06CC000B554D /* timers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = timers.hpp; sourceTree = "<group>"; };
 		45C5CA3323ED07B6000B554D /* expire.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = expire.cpp; sourceTree = "<group>"; };
 		45C5CA3423ED07B6000B554D /* expire.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = expire.hpp; sourceTree = "<group>"; };
@@ -89,8 +82,8 @@
 		45C5CA3923ED16AF000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA3B23ED2636000B554D /* teams.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = teams.hpp; sourceTree = "<group>"; };
 		45C5CA3C23ED54C9000B554D /* each.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = each.hpp; sourceTree = "<group>"; };
-		45C5CA3D23EE35F4000B554D /* enemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = enemy.cpp; sourceTree = "<group>"; };
-		45C5CA3E23EE35F4000B554D /* enemy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = enemy.hpp; sourceTree = "<group>"; };
+		45C5CA3D23EE35F4000B554D /* ships.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ships.cpp; sourceTree = "<group>"; };
+		45C5CA3E23EE35F4000B554D /* ships.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ships.hpp; sourceTree = "<group>"; };
 		45C5CA4023EE37FC000B554D /* behaviour.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = behaviour.hpp; sourceTree = "<group>"; };
 		45C5CA4123EE385D000B554D /* physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = physics.cpp; sourceTree = "<group>"; };
 		45C5CA4223EE385D000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
@@ -98,8 +91,8 @@
 		45C5CA4523EE3B7A000B554D /* find_target.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = find_target.hpp; sourceTree = "<group>"; };
 		45C5CA4723EE3E91000B554D /* behave.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = behave.cpp; sourceTree = "<group>"; };
 		45C5CA4823EE3E91000B554D /* behave.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = behave.hpp; sourceTree = "<group>"; };
-		45C5CA4A23EE599E000B554D /* missile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = missile.cpp; sourceTree = "<group>"; };
-		45C5CA4B23EE599E000B554D /* missile.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = missile.hpp; sourceTree = "<group>"; };
+		45C5CA4A23EE599E000B554D /* weapons.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = weapons.cpp; sourceTree = "<group>"; };
+		45C5CA4B23EE599E000B554D /* weapons.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = weapons.hpp; sourceTree = "<group>"; };
 		45C5CA4D23EF8E93000B554D /* load_texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = load_texture.cpp; sourceTree = "<group>"; };
 		45C5CA4E23EF8E93000B554D /* load_texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = load_texture.hpp; sourceTree = "<group>"; };
 		45C5CA5023EF8ED5000B554D /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -113,8 +106,6 @@
 		45C5CA6123F10652000B554D /* aim_assist.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = aim_assist.hpp; sourceTree = "<group>"; };
 		45C5CA6323F107D8000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA6423F22455000B554D /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
-		45C5CA6623F24118000B554D /* asteroid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = asteroid.cpp; sourceTree = "<group>"; };
-		45C5CA6723F24118000B554D /* asteroid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = asteroid.hpp; sourceTree = "<group>"; };
 		45C5CA6923F25263000B554D /* ai.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ai.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -232,20 +223,14 @@
 		45C5CA2B23ECF022000B554D /* factories */ = {
 			isa = PBXGroup;
 			children = (
-				45C5CA2C23ECF043000B554D /* player.cpp */,
-				45C5CA2D23ECF043000B554D /* player.hpp */,
-				45C5CA2F23ECFE1A000B554D /* bolt.cpp */,
-				45C5CA3023ECFE1A000B554D /* bolt.hpp */,
-				45C5CA3D23EE35F4000B554D /* enemy.cpp */,
-				45C5CA3E23EE35F4000B554D /* enemy.hpp */,
 				45C5CA4123EE385D000B554D /* physics.cpp */,
 				45C5CA4223EE385D000B554D /* physics.hpp */,
-				45C5CA4A23EE599E000B554D /* missile.cpp */,
-				45C5CA4B23EE599E000B554D /* missile.hpp */,
+				45C5CA3D23EE35F4000B554D /* ships.cpp */,
+				45C5CA3E23EE35F4000B554D /* ships.hpp */,
+				45C5CA4A23EE599E000B554D /* weapons.cpp */,
+				45C5CA4B23EE599E000B554D /* weapons.hpp */,
 				45C5CA5923EF9A0C000B554D /* arena.cpp */,
 				45C5CA5A23EF9A0C000B554D /* arena.hpp */,
-				45C5CA6623F24118000B554D /* asteroid.cpp */,
-				45C5CA6723F24118000B554D /* asteroid.hpp */,
 			);
 			path = factories;
 			sourceTree = "<group>";
@@ -316,13 +301,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45C5CA4C23EE599E000B554D /* missile.cpp in Sources */,
+				45C5CA4C23EE599E000B554D /* weapons.cpp in Sources */,
 				45C5CA6223F10652000B554D /* aim_assist.cpp in Sources */,
 				457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */,
 				45C5CA5223EF8EE2000B554D /* stb_image.c in Sources */,
 				45C5CA4F23EF8E93000B554D /* load_texture.cpp in Sources */,
 				45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */,
-				45C5CA3123ECFE1A000B554D /* bolt.cpp in Sources */,
 				457DF44923EBD70E00405E2D /* main.cpp in Sources */,
 				45C5CA4923EE3E91000B554D /* behave.cpp in Sources */,
 				45C5CA2A23ECEE46000B554D /* render.cpp in Sources */,
@@ -331,12 +315,10 @@
 				45C5CA4623EE3B7A000B554D /* find_target.cpp in Sources */,
 				45C5CA4323EE385D000B554D /* physics.cpp in Sources */,
 				45C5CA5B23EF9A0C000B554D /* arena.cpp in Sources */,
-				45C5CA3F23EE35F4000B554D /* enemy.cpp in Sources */,
+				45C5CA3F23EE35F4000B554D /* ships.cpp in Sources */,
 				45C5CA3A23ED16AF000B554D /* physics.cpp in Sources */,
 				45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */,
 				45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */,
-				45C5CA2E23ECF043000B554D /* player.cpp in Sources */,
-				45C5CA6823F24118000B554D /* asteroid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,8 +20,8 @@ void behaveSniper(entt::registry &);
 /// Rotate to mouse position
 void behaveMouse(entt::registry &);
 
-// Maybe a turret behaviour that stays still and rotates to shoot
-// It could try to move back to it
-// Sniper behaviour with fast blaster and slow rotation
+// Behaviour that dodges the player and launches homing missiles
+// Ability to grab onto asteroids and move them around
+// Ships take damage when they smash into stuff
 
 #endif

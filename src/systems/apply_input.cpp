@@ -21,9 +21,8 @@
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../utils/physics.hpp"
-#include "../factories/bolt.hpp"
 #include "../comps/behaviour.hpp"
-#include "../factories/missile.hpp"
+#include "../factories/weapons.hpp"
 #include <entt/entity/registry.hpp>
 
 void applyMoveInput(entt::registry &reg) {
