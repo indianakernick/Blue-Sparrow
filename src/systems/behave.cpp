@@ -113,13 +113,16 @@ void behaveOrbit(entt::registry &reg) {
     const b2Vec2 accel = desiredVel - shipVel;
     moveByAccel(move, b2Dot(accel, toTarget));
     
-    /*
-    TODO: Maybe put this into a dumber bot
-    const float timeToReach = (targetPos - shipPos).Length() / params.speed * 1.5f;
-    const b2Vec2 aimPos = targetPos + timeToReach * targetVel;
-    */
+    b2Vec2 aimPos;
+    switch (behave.level) {
+      case OrbitLevel::aim_pos:
+        aimPos = targetPos;
+        break;
+      case OrbitLevel::aim_ahead:
+        aimPos = interseptPoint(targetPos, targetVel, shipPos, params.speed);
+        break;
+    }
     
-    b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, params.speed);
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
     rotateByAngle(move, normalizeAngle(aimAngle - phys.body->GetAngle()));
@@ -133,20 +136,36 @@ void behaveSeek(entt::registry &reg) {
       return;
     }
     
+    if (behave.level == SeekLevel::no_aim) {
+      move.forward = true;
+      move.reverse = move.left = move.right = false;
+      return;
+    }
+    
     b2Body *targetBody = reg.get<Physics>(target.e).body;
     const b2Vec2 targetPos = targetBody->GetPosition();
     const b2Vec2 targetVel = targetBody->GetLinearVelocity();
     const b2Vec2 shipPos = phys.body->GetPosition();
     const b2Vec2 shipVel = phys.body->GetLinearVelocity();
     
-    /*
-    const float timeToReach = (targetPos - shipPos).Length() / shipVel.Length() * 0.6f;
-    const b2Vec2 aimPos = targetPos + timeToReach * targetVel;
-    */
-    
-    b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, behave.speed);
-    const b2Vec2 desiredVel = scaleToLength(aimPos - shipPos, behave.speed);
-    const b2Vec2 accel = desiredVel - shipVel;
+    b2Vec2 accel;
+    switch (behave.level) {
+      case SeekLevel::aim_pos:
+        accel = targetPos - shipPos;
+        break;
+      case SeekLevel::aim_vel_pos: {
+        const b2Vec2 desiredVel = scaleToLength(targetPos - shipPos, behave.speed);
+        accel = desiredVel - shipVel;
+        break;
+      }
+      case SeekLevel::aim_vel_ahead: {
+        const b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, behave.speed);
+        const b2Vec2 desiredVel = scaleToLength(aimPos - shipPos, behave.speed);
+        accel = desiredVel - shipVel;
+        break;
+      }
+      case SeekLevel::no_aim: ;
+    }
     
     const float aimAngle = std::atan2(accel.y, accel.x);
     const float angleChange = normalizeAngle(aimAngle - phys.body->GetAngle());

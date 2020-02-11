@@ -115,6 +115,7 @@
 		45C5CA6423F22455000B554D /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
 		45C5CA6623F24118000B554D /* asteroid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = asteroid.cpp; sourceTree = "<group>"; };
 		45C5CA6723F24118000B554D /* asteroid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = asteroid.hpp; sourceTree = "<group>"; };
+		45C5CA6923F25263000B554D /* ai.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ai.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +197,7 @@
 				45C5CA3B23ED2636000B554D /* teams.hpp */,
 				45C5CA4023EE37FC000B554D /* behaviour.hpp */,
 				45C5CA5C23F0DC85000B554D /* ammo.hpp */,
+				45C5CA6923F25263000B554D /* ai.hpp */,
 			);
 			path = comps;
 			sourceTree = "<group>";

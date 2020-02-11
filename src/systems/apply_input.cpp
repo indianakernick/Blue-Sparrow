@@ -83,7 +83,7 @@ void applyMissileInput(entt::registry &reg) {
     moveParams.reverseForce = 0.0f;
     moveParams.turnTorque = params.turnTorque;
     reg.assign<MoveParams>(missile, moveParams);
-    reg.assign<SeekBehaviour>(missile, params.speed);
+    reg.assign<SeekBehaviour>(missile, params.speed, params.level);
     reg.assign<VelocityLimit>(missile, params.speed * 0.75f);
     reg.assign<Damage>(missile, params.damage);
   });

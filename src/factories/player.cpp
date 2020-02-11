@@ -51,6 +51,7 @@ entt::entity makePlayer(entt::registry &reg) {
   missileParams.forwardForce = 25.0f;
   missileParams.turnTorque = 3.0f;
   missileParams.damage = 15;
+  missileParams.level = SeekLevel::aim_vel_ahead;
   reg.assign<MissileParams>(e, missileParams);
   reg.assign<MissileInput>(e);
   reg.assign<MissileTimer>(e, std::uint32_t{});

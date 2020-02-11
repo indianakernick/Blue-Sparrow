@@ -9,6 +9,8 @@
 #ifndef comps_params_hpp
 #define comps_params_hpp
 
+#include "ai.hpp"
+
 /// Forces and torques used to move the physics body.
 /// Can be changed when the player upgrades their ship.
 struct MoveParams {
@@ -33,6 +35,7 @@ struct MissileParams {
   float forwardForce;
   float turnTorque;
   int damage;
+  SeekLevel level;
 };
 
 /*
