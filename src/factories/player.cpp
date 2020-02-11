@@ -20,7 +20,7 @@
 
 entt::entity makePlayer(entt::registry &reg) {
   entt::entity e = reg.create();
-  reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), Team::ally, e));
+  reg.assign<Physics>(e, makeScout(reg.ctx<b2World>(), Team::ally, e));
   reg.assign<VelocityLimit>(e, 15.0f);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{63, 63, 191});

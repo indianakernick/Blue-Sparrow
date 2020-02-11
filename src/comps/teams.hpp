@@ -52,7 +52,7 @@ constexpr std::uint16_t bulletCat(const Team team) {
 constexpr std::uint16_t bulletMsk(const Team team) {
   switch (team) {
     case Team::ally: return enemy_ship_bit | asteroid_bit;
-    case Team::enemy: return ally_ship_bit | asteroid_bit;
+    case Team::enemy: return asteroid_bit;//ally_ship_bit | asteroid_bit;
   }
 }
 

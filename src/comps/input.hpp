@@ -9,6 +9,10 @@
 #ifndef comps_input_hpp
 #define comps_input_hpp
 
+// TODO: "input" seems to be an overloaded word
+// It refers to key/mouse events and ship commands
+// Perhaps MoveIntent or MoveCommand instead of MoveInput?
+
 /// If present, the keyboard will control MoveInput
 struct KeyInput {};
 

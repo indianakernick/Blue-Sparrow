@@ -161,6 +161,7 @@ int main() {
     findTarget(reg);
     behaveOrbit(reg);
     behaveSeek(reg);
+    behaveSniper(reg);
     behaveMouse(reg);
     applyMoveInput(reg);
     applyBlasterInput(reg);

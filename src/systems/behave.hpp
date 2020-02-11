@@ -15,6 +15,8 @@
 void behaveOrbit(entt::registry &);
 /// Collide with the target
 void behaveSeek(entt::registry &);
+/// Remain stationary and aim carefully
+void behaveSniper(entt::registry &);
 /// Rotate to mouse position
 void behaveMouse(entt::registry &);
 

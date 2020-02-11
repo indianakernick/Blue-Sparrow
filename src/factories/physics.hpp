@@ -16,7 +16,8 @@
 class b2World;
 
 Physics makeArena(b2World &, float, float);
-Physics makeSmallShip(b2World &, Team, entt::entity);
+Physics makeScout(b2World &, Team, entt::entity);
+Physics makeSniper(b2World &, Team, entt::entity);
 Physics makeSmallBullet(b2World &, Team, entt::entity);
 Physics makeSmallMissile(b2World &, Team, entt::entity);
 Physics makeAsteroid(b2World &, entt::entity);

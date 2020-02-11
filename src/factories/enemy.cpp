@@ -19,9 +19,9 @@
 #include "../comps/behaviour.hpp"
 #include <entt/entity/registry.hpp>
 
-entt::entity makeEnemy(entt::registry &reg, const Team team) {
+entt::entity makeScout(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
-  reg.assign<Physics>(e, makeSmallShip(reg.ctx<b2World>(), team, e));
+  reg.assign<Physics>(e, makeScout(reg.ctx<b2World>(), team, e));
   reg.assign<VelocityLimit>(e, 15.0f);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{63, 191, 63});
@@ -40,6 +40,36 @@ entt::entity makeEnemy(entt::registry &reg, const Team team) {
   blasterParams.rof = 1.5f;
   blasterParams.speed = 60.0f;
   blasterParams.damage = 5;
+  reg.assign<BlasterParams>(e, blasterParams);
+  reg.assign<BlasterInput>(e);
+  reg.assign<BlasterTimer>(e, std::uint32_t{});
+  
+  reg.assign<Team>(e, team);
+  reg.assign<Type>(e, Type::ship);
+  return e;
+}
+
+entt::entity makeSniper(entt::registry &reg, const Team team) {
+  entt::entity e = reg.create();
+  reg.assign<Physics>(e, makeSniper(reg.ctx<b2World>(), team, e));
+  reg.assign<VelocityLimit>(e, 15.0f);
+  reg.assign<SpriteRect>(e);
+  reg.assign<Sprite>(e, Sprite{63, 191, 63});
+  reg.assign<SniperBehaviour>(e);
+  reg.assign<Target>(e, true);
+  reg.assign<Hull>(e, 100);
+  
+  MoveParams moveParams;
+  moveParams.forwardForce = 30.0f;
+  moveParams.reverseForce = 30.0f;
+  moveParams.turnTorque = 80.0f;
+  reg.assign<MoveParams>(e, moveParams);
+  reg.assign<MoveInput>(e);
+  
+  BlasterParams blasterParams;
+  blasterParams.rof = 0.25f;
+  blasterParams.speed = 140.0f;
+  blasterParams.damage = 50;
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterInput>(e);
   reg.assign<BlasterTimer>(e, std::uint32_t{});

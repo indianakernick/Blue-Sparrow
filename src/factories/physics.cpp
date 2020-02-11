@@ -49,13 +49,38 @@ Physics makeArena(b2World &world, const float width, const float height) {
   return {body, width, height};
 }
 
-Physics makeSmallShip(b2World &world, const Team team, const entt::entity e) {
+Physics makeScout(b2World &world, const Team team, const entt::entity e) {
   const float halfWidth = 1.5f;
   const float halfHeight = 1.0f;
   
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
   bodyDef.angularDamping = 8.0f;
+  bodyDef.linearDamping = 0.1f;
+  bodyDef.userData = toUserData(e);
+  
+  b2PolygonShape shape;
+  shape.SetAsBox(halfWidth, halfHeight);
+  
+  b2FixtureDef fixDef;
+  fixDef.shape = &shape;
+  fixDef.density = 1.0f;
+  fixDef.restitution = 0.4f;
+  fixDef.filter.categoryBits = shipCat(team);
+  fixDef.filter.maskBits = shipMsk(team);
+  
+  b2Body *body = world.CreateBody(&bodyDef);
+  body->CreateFixture(&fixDef);
+  return {body, halfWidth * 2.0f, halfHeight * 2.0f};
+}
+
+Physics makeSniper(b2World &world, const Team team, const entt::entity e) {
+  const float halfWidth = 1.5f;
+  const float halfHeight = 1.0f;
+  
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_dynamicBody;
+  bodyDef.angularDamping = 4.0f;
   bodyDef.linearDamping = 0.1f;
   bodyDef.userData = toUserData(e);
   
@@ -105,7 +130,7 @@ Physics makeSmallMissile(b2World &world, const Team team, const entt::entity e) 
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
   bodyDef.angularDamping = 10.0f;
-  bodyDef.linearDamping = 0.1f;
+  bodyDef.linearDamping = 0.0f;
   bodyDef.userData = toUserData(e);
   
   b2PolygonShape shape;

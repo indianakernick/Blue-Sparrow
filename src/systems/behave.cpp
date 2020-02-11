@@ -26,8 +26,8 @@ float normalizeAngle(float angle) {
   return angle;
 }
 
-void rotateByAngle(MoveInput &move, float deltaAngle) {
-  if (b2Abs(deltaAngle) < 0.5f * deg2rad) {
+void rotateByAngle(MoveInput &move, const float deltaAngle, const float threshold = 0.5f) {
+  if (b2Abs(deltaAngle) < threshold * deg2rad) {
     move.left = move.right = false;
   } else if (deltaAngle < 0.0f) {
     move.right = false;
@@ -38,7 +38,7 @@ void rotateByAngle(MoveInput &move, float deltaAngle) {
   }
 }
 
-void moveByAccel(MoveInput &move, float accel) {
+void moveByAccel(MoveInput &move, const float accel) {
   if (b2Abs(accel) < 0.5f) {
     move.forward = move.reverse = false;
   } else if (accel < 0.0f) {
@@ -173,6 +173,30 @@ void behaveSeek(entt::registry &reg) {
     
     move.forward = (b2Abs(angleChange) < b2_pi / 4.0f);
     move.reverse = false;
+  });
+}
+
+void behaveSniper(entt::registry &reg) {
+  auto view = reg.view<Physics, Target, MoveInput, BlasterInput, SniperBehaviour, BlasterParams>();
+  view.less([&](auto phys, auto target, auto &move, auto &blaster, auto params) {
+    if (target.e == entt::null) {
+      blaster.fire = false;
+      move.forward = move.reverse = move.left = move.right = false;
+      return;
+    } else {
+      blaster.fire = true;
+    }
+    
+    b2Body *targetBody = reg.get<Physics>(target.e).body;
+    const b2Vec2 targetPos = targetBody->GetPosition();
+    const b2Vec2 targetVel = targetBody->GetLinearVelocity();
+    const b2Vec2 shipPos = phys.body->GetPosition();
+    const float shipAngle = phys.body->GetAngle() + phys.body->GetAngularVelocity() / 60.0f;
+    
+    const b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, params.speed);
+    const b2Vec2 toAim = aimPos - shipPos;
+    const float aimAngle = std::atan2(toAim.y, toAim.x);
+    rotateByAngle(move, normalizeAngle(aimAngle - shipAngle), 0.05f);
   });
 }
 

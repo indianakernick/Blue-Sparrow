@@ -14,6 +14,8 @@
 #include <entt/entity/entity.hpp>
 
 struct Target {
+  /// If true, always try to find the closest target even if a target has
+  /// already been aquired
   bool eager = false;
   entt::entity e = entt::null;
 };
@@ -30,5 +32,8 @@ struct SeekBehaviour {
   float speed;
   SeekLevel level;
 };
+
+/// Remain stationary and aim carefully
+struct SniperBehaviour {};
 
 #endif
