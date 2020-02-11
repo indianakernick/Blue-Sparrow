@@ -155,3 +155,14 @@ void behaveSeek(entt::registry &reg) {
     move.reverse = false;
   });
 }
+
+void behaveMouse(entt::registry &reg) {
+  entt::each(reg, [](Physics phys, MoveInput &move, MouseInput mouse) {
+    const b2Vec2 shipPos = phys.body->GetPosition();
+    const float aimAngle = std::atan2(
+      mouse.y - shipPos.y,
+      mouse.x - shipPos.x
+    );
+    rotateByAngle(move, normalizeAngle(aimAngle - phys.body->GetAngle()));
+  });
+}

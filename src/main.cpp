@@ -102,6 +102,9 @@ int main() {
   setTransform(reg, makeEnemy(reg, Team::ally), {-20.0f, 0.0f}, 0.0f);
   makeArena(reg, camera.arenaWidth, camera.arenaHeight);
   
+  // Camera needs to be initialized before the first mouse motion event
+  moveCamera(reg);
+  
   while (true) {
     SDL_Event e;
     bool quit = false;
@@ -129,6 +132,16 @@ int main() {
             cam.zoom = std::max(cam.zoom, cam.minZoom);
           }
           break;
+        case SDL_MOUSEMOTION:
+          handleMouseMove(reg, e.motion.x, e.motion.y);
+          break;
+        case SDL_MOUSEBUTTONDOWN:
+          handleMouseDown(reg, e.button.button);
+          break;
+        case SDL_MOUSEBUTTONUP:
+          handleMouseUp(reg, e.button.button);
+          break;
+          
         default: ;
       }
       if (quit) break;
@@ -147,6 +160,7 @@ int main() {
     findTarget(reg);
     behaveOrbit(reg);
     behaveSeek(reg);
+    behaveMouse(reg);
     applyMoveInput(reg);
     applyBlasterInput(reg);
     applyMissileInput(reg);

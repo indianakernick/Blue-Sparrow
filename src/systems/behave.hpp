@@ -15,5 +15,10 @@
 void behaveOrbit(entt::registry &);
 /// Collide with the target
 void behaveSeek(entt::registry &);
+/// Rotate to mouse position
+void behaveMouse(entt::registry &);
+
+// Maybe a turret behaviour that stays still and rotates to shoot
+// It could try to move back to it
 
 #endif

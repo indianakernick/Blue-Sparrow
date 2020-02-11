@@ -17,4 +17,11 @@ bool handleKeyDown(entt::registry &, SDL_Scancode);
 /// Respond to key-up events by setting MoveInput when KeyInput is present
 bool handleKeyUp(entt::registry &, SDL_Scancode);
 
+// I'm not sure if I want mouse controls. I'm just testing
+
+/// Respond to mouse move events by setting MoveInput when KeyInput is present
+bool handleMouseMove(entt::registry &, int, int);
+bool handleMouseDown(entt::registry &, int);
+bool handleMouseUp(entt::registry &, int);
+
 #endif

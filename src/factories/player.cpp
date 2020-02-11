@@ -26,6 +26,7 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<Sprite>(e, Sprite{63, 63, 191});
   reg.assign<CameraFocus>(e);
   reg.assign<KeyInput>(e);
+  reg.assign<MouseInput>(e);
   reg.assign<Hull>(e, 50000); // for testing
   reg.assign<AimAssist>(e);
   

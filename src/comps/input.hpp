@@ -12,6 +12,12 @@
 /// If present, the keyboard will control MoveInput
 struct KeyInput {};
 
+/// If present, the mouse will control MoveInput
+struct MouseInput {
+  float x = 0.0f;
+  float y = 0.0f;
+};
+
 /// If present, the blaster bolts are nudged toward the nearest target
 struct AimAssist {};
 
