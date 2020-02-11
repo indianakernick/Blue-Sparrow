@@ -19,6 +19,7 @@ Physics makeArena(b2World &, float, float);
 Physics makeSmallShip(b2World &, Team, entt::entity);
 Physics makeSmallBullet(b2World &, Team, entt::entity);
 Physics makeSmallMissile(b2World &, Team, entt::entity);
+Physics makeAsteroid(b2World &, entt::entity);
 
 //void setUserData(b2Body *, entt::entity);
 

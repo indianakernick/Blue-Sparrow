@@ -65,6 +65,7 @@ Physics makeSmallShip(b2World &world, const Team team, const entt::entity e) {
   b2FixtureDef fixDef;
   fixDef.shape = &shape;
   fixDef.density = 1.0f;
+  fixDef.restitution = 0.4f;
   fixDef.filter.categoryBits = shipCat(team);
   fixDef.filter.maskBits = shipMsk(team);
   
@@ -115,6 +116,28 @@ Physics makeSmallMissile(b2World &world, const Team team, const entt::entity e) 
   fixDef.density = 2.0f;
   fixDef.filter.categoryBits = bulletCat(team);
   fixDef.filter.maskBits = bulletMsk(team);
+  
+  b2Body *body = world.CreateBody(&bodyDef);
+  body->CreateFixture(&fixDef);
+  return {body, halfWidth * 2.0f, halfHeight * 2.0f};
+}
+
+Physics makeAsteroid(b2World &world, const entt::entity e) {
+  const float halfWidth = 8.0f;
+  const float halfHeight = 8.0f;
+  
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_dynamicBody;
+  bodyDef.userData = toUserData(e);
+  
+  b2PolygonShape shape;
+  shape.SetAsBox(halfWidth, halfHeight);
+  
+  b2FixtureDef fixDef;
+  fixDef.shape = &shape;
+  fixDef.density = 2.0f;
+  fixDef.restitution = 1.0f;
+  fixDef.filter.categoryBits = asteroid_bit;
   
   b2Body *body = world.CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);

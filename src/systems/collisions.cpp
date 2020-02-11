@@ -33,15 +33,15 @@ void handleCollisions(entt::registry &reg) {
     }
     
     visit(pair, [&reg](entt::entity a, entt::entity b) {
-      if (auto *hull = reg.try_get<Hull>(a)) {
-        if (auto *damage = reg.try_get<Damage>(b)) {
+      if (auto *damage = reg.try_get<Damage>(a)) {
+        if (auto *hull = reg.try_get<Hull>(b)) {
           hull->h -= damage->d;
-          reg.destroy(b);
           if (hull->h <= 0) {
-            reg.destroy(a);
+            reg.destroy(b);
           }
-          return true;
         }
+        reg.destroy(a);
+        return true;
       }
       return false;
     });

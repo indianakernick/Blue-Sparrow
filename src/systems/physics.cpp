@@ -79,3 +79,9 @@ void connectContactListener(entt::registry &reg) {
 void setTransform(entt::registry &reg, const entt::entity e, const b2Vec2 pos, const float angle) {
   reg.get<Physics>(e).body->SetTransform(pos, angle);
 }
+
+void setMotion(entt::registry &reg, const entt::entity e, const b2Vec2 vel, const float rot) {
+  b2Body *body = reg.get<Physics>(e).body;
+  body->SetLinearVelocity(vel);
+  body->SetAngularVelocity(rot);
+}

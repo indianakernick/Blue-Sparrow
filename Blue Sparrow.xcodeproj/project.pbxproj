@@ -31,6 +31,7 @@
 		45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5D23F0E020000B554D /* collisions.cpp */; };
 		45C5CA6223F10652000B554D /* aim_assist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA6023F10652000B554D /* aim_assist.cpp */; };
 		45C5CA6523F22487000B554D /* stars.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45C5CA6423F22455000B554D /* stars.png */; };
+		45C5CA6823F24118000B554D /* asteroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA6623F24118000B554D /* asteroid.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -112,6 +113,8 @@
 		45C5CA6123F10652000B554D /* aim_assist.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = aim_assist.hpp; sourceTree = "<group>"; };
 		45C5CA6323F107D8000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA6423F22455000B554D /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
+		45C5CA6623F24118000B554D /* asteroid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = asteroid.cpp; sourceTree = "<group>"; };
+		45C5CA6723F24118000B554D /* asteroid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = asteroid.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +242,8 @@
 				45C5CA4B23EE599E000B554D /* missile.hpp */,
 				45C5CA5923EF9A0C000B554D /* arena.cpp */,
 				45C5CA5A23EF9A0C000B554D /* arena.hpp */,
+				45C5CA6623F24118000B554D /* asteroid.cpp */,
+				45C5CA6723F24118000B554D /* asteroid.hpp */,
 			);
 			path = factories;
 			sourceTree = "<group>";
@@ -329,6 +334,7 @@
 				45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */,
 				45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */,
 				45C5CA2E23ECF043000B554D /* player.cpp in Sources */,
+				45C5CA6823F24118000B554D /* asteroid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

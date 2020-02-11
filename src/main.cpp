@@ -18,6 +18,7 @@
 #include "factories/player.hpp"
 #include "utils/sdl_delete.hpp"
 #include "utils/load_texture.hpp"
+#include "factories/asteroid.hpp"
 
 #include "systems/camera.hpp"
 #include "systems/render.hpp"
@@ -101,6 +102,9 @@ int main() {
   setTransform(reg, makeEnemy(reg, Team::enemy), {20.0f, -10.0f}, b2_pi);
   setTransform(reg, makeEnemy(reg, Team::ally), {-20.0f, 0.0f}, 0.0f);
   makeArena(reg, camera.arenaWidth, camera.arenaHeight);
+  entt::entity rock = makeAsteroid(reg);
+  setTransform(reg, rock, {-30.0f, -40.0f}, 1.0f);
+  setMotion(reg, rock, {1.0f, 1.3f}, 0.1f);
   
   while (true) {
     SDL_Event e;

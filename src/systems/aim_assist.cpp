@@ -34,6 +34,7 @@ public:
   ) override {
     const entt::entity e = fromUserData(fixture->GetBody()->GetUserData());
     if (!reg.valid(e)) return -1.0f;
+    if (!reg.has<Team>(e)) return -1.0f;
     if (reg.get<Team>(e) == shipTeam) return -1.0f;
     target = e;
     return fraction;
