@@ -14,6 +14,7 @@
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../utils/physics.hpp"
+#include "../comps/graphics.hpp"
 #include "../comps/behaviour.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -157,11 +158,14 @@ void behaveSeek(entt::registry &reg) {
 }
 
 void behaveMouse(entt::registry &reg) {
-  entt::each(reg, [](Physics phys, MoveInput &move, MouseInput mouse) {
+  entt::each(reg, [&](Physics phys, MoveInput &move, MouseInput mouse) {
+    const auto &cam = reg.ctx<Camera>();
     const b2Vec2 shipPos = phys.body->GetPosition();
+    const float aimX = mouse.x / cam.zoom + cam.x;
+    const float aimY = mouse.y / cam.zoom + cam.y;
     const float aimAngle = std::atan2(
-      mouse.y - shipPos.y,
-      mouse.x - shipPos.x
+      aimY - shipPos.y,
+      aimX - shipPos.x
     );
     rotateByAngle(move, normalizeAngle(aimAngle - phys.body->GetAngle()));
   });

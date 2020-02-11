@@ -102,9 +102,6 @@ int main() {
   setTransform(reg, makeEnemy(reg, Team::ally), {-20.0f, 0.0f}, 0.0f);
   makeArena(reg, camera.arenaWidth, camera.arenaHeight);
   
-  // Camera needs to be initialized before the first mouse motion event
-  moveCamera(reg);
-  
   while (true) {
     SDL_Event e;
     bool quit = false;

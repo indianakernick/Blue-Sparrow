@@ -11,7 +11,6 @@
 #include <SDL2/SDL_mouse.h>
 #include "../utils/each.hpp"
 #include "../comps/input.hpp"
-#include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
@@ -77,9 +76,8 @@ bool handleKeyUp(entt::registry &reg, const SDL_Scancode key) {
 
 bool handleMouseMove(entt::registry &reg, const int x, const int y) {
   entt::each(reg, [&](MouseInput &mouse) {
-    const auto &cam = reg.ctx<Camera>();
-    mouse.x = x / cam.zoom + cam.x;
-    mouse.y = y / cam.zoom + cam.y;
+    mouse.x = x;
+    mouse.y = y;
   });
   return true;
 }

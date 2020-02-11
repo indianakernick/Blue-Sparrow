@@ -31,8 +31,8 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<AimAssist>(e);
   
   MoveParams moveParams;
-  moveParams.forwardForce = 60.0f;
-  moveParams.reverseForce = 30.0f;
+  moveParams.forwardForce = 80.0f;
+  moveParams.reverseForce = 50.0f;
   moveParams.turnTorque = 200.0f;
   reg.assign<MoveParams>(e, moveParams);
   reg.assign<MoveInput>(e);
