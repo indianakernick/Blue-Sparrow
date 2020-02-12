@@ -54,12 +54,13 @@ void applyBlasterCommands(entt::registry &reg) {
     
     const b2Vec2 shipPos = phys.body->GetPosition();
     const float shipAngle = phys.body->GetAngle();
+    const b2Vec2 shipVel = phys.body->GetLinearVelocity();
     
     entt::entity bolt = makeBolt(reg, team);
     b2Body *boltBody = reg.get<Physics>(bolt).body;
     boltBody->SetTransform(shipPos, shipAngle);
     const float aim = reg.has<AimAssist>(e) ? assistAim(reg, e) : shipAngle;
-    boltBody->SetLinearVelocity(angleMag(aim, params.speed));
+    boltBody->SetLinearVelocity(angleMag(aim, params.speed) + shipVel);
     reg.assign<Damage>(bolt, params.damage);
   });
 }
@@ -76,11 +77,12 @@ void applyMissileCommands(entt::registry &reg) {
     
     const b2Vec2 shipPos = phys.body->GetPosition();
     const float shipAngle = phys.body->GetAngle();
+    const b2Vec2 shipVel = phys.body->GetLinearVelocity();
     
     entt::entity missile = makeMissile(reg, team);
     b2Body *missileBody = reg.get<Physics>(missile).body;
     missileBody->SetTransform(shipPos, shipAngle);
-    missileBody->SetLinearVelocity(angleMag(shipAngle, params.speed * 0.5f));
+    missileBody->SetLinearVelocity(angleMag(shipAngle, params.speed * 0.5f) + shipVel);
     MoveParams moveParams;
     moveParams.forwardForce = params.forwardForce;
     moveParams.reverseForce = 0.0f;

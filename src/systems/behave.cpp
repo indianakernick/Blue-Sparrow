@@ -119,7 +119,7 @@ void behaveOrbit(entt::registry &reg) {
         aimPos = targetPos;
         break;
       case OrbitLevel::aim_ahead:
-        aimPos = interseptPoint(targetPos, targetVel, shipPos, params.speed);
+        aimPos = interseptPoint(targetPos, targetVel - shipVel, shipPos, params.speed);
         break;
     }
     
@@ -191,9 +191,10 @@ void behaveSniper(entt::registry &reg) {
     const b2Vec2 targetPos = targetBody->GetPosition();
     const b2Vec2 targetVel = targetBody->GetLinearVelocity();
     const b2Vec2 shipPos = phys.body->GetPosition();
+    const b2Vec2 shipVel = phys.body->GetLinearVelocity();
     const float shipAngle = phys.body->GetAngle();
     
-    const b2Vec2 aimPos = interseptPoint(targetPos, targetVel, shipPos, params.speed);
+    const b2Vec2 aimPos = interseptPoint(targetPos, targetVel - shipVel, shipPos, params.speed);
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
     rotateByAngle(move, normalizeAngle(aimAngle - shipAngle), 0.1f);
