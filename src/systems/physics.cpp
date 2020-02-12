@@ -18,7 +18,7 @@
 #include <entt/entity/registry.hpp>
 
 void stepPhysics(entt::registry &reg, const int fps) {
-  reg.ctx<b2World>().Step(1.0f / fps, 8, 4);
+  reg.ctx<b2World>().Step(1.0f / fps, 8, 3);
 }
 
 void limitVelocity(entt::registry &reg) {
