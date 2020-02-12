@@ -12,5 +12,7 @@
 #include <entt/entity/fwd.hpp>
 
 void destroyShip(entt::registry &, entt::entity);
+void collideShipPair(entt::registry &, entt::entity, entt::entity);
+void collideShip(entt::registry &, entt::entity, entt::entity);
 
 #endif

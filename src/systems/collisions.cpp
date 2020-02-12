@@ -75,7 +75,7 @@ void handleCollisions(entt::registry &reg) {
     });
     if (handled) continue;
     
-    visit(pair, [&reg](entt::entity a, entt::entity b) {
+    handled = visit(pair, [&reg](entt::entity a, entt::entity b) {
       if (auto *hull = reg.try_get<Hull>(a)) {
         if (reg.has<Scrap>(b)) {
           if (hull->h < reg.get<HullParams>(a).durability) {
@@ -87,5 +87,21 @@ void handleCollisions(entt::registry &reg) {
       }
       return false;
     });
+    if (handled) continue;
+    
+    if (reg.has<Hull>(pair.first) && reg.has<Hull>(pair.second)) {
+      collideShipPair(reg, pair.first, pair.second);
+      continue;
+    }
+    
+    handled = visit(pair, [&reg](entt::entity a, entt::entity b) {
+      if (reg.has<Hull>(a)) {
+        collideShip(reg, a, b);
+        return true;
+      }
+      return false;
+    });
+    if (handled) continue;
   }
+  collisions.clear();
 }

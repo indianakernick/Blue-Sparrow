@@ -10,6 +10,7 @@
 
 #include <random>
 #include <box2d/b2_body.h>
+#include "../comps/ammo.hpp"
 #include "../comps/drops.hpp"
 #include "../comps/physics.hpp"
 #include "../factories/arena.hpp"
@@ -52,4 +53,45 @@ void destroyShip(entt::registry &reg, const entt::entity e) {
   }
   
   reg.destroy(e);
+}
+
+namespace {
+
+const float minSpeed = 4.0f;
+const float damagePerSpeed = 0.5f;
+
+float relativeSpeed(entt::registry &reg, const entt::entity a, const entt::entity b) {
+  const b2Vec2 velA = reg.get<Physics>(a).body->GetLinearVelocity();
+  const b2Vec2 velB = reg.get<Physics>(b).body->GetLinearVelocity();
+  return (velA - velB).Length();
+}
+
+}
+
+void collideShipPair(entt::registry &reg, const entt::entity a, const entt::entity b) {
+  const float speed = relativeSpeed(reg, a, b);
+  const int damage = (speed - minSpeed) * damagePerSpeed + 0.5f;
+  int &hullA = reg.get<Hull>(a).h;
+  int &hullB = reg.get<Hull>(b).h;
+  // TODO: Should both ships take the same amount of damage?
+  // Maybe hull params could store the "toughness" as minSpeed and damagePerSpeed
+  hullA -= damage;
+  hullB -= damage;
+  // This function exists to handle the case where two ships destroy each other
+  if (hullA < 0) {
+    destroyShip(reg, a);
+  }
+  if (hullB < 0) {
+    destroyShip(reg, b);
+  }
+}
+
+void collideShip(entt::registry &reg, const entt::entity a, const entt::entity b) {
+  const float speed = relativeSpeed(reg, a, b);
+  const int damage = (speed - minSpeed) * damagePerSpeed;
+  int &hull = reg.get<Hull>(a).h;
+  hull -= damage;
+  if (hull < 0) {
+    destroyShip(reg, a);
+  }
 }

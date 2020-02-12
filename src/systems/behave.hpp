@@ -24,4 +24,6 @@ void behaveMouse(entt::registry &);
 // Ability to grab onto asteroids and move them around
 // Ships take damage when they smash into stuff
 
+// maybe missiles and ships should try to avoid obstactles
+
 #endif

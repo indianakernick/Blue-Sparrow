@@ -33,15 +33,9 @@ void setBasicMissile(entt::registry &, entt::entity);
 void setSniperMotion(entt::registry &, entt::entity);
 void setSniperBlaster(entt::registry &, entt::entity);
 
-// Single file for all ship factories
-// functions like makeSmallShip, setPlayer, setOrbiter
-
 // have sets of parameters in levels
 // like level 1 blasters
 // level 1 movement
 // upgrade system will just choose levels
-
-// classes of ships
-// like scouts and snipers
 
 #endif
