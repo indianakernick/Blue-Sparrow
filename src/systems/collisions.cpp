@@ -8,6 +8,7 @@
 
 #include "collisions.hpp"
 
+#include "destruction.hpp"
 #include "../comps/ammo.hpp"
 #include "../comps/drops.hpp"
 #include <entt/entity/registry.hpp>
@@ -39,7 +40,7 @@ void handleCollisions(entt::registry &reg) {
         if (auto *hull = reg.try_get<Hull>(b)) {
           hull->h -= damage->d;
           if (hull->h <= 0) {
-            reg.destroy(b);
+            destroyShip(reg, b);
           }
         }
         reg.destroy(a);

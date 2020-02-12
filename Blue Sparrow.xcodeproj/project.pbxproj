@@ -12,6 +12,7 @@
 		457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF45523EBEA8D00405E2D /* libbox2d.a */; };
 		457DF47E23EBF20B00405E2D /* libSDL2-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF48223EBF45E00405E2D /* sdl_delete.cpp */; };
+		45BC5E4723F3833200A07A57 /* destruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E4523F3833200A07A57 /* destruction.cpp */; };
 		45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA1E23ECE5E6000B554D /* handle_input.cpp */; };
 		45C5CA2323ECE7C3000B554D /* apply_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2123ECE7C3000B554D /* apply_input.cpp */; };
 		45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2523ECEA5E000B554D /* camera.cpp */; };
@@ -64,6 +65,8 @@
 		457DF48223EBF45E00405E2D /* sdl_delete.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sdl_delete.cpp; sourceTree = "<group>"; };
 		457DF48323EBF45E00405E2D /* sdl_delete.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sdl_delete.hpp; sourceTree = "<group>"; };
 		45BC5E4423F37F3B00A07A57 /* drops.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = drops.hpp; sourceTree = "<group>"; };
+		45BC5E4523F3833200A07A57 /* destruction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = destruction.cpp; sourceTree = "<group>"; };
+		45BC5E4623F3833200A07A57 /* destruction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = destruction.hpp; sourceTree = "<group>"; };
 		45C5CA1723ECE3DA000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA1823ECE41E000B554D /* graphics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = graphics.hpp; sourceTree = "<group>"; };
 		45C5CA1923ECE4FD000B554D /* input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
@@ -218,6 +221,8 @@
 				45C5CA5E23F0E020000B554D /* collisions.hpp */,
 				45C5CA6023F10652000B554D /* aim_assist.cpp */,
 				45C5CA6123F10652000B554D /* aim_assist.hpp */,
+				45BC5E4523F3833200A07A57 /* destruction.cpp */,
+				45BC5E4623F3833200A07A57 /* destruction.hpp */,
 			);
 			path = systems;
 			sourceTree = "<group>";
@@ -321,6 +326,7 @@
 				45C5CA3A23ED16AF000B554D /* physics.cpp in Sources */,
 				45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */,
 				45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */,
+				45BC5E4723F3833200A07A57 /* destruction.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

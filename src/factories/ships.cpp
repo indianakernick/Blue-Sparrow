@@ -10,6 +10,7 @@
 
 #include "physics.hpp"
 #include "../comps/ammo.hpp"
+#include "../comps/drops.hpp"
 #include "../comps/input.hpp"
 #include "../comps/timers.hpp"
 #include "../comps/params.hpp"
@@ -33,6 +34,9 @@ entt::entity makePlayer(entt::registry &reg) {
 
 entt::entity makeScout(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
+  if (team == Team::enemy) {
+    reg.assign<Drops>(e, 4, 5);
+  }
   setHull(reg, e, 100);
   setShip(reg, e, team);
   setSmallShipPhysics(reg, e, team);
@@ -45,6 +49,9 @@ entt::entity makeScout(entt::registry &reg, const Team team) {
 
 entt::entity makeSniper(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
+  if (team == Team::enemy) {
+    reg.assign<Drops>(e, 10, 14);
+  }
   setHull(reg, e, 100);
   setShip(reg, e, team);
   setSmallShipPhysics(reg, e, team);

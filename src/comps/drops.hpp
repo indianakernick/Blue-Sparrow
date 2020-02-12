@@ -11,4 +11,9 @@
 
 struct Coin {};
 
+struct Drops {
+  int minCoins;
+  int maxCoins;
+};
+
 #endif

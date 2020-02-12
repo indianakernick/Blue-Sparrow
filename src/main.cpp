@@ -103,7 +103,6 @@ int main() {
   entt::entity rock = makeAsteroid(reg);
   setTransform(reg, rock, {-30.0f, -40.0f}, 1.0f);
   setMotion(reg, rock, {1.0f, 1.3f}, 0.1f);
-  setTransform(reg, makeCoin(reg), {40.0f, 40.0f}, 0.0f);
   
   const std::uint64_t lowerFrameTime = SDL_GetPerformanceFrequency() / 100;
   const std::uint64_t targetFrameTime = SDL_GetPerformanceFrequency() / 60;
