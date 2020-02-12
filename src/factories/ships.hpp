@@ -17,6 +17,7 @@ entt::entity makeScout(entt::registry &, Team);
 entt::entity makeSniper(entt::registry &, Team);
 
 void setShip(entt::registry &, entt::entity, Team);
+void setHull(entt::registry &, entt::entity, int);
 
 void setPlayer(entt::registry &, entt::entity);
 void setOrbitBehave(entt::registry &, entt::entity);

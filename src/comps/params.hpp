@@ -38,10 +38,10 @@ struct MissileParams {
   SeekLevel level;
 };
 
-/*
+/// The maximum hull durability.
+/// Can be changed when the player upgrades their ship.
 struct HullParams {
   int durability;
 };
-*/
 
 #endif

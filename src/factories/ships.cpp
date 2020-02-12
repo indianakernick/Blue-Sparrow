@@ -20,7 +20,7 @@
 
 entt::entity makePlayer(entt::registry &reg) {
   entt::entity e = reg.create();
-  reg.assign<Hull>(e, 50000); // for testing
+  setHull(reg, e, 50000); // for testing
   setShip(reg, e, Team::ally);
   setSmallShipPhysics(reg, e, Team::ally);
   setPlayer(reg, e);
@@ -33,7 +33,7 @@ entt::entity makePlayer(entt::registry &reg) {
 
 entt::entity makeScout(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
-  reg.assign<Hull>(e, 100);
+  setHull(reg, e, 100);
   setShip(reg, e, team);
   setSmallShipPhysics(reg, e, team);
   setOrbitBehave(reg, e);
@@ -45,7 +45,7 @@ entt::entity makeScout(entt::registry &reg, const Team team) {
 
 entt::entity makeSniper(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
-  reg.assign<Hull>(e, 100);
+  setHull(reg, e, 100);
   setShip(reg, e, team);
   setSmallShipPhysics(reg, e, team);
   setSniperSprite(reg, e, team);
@@ -58,6 +58,11 @@ entt::entity makeSniper(entt::registry &reg, const Team team) {
 void setShip(entt::registry &reg, const entt::entity e, const Team team) {
   reg.assign<Team>(e, team);
   reg.assign<Type>(e, Type::ship);
+}
+
+void setHull(entt::registry &reg, const entt::entity e, const int hull) {
+  reg.assign<Hull>(e, hull);
+  reg.assign<HullParams>(e, hull);
 }
 
 void setPlayer(entt::registry &reg, const entt::entity e) {
