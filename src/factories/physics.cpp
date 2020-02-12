@@ -142,7 +142,7 @@ void setAsteroidPhysics(entt::registry &reg, const entt::entity e) {
   b2FixtureDef fixDef;
   fixDef.shape = &shape;
   fixDef.density = 2.0f;
-  fixDef.restitution = 1.0f;
+  fixDef.restitution = 0.2f;
   fixDef.filter.categoryBits = asteroid_bit;
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
