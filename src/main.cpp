@@ -104,8 +104,17 @@ int main() {
   setTransform(reg, rock, {-30.0f, -40.0f}, 1.0f);
   setMotion(reg, rock, {1.0f, 1.3f}, 0.1f);
   
-  const std::uint64_t lowerFrameTime = SDL_GetPerformanceFrequency() / 100;
-  const std::uint64_t targetFrameTime = SDL_GetPerformanceFrequency() / 60;
+  // TODO: The window could move to a different monitor with a different refresh
+  // rate and mess everything up.
+  // There doesn't seem to be an event for changing monitors.
+  // Might need to check for monitor change on the window move event.
+  const int display = SDL_CHECK(SDL_GetWindowDisplayIndex(window.get()));
+  SDL_DisplayMode displayMode;
+  SDL_CHECK(SDL_GetCurrentDisplayMode(display, &displayMode));
+  const int fps = displayMode.refresh_rate == 0 ? 60 : displayMode.refresh_rate;
+  
+  const std::uint64_t lowerFrameTime = SDL_GetPerformanceFrequency() / (fps + fps / 2);
+  const std::uint64_t targetFrameTime = SDL_GetPerformanceFrequency() / fps;
   const std::uint64_t toMilli = SDL_GetPerformanceFrequency() / 1000;
   
   while (true) {
@@ -171,7 +180,7 @@ int main() {
     applyMissileCommands(reg);
     expireTemporary(reg);
     
-    stepPhysics(reg);
+    stepPhysics(reg, fps);
     
     limitVelocity(reg);
     handleCollisions(reg);

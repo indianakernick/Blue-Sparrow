@@ -12,7 +12,7 @@
 #include <box2d/b2_math.h>
 #include <entt/entity/fwd.hpp>
 
-void stepPhysics(entt::registry &);
+void stepPhysics(entt::registry &, int);
 void limitVelocity(entt::registry &);
 void connectDestroyBody(entt::registry &);
 void connectContactListener(entt::registry &);

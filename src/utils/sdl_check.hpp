@@ -27,15 +27,13 @@ public:
 
 template <typename Ptr>
 [[nodiscard]] Ptr *check(Ptr *ptr) {
-  if (ptr == nullptr) {
-    raise();
-  } else {
-    return ptr;
-  }
+  if (ptr == nullptr) raise();
+  return ptr;
 }
 
-inline void check(const int code) {
-  if (code == -1) raise();
+inline int check(const int code) {
+  if (code < 0) raise();
+  return code;
 }
 
 }
