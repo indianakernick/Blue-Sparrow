@@ -150,12 +150,11 @@ void setAsteroidPhysics(entt::registry &reg, const entt::entity e) {
   reg.assign<Physics>(e, body, halfWidth * 2.0f, halfHeight * 2.0f);
 }
 
-void setCoinPhysics(entt::registry &reg, const entt::entity e) {
+void setDropPhysics(entt::registry &reg, const entt::entity e) {
   const float halfSize = 0.5f;
   
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
-  bodyDef.angularVelocity = 0.5f;
   bodyDef.userData = toUserData(e);
   
   b2PolygonShape shape;
@@ -164,7 +163,7 @@ void setCoinPhysics(entt::registry &reg, const entt::entity e) {
   b2FixtureDef fixDef;
   fixDef.shape = &shape;
   fixDef.isSensor = true;
-  fixDef.filter.categoryBits = coin_bit;
+  fixDef.filter.categoryBits = drop_bit;
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);

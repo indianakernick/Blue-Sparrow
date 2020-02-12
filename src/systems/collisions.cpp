@@ -50,11 +50,23 @@ void handleCollisions(entt::registry &reg) {
     });
     if (handled) continue;
     
-    visit(pair, [&reg](entt::entity a, entt::entity b) {
+    handled = visit(pair, [&reg](entt::entity a, entt::entity b) {
       if (auto *coins = reg.try_get<Coins>(a)) {
         if (reg.has<Coin>(b)) {
           reg.destroy(b);
           ++coins->c;
+          return true;
+        }
+      }
+      return false;
+    });
+    if (handled) continue;
+    
+    visit(pair, [&reg](entt::entity a, entt::entity b) {
+      if (auto *ammo = reg.try_get<MissileAmmo>(a)) {
+        if (reg.has<Ammo>(b)) {
+          reg.destroy(b);
+          ++ammo->n;
           return true;
         }
       }

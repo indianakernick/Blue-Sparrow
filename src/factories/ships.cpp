@@ -35,7 +35,7 @@ entt::entity makePlayer(entt::registry &reg) {
 entt::entity makeScout(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
   if (team == Team::enemy) {
-    reg.assign<Drops>(e, 4, 5);
+    reg.assign<Drops>(e, 4, 5, 0, 1);
   }
   setHull(reg, e, 100);
   setShip(reg, e, team);
@@ -50,7 +50,7 @@ entt::entity makeScout(entt::registry &reg, const Team team) {
 entt::entity makeSniper(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
   if (team == Team::enemy) {
-    reg.assign<Drops>(e, 10, 14);
+    reg.assign<Drops>(e, 10, 14, 0, 2);
   }
   setHull(reg, e, 100);
   setShip(reg, e, team);

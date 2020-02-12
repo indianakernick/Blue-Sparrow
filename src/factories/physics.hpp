@@ -17,6 +17,6 @@ void setSmallShipPhysics(entt::registry &, entt::entity, Team);
 void setSmallBoltPhysics(entt::registry &, entt::entity, Team);
 void setSmallMissilePhysics(entt::registry &, entt::entity, Team);
 void setAsteroidPhysics(entt::registry &, entt::entity);
-void setCoinPhysics(entt::registry &, entt::entity);
+void setDropPhysics(entt::registry &, entt::entity);
 
 #endif

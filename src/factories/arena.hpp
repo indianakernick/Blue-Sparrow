@@ -14,5 +14,6 @@
 entt::entity makeArena(entt::registry &, float, float);
 entt::entity makeAsteroid(entt::registry &);
 entt::entity makeCoin(entt::registry &);
+entt::entity makeAmmo(entt::registry &);
 
 #endif

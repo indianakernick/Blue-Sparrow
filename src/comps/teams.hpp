@@ -17,7 +17,7 @@ constexpr std::uint16_t enemy_ship_bit   = 1 << 2;
 constexpr std::uint16_t enemy_bullet_bit = 1 << 3;
 constexpr std::uint16_t arena_bit        = 1 << 4;
 constexpr std::uint16_t asteroid_bit     = 1 << 5;
-constexpr std::uint16_t coin_bit         = 1 << 6;
+constexpr std::uint16_t drop_bit         = 1 << 6;
 
 enum class Team {
   enemy,
@@ -39,7 +39,7 @@ constexpr std::uint16_t shipCat(const Team team) {
 constexpr std::uint16_t shipMsk(const Team team) {
   switch (team) {
     case Team::ally: return ~ally_bullet_bit;
-    case Team::enemy: return ~enemy_bullet_bit & ~coin_bit;
+    case Team::enemy: return ~enemy_bullet_bit & ~drop_bit;
   }
 }
 

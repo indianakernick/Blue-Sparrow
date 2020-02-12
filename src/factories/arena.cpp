@@ -31,9 +31,18 @@ entt::entity makeAsteroid(entt::registry &reg) {
 
 entt::entity makeCoin(entt::registry &reg) {
   entt::entity e = reg.create();
-  setCoinPhysics(reg, e);
+  setDropPhysics(reg, e);
   reg.assign<Coin>(e);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{255, 255, 0});
+  return e;
+}
+
+entt::entity makeAmmo(entt::registry &reg) {
+  entt::entity e = reg.create();
+  setDropPhysics(reg, e);
+  reg.assign<Ammo>(e);
+  reg.assign<SpriteRect>(e);
+  reg.assign<Sprite>(e, Sprite{191, 191, 191});
   return e;
 }
