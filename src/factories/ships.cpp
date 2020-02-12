@@ -70,6 +70,7 @@ void setPlayer(entt::registry &reg, const entt::entity e) {
   reg.assign<KeyInput>(e);
   reg.assign<MouseInput>(e);
   reg.assign<AimAssist>(e);
+  reg.assign<Coins>(e, 0);
 }
 
 void setOrbitBehave(entt::registry &reg, const entt::entity e) {

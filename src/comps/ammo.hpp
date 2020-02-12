@@ -25,4 +25,9 @@ struct Damage {
   int d;
 };
 
+/// The number of coins that the player has
+struct Coins {
+  int c;
+};
+
 #endif

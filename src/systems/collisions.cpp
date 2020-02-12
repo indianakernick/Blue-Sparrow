@@ -9,6 +9,7 @@
 #include "collisions.hpp"
 
 #include "../comps/ammo.hpp"
+#include "../comps/drops.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
@@ -17,10 +18,9 @@ using CollisionPair = std::pair<entt::entity, entt::entity>;
 using Collisions = std::vector<CollisionPair>;
 
 template <typename Func>
-void visit(CollisionPair pair, Func func) {
-  if (!func(pair.first, pair.second)) {
-    func(pair.second, pair.first);
-  }
+bool visit(CollisionPair pair, Func func) {
+  if (func(pair.first, pair.second)) return true;
+  return func(pair.second, pair.first);
 }
 
 }
@@ -32,7 +32,9 @@ void handleCollisions(entt::registry &reg) {
       continue;
     }
     
-    visit(pair, [&reg](entt::entity a, entt::entity b) {
+    bool handled = false;
+    
+    handled = visit(pair, [&reg](entt::entity a, entt::entity b) {
       if (auto *damage = reg.try_get<Damage>(a)) {
         if (auto *hull = reg.try_get<Hull>(b)) {
           hull->h -= damage->d;
@@ -42,6 +44,18 @@ void handleCollisions(entt::registry &reg) {
         }
         reg.destroy(a);
         return true;
+      }
+      return false;
+    });
+    if (handled) continue;
+    
+    visit(pair, [&reg](entt::entity a, entt::entity b) {
+      if (auto *coins = reg.try_get<Coins>(a)) {
+        if (reg.has<Coin>(b)) {
+          reg.destroy(b);
+          ++coins->c;
+          return true;
+        }
       }
       return false;
     });

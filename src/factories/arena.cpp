@@ -9,6 +9,7 @@
 #include "arena.hpp"
 
 #include "physics.hpp"
+#include "../comps/drops.hpp"
 #include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -31,6 +32,7 @@ entt::entity makeAsteroid(entt::registry &reg) {
 entt::entity makeCoin(entt::registry &reg) {
   entt::entity e = reg.create();
   setCoinPhysics(reg, e);
+  reg.assign<Coin>(e);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{255, 255, 0});
   return e;
