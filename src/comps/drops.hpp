@@ -12,8 +12,11 @@
 /// Coin drop
 struct Coin {};
 
-/// Ammo drop
+/// Missile ammo drop
 struct Ammo {};
+
+/// Hull repair drop
+struct Scrap {};
 
 /// Definition of what a ship drops.
 /// The number of items dropped is a random number within a range.
@@ -22,6 +25,8 @@ struct Drops {
   int maxCoins;
   int minAmmo;
   int maxAmmo;
+  int minScrap;
+  int maxScrap;
 };
 
 #endif

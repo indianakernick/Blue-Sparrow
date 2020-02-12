@@ -46,3 +46,12 @@ entt::entity makeAmmo(entt::registry &reg) {
   reg.assign<Sprite>(e, Sprite{191, 191, 191});
   return e;
 }
+
+entt::entity makeScrap(entt::registry &reg) {
+  entt::entity e = reg.create();
+  setDropPhysics(reg, e);
+  reg.assign<Scrap>(e);
+  reg.assign<SpriteRect>(e);
+  reg.assign<Sprite>(e, Sprite{63, 63, 63});
+  return e;
+}

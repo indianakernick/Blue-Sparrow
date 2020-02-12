@@ -44,6 +44,11 @@ void destroyShip(entt::registry &reg, const entt::entity e) {
     for (int ammo = ammoDist(gen); ammo > 0; --ammo) {
       setPos(reg, makeAmmo(reg), pos, gen);
     }
+    
+    std::uniform_int_distribution scrapDist{drops->minScrap, drops->maxScrap};
+    for (int scrap = scrapDist(gen); scrap > 0; --scrap) {
+      setPos(reg, makeScrap(reg), pos, gen);
+    }
   }
   
   reg.destroy(e);

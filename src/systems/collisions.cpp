@@ -11,6 +11,7 @@
 #include "destruction.hpp"
 #include "../comps/ammo.hpp"
 #include "../comps/drops.hpp"
+#include "../comps/params.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
@@ -62,11 +63,25 @@ void handleCollisions(entt::registry &reg) {
     });
     if (handled) continue;
     
-    visit(pair, [&reg](entt::entity a, entt::entity b) {
+    handled = visit(pair, [&reg](entt::entity a, entt::entity b) {
       if (auto *ammo = reg.try_get<MissileAmmo>(a)) {
         if (reg.has<Ammo>(b)) {
           reg.destroy(b);
           ++ammo->n;
+          return true;
+        }
+      }
+      return false;
+    });
+    if (handled) continue;
+    
+    visit(pair, [&reg](entt::entity a, entt::entity b) {
+      if (auto *hull = reg.try_get<Hull>(a)) {
+        if (reg.has<Scrap>(b)) {
+          if (hull->h < reg.get<HullParams>(a).durability) {
+            reg.destroy(b);
+            ++hull->h;
+          }
           return true;
         }
       }
