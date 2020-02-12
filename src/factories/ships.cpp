@@ -142,6 +142,7 @@ void setBasicMissile(entt::registry &reg, const entt::entity e) {
   reg.assign<MissileParams>(e, missileParams);
   reg.assign<MissileInput>(e);
   reg.assign<MissileTimer>(e, std::uint32_t{});
+  reg.assign<MissileAmmo>(e, 0);
 }
 
 void setSniperMotion(entt::registry &reg, const entt::entity e) {
@@ -158,7 +159,7 @@ void setSniperBlaster(entt::registry &reg, const entt::entity e) {
   BlasterParams blasterParams;
   blasterParams.rof = 0.25f;
   blasterParams.speed = 160.0f;
-  blasterParams.damage = 50;
+  blasterParams.damage = 30;
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterInput>(e);
   reg.assign<BlasterTimer>(e, std::uint32_t{});

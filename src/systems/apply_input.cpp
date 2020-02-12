@@ -47,6 +47,7 @@ void applyMoveInput(entt::registry &reg) {
 void applyBlasterInput(entt::registry &reg) {
   entt::each(reg, [&](entt::entity e, Physics phys, BlasterParams params, BlasterInput input, BlasterTimer &timer, Team team) {
     if (!input.fire) return;
+    
     const std::uint32_t now = SDL_GetTicks();
     if (!SDL_TICKS_PASSED(now, timer.done)) return;
     timer.done = now + 1000 / params.rof;
@@ -64,11 +65,14 @@ void applyBlasterInput(entt::registry &reg) {
 }
 
 void applyMissileInput(entt::registry &reg) {
-  entt::each(reg, [&](Physics phys, MissileParams params, MissileInput input, MissileTimer &timer, Team team) {
+  entt::each(reg, [&](Physics phys, MissileParams params, MissileInput input, MissileAmmo &ammo, MissileTimer &timer, Team team) {
     if (!input.fire) return;
+    if (ammo.n <= 0) return;
+    
     const std::uint32_t now = SDL_GetTicks();
     if (!SDL_TICKS_PASSED(now, timer.done)) return;
     timer.done = now + 1000 / params.rof;
+    --ammo.n;
     
     const b2Vec2 shipPos = phys.body->GetPosition();
     const float shipAngle = phys.body->GetAngle();

@@ -9,11 +9,10 @@
 #ifndef comps_ammo_hpp
 #define comps_ammo_hpp
 
-/*
+/// The number of missiles that the ship holds
 struct MissileAmmo {
   int n;
 };
-*/
 
 /// The remaining durability of the hull of a ship
 struct Hull {
