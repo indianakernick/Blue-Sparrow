@@ -15,8 +15,8 @@
 entt::entity makeArena(entt::registry &reg, const float width, const float height) {
   entt::entity e = reg.create();
   setArenaPhysics(reg, e, width, height);
-  reg.assign<BackgroundSprite>(e);
   reg.assign<SpriteRect>(e);
+  reg.assign<BackgroundSprite>(e);
   return e;
 }
 
@@ -25,5 +25,13 @@ entt::entity makeAsteroid(entt::registry &reg) {
   setAsteroidPhysics(reg, e);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{129, 76, 38});
+  return e;
+}
+
+entt::entity makeCoin(entt::registry &reg) {
+  entt::entity e = reg.create();
+  setCoinPhysics(reg, e);
+  reg.assign<SpriteRect>(e);
+  reg.assign<Sprite>(e, Sprite{255, 255, 0});
   return e;
 }
