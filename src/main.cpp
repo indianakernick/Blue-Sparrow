@@ -25,8 +25,8 @@
 #include "systems/physics.hpp"
 #include "systems/collisions.hpp"
 #include "systems/find_target.hpp"
-#include "systems/apply_input.hpp"
 #include "systems/handle_input.hpp"
+#include "systems/apply_commands.hpp"
 
 SDL::Texture makeTexture(SDL_Renderer *renderer) {
   SDL::Texture tex{SDL_CHECK(SDL_CreateTexture(
@@ -166,9 +166,9 @@ int main() {
     behaveSeek(reg);
     behaveSniper(reg);
     behaveMouse(reg);
-    applyMoveInput(reg);
-    applyBlasterInput(reg);
-    applyMissileInput(reg);
+    applyMoveCommands(reg);
+    applyBlasterCommands(reg);
+    applyMissileCommands(reg);
     expireTemporary(reg);
     
     stepPhysics(reg);

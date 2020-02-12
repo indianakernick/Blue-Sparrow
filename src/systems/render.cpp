@@ -68,7 +68,7 @@ void renderSprite(entt::registry &reg) {
   entt::each(reg, [&](entt::entity e, SpriteRect rect, Sprite sprite) {
     renderRect(draw, rect, sprite, rect.width / 2.0f, rect.height / 2.0f);
     
-    if (auto *input = reg.try_get<MoveInput>(e)) {
+    if (auto *input = reg.try_get<MoveCommand>(e)) {
       const Sprite thrustSprite = {255, 109, 0};
       
       if (input->forward) {

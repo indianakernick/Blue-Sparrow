@@ -32,32 +32,32 @@ void setMouse(entt::registry &reg, bool Input::*mem, const bool value) {
 bool handleKey(entt::registry &reg, const SDL_Scancode key, const bool press) {
   switch (key) {
     case SDL_SCANCODE_E:
-      setMouse(reg, &MoveInput::forward, press);
+      setMouse(reg, &MoveCommand::forward, press);
       return true;
     case SDL_SCANCODE_D:
-      setMouse(reg, &MoveInput::reverse, press);
+      setMouse(reg, &MoveCommand::reverse, press);
       return true;
     case SDL_SCANCODE_I:
     case SDL_SCANCODE_UP:
-      setKey(reg, &MoveInput::forward, press);
+      setKey(reg, &MoveCommand::forward, press);
       return true;
     case SDL_SCANCODE_K:
     case SDL_SCANCODE_DOWN:
-      setKey(reg, &MoveInput::reverse, press);
+      setKey(reg, &MoveCommand::reverse, press);
       return true;
     case SDL_SCANCODE_J:
     case SDL_SCANCODE_LEFT:
-      setKey(reg, &MoveInput::left, press);
+      setKey(reg, &MoveCommand::left, press);
       return true;
     case SDL_SCANCODE_L:
     case SDL_SCANCODE_RIGHT:
-      setKey(reg, &MoveInput::right, press);
+      setKey(reg, &MoveCommand::right, press);
       return true;
     case SDL_SCANCODE_Z:
-      setKey(reg, &BlasterInput::fire, press);
+      setKey(reg, &BlasterCommand::fire, press);
       return true;
     case SDL_SCANCODE_X:
-      setKey(reg, &MissileInput::fire, press);
+      setKey(reg, &MissileCommand::fire, press);
       return true;
     default:
       return false;
@@ -84,10 +84,10 @@ bool handleMouseMove(entt::registry &reg, const int x, const int y) {
 
 bool handleMouseDown(entt::registry &reg, const int button) {
   if (button == SDL_BUTTON_LEFT) {
-    setMouse(reg, &BlasterInput::fire, true);
+    setMouse(reg, &BlasterCommand::fire, true);
     return true;
   } else if (button == SDL_BUTTON_RIGHT) {
-    setMouse(reg, &MissileInput::fire, true);
+    setMouse(reg, &MissileCommand::fire, true);
     return true;
   } else {
     return false;
@@ -96,10 +96,10 @@ bool handleMouseDown(entt::registry &reg, const int button) {
 
 bool handleMouseUp(entt::registry &reg, const int button) {
   if (button == SDL_BUTTON_LEFT) {
-    setMouse(reg, &BlasterInput::fire, false);
+    setMouse(reg, &BlasterCommand::fire, false);
     return true;
   } else if (button == SDL_BUTTON_RIGHT) {
-    setMouse(reg, &MissileInput::fire, false);
+    setMouse(reg, &MissileCommand::fire, false);
     return true;
   } else {
     return false;

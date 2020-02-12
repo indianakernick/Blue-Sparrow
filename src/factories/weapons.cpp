@@ -34,7 +34,7 @@ entt::entity makeMissile(entt::registry &reg, const Team team) {
   reg.assign<Sprite>(e, Sprite{191, 191, 191});
   reg.assign<ExpireTimer>(e, SDL_GetTicks() + 10000);
   reg.assign<Target>(e, false);
-  reg.assign<MoveInput>(e);
+  reg.assign<MoveCommand>(e);
   reg.assign<Team>(e, team);
   reg.assign<Type>(e, Type::bullet);
   return e;

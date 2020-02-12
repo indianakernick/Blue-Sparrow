@@ -9,10 +9,6 @@
 #ifndef comps_input_hpp
 #define comps_input_hpp
 
-// TODO: "input" seems to be an overloaded word
-// It refers to key/mouse events and ship commands
-// Perhaps MoveIntent or MoveCommand instead of MoveInput?
-
 /// If present, the keyboard will control MoveInput
 struct KeyInput {};
 
@@ -26,7 +22,7 @@ struct MouseInput {
 struct AimAssist {};
 
 /// Influences forces and torques applied to the physics body.
-struct MoveInput {
+struct MoveCommand {
   bool forward = false;
   bool reverse = false;
   bool left = false;
@@ -34,12 +30,12 @@ struct MoveInput {
 };
 
 /// Causes the blaster to be fired.
-struct BlasterInput {
+struct BlasterCommand {
   bool fire = false;
 };
 
 /// Causes a missile to be fired.
-struct MissileInput {
+struct MissileCommand {
   bool fire = false;
 };
 

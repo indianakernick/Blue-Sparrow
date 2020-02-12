@@ -14,7 +14,7 @@
 		457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF48223EBF45E00405E2D /* sdl_delete.cpp */; };
 		45BC5E4723F3833200A07A57 /* destruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E4523F3833200A07A57 /* destruction.cpp */; };
 		45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA1E23ECE5E6000B554D /* handle_input.cpp */; };
-		45C5CA2323ECE7C3000B554D /* apply_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2123ECE7C3000B554D /* apply_input.cpp */; };
+		45C5CA2323ECE7C3000B554D /* apply_commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2123ECE7C3000B554D /* apply_commands.cpp */; };
 		45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2523ECEA5E000B554D /* camera.cpp */; };
 		45C5CA2A23ECEE46000B554D /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2823ECEE46000B554D /* render.cpp */; };
 		45C5CA3523ED07B6000B554D /* expire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA3323ED07B6000B554D /* expire.cpp */; };
@@ -72,8 +72,8 @@
 		45C5CA1923ECE4FD000B554D /* input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
 		45C5CA1E23ECE5E6000B554D /* handle_input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = handle_input.cpp; sourceTree = "<group>"; };
 		45C5CA1F23ECE5E6000B554D /* handle_input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = handle_input.hpp; sourceTree = "<group>"; };
-		45C5CA2123ECE7C3000B554D /* apply_input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = apply_input.cpp; sourceTree = "<group>"; };
-		45C5CA2223ECE7C3000B554D /* apply_input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = apply_input.hpp; sourceTree = "<group>"; };
+		45C5CA2123ECE7C3000B554D /* apply_commands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = apply_commands.cpp; sourceTree = "<group>"; };
+		45C5CA2223ECE7C3000B554D /* apply_commands.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = apply_commands.hpp; sourceTree = "<group>"; };
 		45C5CA2423ECE8F2000B554D /* params.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = params.hpp; sourceTree = "<group>"; };
 		45C5CA2523ECEA5E000B554D /* camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
 		45C5CA2623ECEA5E000B554D /* camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
@@ -203,8 +203,8 @@
 			children = (
 				45C5CA1E23ECE5E6000B554D /* handle_input.cpp */,
 				45C5CA1F23ECE5E6000B554D /* handle_input.hpp */,
-				45C5CA2123ECE7C3000B554D /* apply_input.cpp */,
-				45C5CA2223ECE7C3000B554D /* apply_input.hpp */,
+				45C5CA2123ECE7C3000B554D /* apply_commands.cpp */,
+				45C5CA2223ECE7C3000B554D /* apply_commands.hpp */,
 				45C5CA2523ECEA5E000B554D /* camera.cpp */,
 				45C5CA2623ECEA5E000B554D /* camera.hpp */,
 				45C5CA2823ECEE46000B554D /* render.cpp */,
@@ -318,7 +318,7 @@
 				45C5CA4923EE3E91000B554D /* behave.cpp in Sources */,
 				45C5CA2A23ECEE46000B554D /* render.cpp in Sources */,
 				45C5CA3523ED07B6000B554D /* expire.cpp in Sources */,
-				45C5CA2323ECE7C3000B554D /* apply_input.cpp in Sources */,
+				45C5CA2323ECE7C3000B554D /* apply_commands.cpp in Sources */,
 				45C5CA4623EE3B7A000B554D /* find_target.cpp in Sources */,
 				45C5CA4323EE385D000B554D /* physics.cpp in Sources */,
 				45C5CA5B23EF9A0C000B554D /* arena.cpp in Sources */,

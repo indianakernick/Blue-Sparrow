@@ -1,12 +1,12 @@
 //
-//  apply_input.cpp
+//  apply_commands.cpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 7/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#include "apply_input.hpp"
+#include "apply_commands.hpp"
 
 #include "aim_assist.hpp"
 #include <box2d/b2_body.h>
@@ -25,8 +25,8 @@
 #include "../factories/weapons.hpp"
 #include <entt/entity/registry.hpp>
 
-void applyMoveInput(entt::registry &reg) {
-  entt::each(reg, [](Physics phys, MoveParams params, MoveInput input) {
+void applyMoveCommands(entt::registry &reg) {
+  entt::each(reg, [](Physics phys, MoveParams params, MoveCommand input) {
     if (input.forward) {
       const b2Vec2 force = angleMag(phys.body->GetAngle(), params.forwardForce);
       phys.body->ApplyForceToCenter(force, true);
@@ -44,8 +44,8 @@ void applyMoveInput(entt::registry &reg) {
   });
 }
 
-void applyBlasterInput(entt::registry &reg) {
-  entt::each(reg, [&](entt::entity e, Physics phys, BlasterParams params, BlasterInput input, BlasterTimer &timer, Team team) {
+void applyBlasterCommands(entt::registry &reg) {
+  entt::each(reg, [&](entt::entity e, Physics phys, BlasterParams params, BlasterCommand input, BlasterTimer &timer, Team team) {
     if (!input.fire) return;
     
     const std::uint32_t now = SDL_GetTicks();
@@ -64,8 +64,8 @@ void applyBlasterInput(entt::registry &reg) {
   });
 }
 
-void applyMissileInput(entt::registry &reg) {
-  entt::each(reg, [&](Physics phys, MissileParams params, MissileInput input, MissileAmmo &ammo, MissileTimer &timer, Team team) {
+void applyMissileCommands(entt::registry &reg) {
+  entt::each(reg, [&](Physics phys, MissileParams params, MissileCommand input, MissileAmmo &ammo, MissileTimer &timer, Team team) {
     if (!input.fire) return;
     if (ammo.n <= 0) return;
     

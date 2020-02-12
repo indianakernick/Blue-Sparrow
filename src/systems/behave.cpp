@@ -26,7 +26,7 @@ float normalizeAngle(float angle) {
   return angle;
 }
 
-void rotateByAngle(MoveInput &move, const float deltaAngle, const float threshold = 0.5f) {
+void rotateByAngle(MoveCommand &move, const float deltaAngle, const float threshold = 0.5f) {
   if (b2Abs(deltaAngle) < threshold * deg2rad) {
     move.left = move.right = false;
   } else if (deltaAngle < 0.0f) {
@@ -38,7 +38,7 @@ void rotateByAngle(MoveInput &move, const float deltaAngle, const float threshol
   }
 }
 
-void moveByAccel(MoveInput &move, const float accel) {
+void moveByAccel(MoveCommand &move, const float accel) {
   if (b2Abs(accel) < 0.5f) {
     move.forward = move.reverse = false;
   } else if (accel < 0.0f) {
@@ -87,10 +87,10 @@ b2Vec2 interseptPoint(
 
 }
 
-// TODO: I wonder if I could use the genetic algorithm to train the ultimate bot
+// TODO: I wonder if I could use the genetic algorithm to train the ultimate bot!
 
 void behaveOrbit(entt::registry &reg) {
-  auto view = reg.view<Physics, Target, MoveInput, BlasterInput, OrbitBehaviour, BlasterParams>();
+  auto view = reg.view<Physics, Target, MoveCommand, BlasterCommand, OrbitBehaviour, BlasterParams>();
   view.each([&](auto phys, auto target, auto &move, auto &blaster, auto behave, auto params) {
     if (target.e == entt::null) {
       blaster.fire = false;
@@ -130,7 +130,7 @@ void behaveOrbit(entt::registry &reg) {
 }
 
 void behaveSeek(entt::registry &reg) {
-  entt::each(reg, [&](Physics phys, Target target, MoveInput &move, SeekBehaviour behave) {
+  entt::each(reg, [&](Physics phys, Target target, MoveCommand &move, SeekBehaviour behave) {
     if (target.e == entt::null) {
       move.forward = move.reverse = move.left = move.right = false;
       return;
@@ -177,7 +177,7 @@ void behaveSeek(entt::registry &reg) {
 }
 
 void behaveSniper(entt::registry &reg) {
-  auto view = reg.view<Physics, Target, MoveInput, BlasterInput, SniperBehaviour, BlasterParams>();
+  auto view = reg.view<Physics, Target, MoveCommand, BlasterCommand, SniperBehaviour, BlasterParams>();
   view.less([&](auto phys, auto target, auto &move, auto &blaster, auto params) {
     if (target.e == entt::null) {
       blaster.fire = false;
@@ -201,7 +201,7 @@ void behaveSniper(entt::registry &reg) {
 }
 
 void behaveMouse(entt::registry &reg) {
-  entt::each(reg, [&](Physics phys, MoveInput &move, MouseInput mouse) {
+  entt::each(reg, [&](Physics phys, MoveCommand &move, MouseInput mouse) {
     const auto &cam = reg.ctx<Camera>();
     const b2Vec2 shipPos = phys.body->GetPosition();
     const float aimX = mouse.x / cam.zoom + cam.x;

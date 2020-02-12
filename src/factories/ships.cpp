@@ -117,7 +117,7 @@ void setBasicMotion(entt::registry &reg, const entt::entity e) {
   moveParams.reverseForce = 50.0f;
   moveParams.turnTorque = 200.0f;
   reg.assign<MoveParams>(e, moveParams);
-  reg.assign<MoveInput>(e);
+  reg.assign<MoveCommand>(e);
   reg.assign<VelocityLimit>(e, 15.0f);
 }
 
@@ -127,7 +127,7 @@ void setBasicBlaster(entt::registry &reg, const entt::entity e) {
   blasterParams.speed = 60.0f;
   blasterParams.damage = 5;
   reg.assign<BlasterParams>(e, blasterParams);
-  reg.assign<BlasterInput>(e);
+  reg.assign<BlasterCommand>(e);
   reg.assign<BlasterTimer>(e, std::uint32_t{});
 }
 
@@ -140,7 +140,7 @@ void setBasicMissile(entt::registry &reg, const entt::entity e) {
   missileParams.damage = 20;
   missileParams.level = SeekLevel::aim_vel_ahead;
   reg.assign<MissileParams>(e, missileParams);
-  reg.assign<MissileInput>(e);
+  reg.assign<MissileCommand>(e);
   reg.assign<MissileTimer>(e, std::uint32_t{});
   reg.assign<MissileAmmo>(e, 0);
 }
@@ -151,7 +151,7 @@ void setSniperMotion(entt::registry &reg, const entt::entity e) {
   moveParams.reverseForce = 30.0f;
   moveParams.turnTorque = 100.0f;
   reg.assign<MoveParams>(e, moveParams);
-  reg.assign<MoveInput>(e);
+  reg.assign<MoveCommand>(e);
   reg.assign<VelocityLimit>(e, 15.0f);
 }
 
@@ -161,6 +161,6 @@ void setSniperBlaster(entt::registry &reg, const entt::entity e) {
   blasterParams.speed = 160.0f;
   blasterParams.damage = 30;
   reg.assign<BlasterParams>(e, blasterParams);
-  reg.assign<BlasterInput>(e);
+  reg.assign<BlasterCommand>(e);
   reg.assign<BlasterTimer>(e, std::uint32_t{});
 }
