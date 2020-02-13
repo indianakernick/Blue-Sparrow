@@ -17,7 +17,6 @@ entt::entity makeScout(entt::registry &, Team);
 entt::entity makeSniper(entt::registry &, Team);
 
 void setShip(entt::registry &, entt::entity, Team);
-void setHull(entt::registry &, entt::entity, int);
 
 void setPlayer(entt::registry &, entt::entity);
 void setOrbitBehave(entt::registry &, entt::entity);
@@ -32,10 +31,5 @@ void setBasicMissile(entt::registry &, entt::entity);
 
 void setSniperMotion(entt::registry &, entt::entity);
 void setSniperBlaster(entt::registry &, entt::entity);
-
-// have sets of parameters in levels
-// like level 1 blasters
-// level 1 movement
-// upgrade system will just choose levels
 
 #endif

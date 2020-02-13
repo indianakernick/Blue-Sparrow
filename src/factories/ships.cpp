@@ -9,6 +9,7 @@
 #include "ships.hpp"
 
 #include "physics.hpp"
+#include "upgrades.hpp"
 #include "../comps/ammo.hpp"
 #include "../comps/drops.hpp"
 #include "../comps/input.hpp"
@@ -21,7 +22,7 @@
 
 entt::entity makePlayer(entt::registry &reg) {
   entt::entity e = reg.create();
-  setHull(reg, e, 50000); // for testing
+  setUpgradableHull(reg, e, 0);
   setShip(reg, e, Team::ally);
   setSmallShipPhysics(reg, e, Team::ally);
   setPlayer(reg, e);
@@ -37,7 +38,7 @@ entt::entity makeScout(entt::registry &reg, const Team team) {
   if (team == Team::enemy) {
     reg.assign<Drops>(e, 4, 5, 0, 1, 3, 5);
   }
-  setHull(reg, e, 100);
+  setHull(reg, e, 0);
   setShip(reg, e, team);
   setSmallShipPhysics(reg, e, team);
   setOrbitBehave(reg, e);
@@ -52,7 +53,7 @@ entt::entity makeSniper(entt::registry &reg, const Team team) {
   if (team == Team::enemy) {
     reg.assign<Drops>(e, 10, 14, 0, 2, 4, 6);
   }
-  setHull(reg, e, 100);
+  setHull(reg, e, 0);
   setShip(reg, e, team);
   setSmallShipPhysics(reg, e, team);
   setSniperSprite(reg, e, team);
@@ -65,12 +66,6 @@ entt::entity makeSniper(entt::registry &reg, const Team team) {
 void setShip(entt::registry &reg, const entt::entity e, const Team team) {
   reg.assign<Team>(e, team);
   reg.assign<Type>(e, Type::ship);
-}
-
-void setHull(entt::registry &reg, const entt::entity e, const int hull) {
-  reg.assign<Hull>(e, hull);
-  reg.assign<HullParams>(e, hull);
-  reg.assign<BarRect>(e);
 }
 
 void setPlayer(entt::registry &reg, const entt::entity e) {

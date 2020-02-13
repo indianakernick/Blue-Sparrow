@@ -11,6 +11,16 @@
 
 #include "ai.hpp"
 
+struct Upgrade {
+  int cost;
+  int level;
+};
+
+struct MoveUpgrade : Upgrade {};
+struct BlasterUpgrade : Upgrade {};
+struct MissileUpgrade : Upgrade {};
+struct HullUpgrade : Upgrade {};
+
 /// Forces and torques used to move the physics body.
 /// Can be changed when the player upgrades their ship.
 struct MoveParams {
