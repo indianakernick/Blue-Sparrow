@@ -70,6 +70,7 @@ void setShip(entt::registry &reg, const entt::entity e, const Team team) {
 void setHull(entt::registry &reg, const entt::entity e, const int hull) {
   reg.assign<Hull>(e, hull);
   reg.assign<HullParams>(e, hull);
+  reg.assign<BarRect>(e);
 }
 
 void setPlayer(entt::registry &reg, const entt::entity e) {

@@ -185,13 +185,15 @@ int main() {
     limitVelocity(reg);
     handleCollisions(reg);
     moveCamera(reg);
-    readPhysicsTransform(reg);
+    writeSpriteRect(reg);
+    writeBarRect(reg);
     
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
     
     renderBackground(reg);
     renderSprite(reg);
+    renderBar(reg);
     
     SDL_RenderPresent(renderer.get());
     

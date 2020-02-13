@@ -10,12 +10,14 @@
 
 #include <box2d/b2_body.h>
 #include "../utils/each.hpp"
+#include "../comps/ammo.hpp"
+#include "../comps/params.hpp"
 #include "../utils/physics.hpp"
 #include "../comps/physics.hpp"
 #include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
 
-void readPhysicsTransform(entt::registry &reg) {
+void writeSpriteRect(entt::registry &reg) {
   auto cam = reg.ctx<Camera>();
   entt::each(reg, [=](Physics phys, SpriteRect &rect) {
     const b2Vec2 pos = phys.body->GetPosition();
@@ -25,6 +27,17 @@ void readPhysicsTransform(entt::registry &reg) {
     rect.width = phys.width * cam.zoom;
     rect.height = phys.height * cam.zoom;
     rect.angle = angle * rad2deg;
+  });
+}
+
+void writeBarRect(entt::registry &reg) {
+  auto cam = reg.ctx<Camera>();
+  entt::each(reg, [=](Physics phys, Hull hull, HullParams params, BarRect &rect) {
+    const float yOffset = (phys.width + phys.height) / 4.0f;
+    const b2Vec2 pos = phys.body->GetPosition();
+    rect.x = (pos.x - cam.x) * cam.zoom - 25 + 0.5f;
+    rect.y = (pos.y - yOffset - cam.y) * cam.zoom + 0.5f;
+    rect.progress = static_cast<float>(hull.h) / params.durability;
   });
 }
 

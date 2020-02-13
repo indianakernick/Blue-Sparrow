@@ -17,4 +17,7 @@ void renderBackground(entt::registry &);
 /// Read SpriteRect and Sprite to render the texture
 void renderSprite(entt::registry &);
 
+/// Read BarRect to render the hull bar
+void renderBar(entt::registry &);
+
 #endif

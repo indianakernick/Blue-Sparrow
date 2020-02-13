@@ -24,6 +24,12 @@ struct Sprite {
   unsigned char r, g, b;
 };
 
+/// The position of a bar on the screen (used for hull bars)
+struct BarRect {
+  int x, y;
+  float progress;
+};
+
 struct BackgroundSprite {};
 
 /// Indicates which object the camera should focus on

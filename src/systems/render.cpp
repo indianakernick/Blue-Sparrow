@@ -107,3 +107,23 @@ void renderSprite(entt::registry &reg) {
   });
   SDL_CHECK(SDL_SetTextureColorMod(draw.fgTex, 255, 255, 255));
 }
+
+void renderBar(entt::registry &reg) {
+  // TODO: Is this faster with three separate loops?
+  auto draw = reg.ctx<Drawing>();
+  entt::each(reg, [&](const BarRect rect) {
+    const int width = 50;
+    const int height = 4;
+    const int progWidth = width * rect.progress + 0.5f;
+    const int antiWidth = width - progWidth;
+    const SDL_Rect value = {rect.x, rect.y, progWidth, height};
+    const SDL_Rect anti = {rect.x + progWidth, rect.y, antiWidth, height};
+    const SDL_Rect outline = {rect.x - 1, rect.y - 1, width + 2, height + 2};
+    SDL_CHECK(SDL_SetRenderDrawColor(draw.ren, 0, 255, 0, 255));
+    SDL_CHECK(SDL_RenderFillRect(draw.ren, &value));
+    SDL_CHECK(SDL_SetRenderDrawColor(draw.ren, 255, 0, 0, 255));
+    SDL_CHECK(SDL_RenderFillRect(draw.ren, &anti));
+    SDL_CHECK(SDL_SetRenderDrawColor(draw.ren, 255, 255, 255, 255));
+    SDL_CHECK(SDL_RenderDrawRect(draw.ren, &outline));
+  });
+}
