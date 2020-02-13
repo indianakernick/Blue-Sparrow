@@ -27,9 +27,9 @@ entt::entity makePlayer(entt::registry &reg) {
   setSmallShipPhysics(reg, e, Team::ally);
   setPlayer(reg, e);
   setScoutSprite(reg, e, Team::ally);
-  setBasicMotion(reg, e);
-  setBasicBlaster(reg, e);
-  setBasicMissile(reg, e);
+  setUpgradableMotion(reg, e, 0);
+  setUpgradableBlaster(reg, e, 0);
+  setUpgradableMissile(reg, e, 0);
   return e;
 }
 
@@ -43,8 +43,8 @@ entt::entity makeScout(entt::registry &reg, const Team team) {
   setSmallShipPhysics(reg, e, team);
   setOrbitBehave(reg, e);
   setScoutSprite(reg, e, team);
-  setBasicMotion(reg, e);
-  setBasicBlaster(reg, e);
+  setMotion(reg, e, 0);
+  setBlaster(reg, e, 0);
   return e;
 }
 
@@ -105,40 +105,6 @@ void setScoutSprite(entt::registry &reg, const entt::entity e, const Team team) 
 void setSniperSprite(entt::registry &reg, const entt::entity e, const Team team) {
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, teamSprite(team));
-}
-
-void setBasicMotion(entt::registry &reg, const entt::entity e) {
-  MoveParams moveParams;
-  moveParams.forwardForce = 80.0f;
-  moveParams.reverseForce = 50.0f;
-  moveParams.turnTorque = 200.0f;
-  reg.assign<MoveParams>(e, moveParams);
-  reg.assign<MoveCommand>(e);
-  reg.assign<VelocityLimit>(e, 15.0f);
-}
-
-void setBasicBlaster(entt::registry &reg, const entt::entity e) {
-  BlasterParams blasterParams;
-  blasterParams.rof = 1.5f;
-  blasterParams.speed = 60.0f;
-  blasterParams.damage = 5;
-  reg.assign<BlasterParams>(e, blasterParams);
-  reg.assign<BlasterCommand>(e);
-  reg.assign<BlasterTimer>(e, std::uint32_t{});
-}
-
-void setBasicMissile(entt::registry &reg, const entt::entity e) {
-  MissileParams missileParams;
-  missileParams.rof = 0.5f;
-  missileParams.speed = 25.0f;
-  missileParams.forwardForce = 25.0f;
-  missileParams.turnTorque = 3.0f;
-  missileParams.damage = 20;
-  missileParams.level = SeekLevel::aim_vel_ahead;
-  reg.assign<MissileParams>(e, missileParams);
-  reg.assign<MissileCommand>(e);
-  reg.assign<MissileTimer>(e, std::uint32_t{});
-  reg.assign<MissileAmmo>(e, 0);
 }
 
 void setSniperMotion(entt::registry &reg, const entt::entity e) {

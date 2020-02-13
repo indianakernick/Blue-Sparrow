@@ -21,12 +21,15 @@ struct BlasterUpgrade : Upgrade {};
 struct MissileUpgrade : Upgrade {};
 struct HullUpgrade : Upgrade {};
 
+// TODO: Perhaps rename MoveParams to MotionParams
+
 /// Forces and torques used to move the physics body.
 /// Can be changed when the player upgrades their ship.
 struct MoveParams {
   float forwardForce;
   float reverseForce;
   float turnTorque;
+  float speed;
 };
 
 /// Properties of the primary weapon.

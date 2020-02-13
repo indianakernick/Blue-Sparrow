@@ -25,10 +25,6 @@ void setSniperBehave(entt::registry &, entt::entity);
 void setScoutSprite(entt::registry &, entt::entity, Team);
 void setSniperSprite(entt::registry &, entt::entity, Team);
 
-void setBasicMotion(entt::registry &, entt::entity);
-void setBasicBlaster(entt::registry &, entt::entity);
-void setBasicMissile(entt::registry &, entt::entity);
-
 void setSniperMotion(entt::registry &, entt::entity);
 void setSniperBlaster(entt::registry &, entt::entity);
 
