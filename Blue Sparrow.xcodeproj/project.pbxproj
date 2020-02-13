@@ -14,6 +14,8 @@
 		457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF48223EBF45E00405E2D /* sdl_delete.cpp */; };
 		45BC5E4723F3833200A07A57 /* destruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E4523F3833200A07A57 /* destruction.cpp */; };
 		45BC5E4A23F4DBBF00A07A57 /* upgrades.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E4823F4DBBF00A07A57 /* upgrades.cpp */; };
+		45BC5E4D23F51D8000A07A57 /* all.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E4B23F51D8000A07A57 /* all.cpp */; };
+		45BC5E5023F5302900A07A57 /* frame_cap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E4E23F5302900A07A57 /* frame_cap.cpp */; };
 		45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA1E23ECE5E6000B554D /* handle_input.cpp */; };
 		45C5CA2323ECE7C3000B554D /* apply_commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2123ECE7C3000B554D /* apply_commands.cpp */; };
 		45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2523ECEA5E000B554D /* camera.cpp */; };
@@ -70,6 +72,10 @@
 		45BC5E4623F3833200A07A57 /* destruction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = destruction.hpp; sourceTree = "<group>"; };
 		45BC5E4823F4DBBF00A07A57 /* upgrades.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = upgrades.cpp; sourceTree = "<group>"; };
 		45BC5E4923F4DBBF00A07A57 /* upgrades.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = upgrades.hpp; sourceTree = "<group>"; };
+		45BC5E4B23F51D8000A07A57 /* all.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = all.cpp; sourceTree = "<group>"; };
+		45BC5E4C23F51D8000A07A57 /* all.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = all.hpp; sourceTree = "<group>"; };
+		45BC5E4E23F5302900A07A57 /* frame_cap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = frame_cap.cpp; sourceTree = "<group>"; };
+		45BC5E4F23F5302900A07A57 /* frame_cap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = frame_cap.hpp; sourceTree = "<group>"; };
 		45C5CA1723ECE3DA000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA1823ECE41E000B554D /* graphics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = graphics.hpp; sourceTree = "<group>"; };
 		45C5CA1923ECE4FD000B554D /* input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
@@ -180,6 +186,8 @@
 				45C5CA4D23EF8E93000B554D /* load_texture.cpp */,
 				45C5CA4E23EF8E93000B554D /* load_texture.hpp */,
 				45C5CA6323F107D8000B554D /* physics.hpp */,
+				45BC5E4E23F5302900A07A57 /* frame_cap.cpp */,
+				45BC5E4F23F5302900A07A57 /* frame_cap.hpp */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -226,6 +234,8 @@
 				45C5CA6123F10652000B554D /* aim_assist.hpp */,
 				45BC5E4523F3833200A07A57 /* destruction.cpp */,
 				45BC5E4623F3833200A07A57 /* destruction.hpp */,
+				45BC5E4B23F51D8000A07A57 /* all.cpp */,
+				45BC5E4C23F51D8000A07A57 /* all.hpp */,
 			);
 			path = systems;
 			sourceTree = "<group>";
@@ -313,6 +323,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45BC5E4D23F51D8000A07A57 /* all.cpp in Sources */,
 				45C5CA4C23EE599E000B554D /* weapons.cpp in Sources */,
 				45C5CA6223F10652000B554D /* aim_assist.cpp in Sources */,
 				457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */,
@@ -332,6 +343,7 @@
 				45BC5E4A23F4DBBF00A07A57 /* upgrades.cpp in Sources */,
 				45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */,
 				45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */,
+				45BC5E5023F5302900A07A57 /* frame_cap.cpp in Sources */,
 				45BC5E4723F3833200A07A57 /* destruction.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

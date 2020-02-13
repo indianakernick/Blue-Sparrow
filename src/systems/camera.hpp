@@ -9,6 +9,7 @@
 #ifndef systems_camera_hpp
 #define systems_camera_hpp
 
+#include <SDL2/SDL_rect.h>
 #include <entt/entity/fwd.hpp>
 
 /// Read the position and angle of Physics bodies and update the SpriteRect
@@ -19,5 +20,9 @@ void writeBarRect(entt::registry &);
 
 /// Move the Camera to focus on the object width CameraFocus
 void moveCamera(entt::registry &);
+
+void initializeCamera(entt::registry &, float);
+void updateCameraViewport(entt::registry &, SDL_Rect);
+void updateCameraBackground(entt::registry &, SDL_Point);
 
 #endif

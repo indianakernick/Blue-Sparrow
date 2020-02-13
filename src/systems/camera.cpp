@@ -59,3 +59,27 @@ void moveCamera(entt::registry &reg) {
     cam.y = std::min(cam.y, cam.arenaHeight / 2.0f - height);
   });
 }
+
+void initializeCamera(entt::registry &reg, const float arenaSize) {
+  Camera cam;
+  cam.x = 0.0f;
+  cam.y = 0.0f;
+  cam.arenaWidth = arenaSize;
+  cam.arenaHeight = arenaSize;
+  cam.zoom = INFINITY;
+  reg.set<Camera>(cam);
+}
+
+void updateCameraViewport(entt::registry &reg, const SDL_Rect viewport) {
+  auto &cam = reg.ctx<Camera>();
+  cam.width = viewport.w;
+  cam.height = viewport.h;
+  cam.minZoom = std::max(viewport.w / cam.arenaWidth, viewport.h / cam.arenaHeight);
+  cam.zoom = std::max(cam.zoom, cam.minZoom);
+}
+
+void updateCameraBackground(entt::registry &reg, const SDL_Point bgSize) {
+  auto &cam = reg.ctx<Camera>();
+  cam.maxZoom = std::min(bgSize.x / cam.arenaWidth, bgSize.y / cam.arenaHeight);
+  cam.zoom = std::min(cam.zoom, cam.maxZoom);
+}
