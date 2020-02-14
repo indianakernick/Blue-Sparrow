@@ -22,7 +22,7 @@ namespace {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wc99-extensions"
 
-constexpr MoveParams moveParams[] = {
+const MoveParams moveParams[] = {
   {
     .forwardForce = 80.0f,
     .reverseForce = 50.0f,
@@ -36,12 +36,12 @@ constexpr MoveParams moveParams[] = {
   }
 };
 
-constexpr MoveUpgrade moveUpgrades[] = {
+const MoveUpgrade moveUpgrades[] = {
   {{.cost = 3, .level = 1}},
   {{.cost = -1, .level = -1}}
 };
 
-constexpr BlasterParams blasterParams[] = {
+const BlasterParams blasterParams[] = {
   {
     .rof = 1.5f,
     .speed = 60.0f,
@@ -53,12 +53,12 @@ constexpr BlasterParams blasterParams[] = {
   }
 };
 
-constexpr BlasterUpgrade blasterUpgrades[] = {
+const BlasterUpgrade blasterUpgrades[] = {
   {{.cost = 4, .level = 1}},
   {{.cost = -1, .level = -1}}
 };
 
-constexpr MissileParams missileParams[] = {
+const MissileParams missileParams[] = {
   {
     .rof = 0.25f,
     .speed = 25.0f,
@@ -76,19 +76,19 @@ constexpr MissileParams missileParams[] = {
   }
 };
 
-constexpr MissileUpgrade missileUpgrades[] = {
+const MissileUpgrade missileUpgrades[] = {
   {{.cost = 25, .level = 1}},
   {{.cost = -1, .level = -1}}
 };
 
-constexpr HullParams hullParams[] = {
+const HullParams hullParams[] = {
   {.durability = 100},
   {.durability = 125},
   {.durability = 150},
   {.durability = 200}
 };
 
-constexpr HullUpgrade hullUpgrades[] = {
+const HullUpgrade hullUpgrades[] = {
   {{.cost = 4, .level = 1}},
   {{.cost = 6, .level = 2}},
   {{.cost = 10, .level = 3}},
