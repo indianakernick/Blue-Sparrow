@@ -8,6 +8,7 @@
 
 #include <string>
 #include <SDL2/SDL.h>
+#include <SDL_FontCache.h>
 #include <box2d/b2_world.h>
 #include <entt/entity/registry.hpp>
 
@@ -87,27 +88,35 @@ int main() {
   SDL::Renderer renderer = initializeRenderer(window.get());
   SDL::Texture foreground = makeTexture(renderer.get());
   SDL::Texture background = loadTexture(renderer.get(), res("stars.png").c_str());
+  SDL::Font font{FC_CreateFont()};
+  FC_LoadFont(font.get(), renderer.get(), res("FreeSans.ttf").c_str(), 24, {255, 255, 255, 255}, TTF_STYLE_NORMAL);
 
-  SDL_Rect viewport = {100, 0, 0, 0};
+  SDL_Rect viewport = {200, 0, 0, 0};
   entt::registry reg;
   initializePhysics(reg);
   initializeWorld(reg, 150.0f);
   initializeCamera(reg, 150.0f);
 
-  SDL_Point bgSize;
-  SDL_CHECK(SDL_QueryTexture(background.get(), nullptr, nullptr, &bgSize.x, &bgSize.y));
-  updateCameraBackground(reg, bgSize);
+  {
+    SDL_Point bgSize;
+    SDL_CHECK(SDL_QueryTexture(background.get(), nullptr, nullptr, &bgSize.x, &bgSize.y));
+    updateCameraBackground(reg, bgSize);
+  }
   
-  SDL_Point windowSize;
-  SDL_CHECK(SDL_GetRendererOutputSize(renderer.get(), &windowSize.x, &windowSize.y));
-  updateViewport(viewport, windowSize);
-  updateCameraViewport(reg, viewport);
+  {
+    SDL_Point windowSize;
+    SDL_CHECK(SDL_GetRendererOutputSize(renderer.get(), &windowSize.x, &windowSize.y));
+    updateViewport(viewport, windowSize);
+    updateCameraViewport(reg, viewport);
+  }
   
-  Drawing drawing;
-  drawing.ren = renderer.get();
-  drawing.fgTex = foreground.get();
-  drawing.bgTex = background.get();
-  reg.set<Drawing>(drawing);
+  {
+    Drawing drawing;
+    drawing.ren = renderer.get();
+    drawing.fgTex = foreground.get();
+    drawing.bgTex = background.get();
+    reg.set<Drawing>(drawing);
+  }
   
   // TODO: The window could move to a different monitor with a different refresh
   // rate and mess everything up.
@@ -165,6 +174,10 @@ int main() {
     
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
+    
+    const SDL_Rect uiViewport = {0, 0, viewport.x, viewport.h};
+    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &uiViewport));
+    FC_Draw(font.get(), renderer.get(), 0.0f, 0.0f, "This is a test\n  Next line");
     
     SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &viewport));
     renderSystems(reg);

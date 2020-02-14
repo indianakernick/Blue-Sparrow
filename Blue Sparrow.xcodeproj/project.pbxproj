@@ -16,6 +16,10 @@
 		45BC5E4A23F4DBBF00A07A57 /* upgrades.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E4823F4DBBF00A07A57 /* upgrades.cpp */; };
 		45BC5E4D23F51D8000A07A57 /* all.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E4B23F51D8000A07A57 /* all.cpp */; };
 		45BC5E5023F5302900A07A57 /* frame_cap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E4E23F5302900A07A57 /* frame_cap.cpp */; };
+		45BC5E5223F60D9800A07A57 /* libSDL2_ttf-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45BC5E5123F60D9800A07A57 /* libSDL2_ttf-2.0.0.dylib */; };
+		45BC5E5323F60D9800A07A57 /* libSDL2_ttf-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 45BC5E5123F60D9800A07A57 /* libSDL2_ttf-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		45BC5E5923F62BCC00A07A57 /* libFontCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45BC5E5823F62BB700A07A57 /* libFontCache.a */; };
+		45BC5E5B23F62E3400A07A57 /* FreeSans.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45BC5E5A23F62E1600A07A57 /* FreeSans.ttf */; };
 		45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA1E23ECE5E6000B554D /* handle_input.cpp */; };
 		45C5CA2323ECE7C3000B554D /* apply_commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2123ECE7C3000B554D /* apply_commands.cpp */; };
 		45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2523ECEA5E000B554D /* camera.cpp */; };
@@ -47,12 +51,24 @@
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		45BC5E5423F60D9800A07A57 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				45BC5E5323F60D9800A07A57 /* libSDL2_ttf-2.0.0.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		45C5CA5723EF9195000B554D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				45BC5E5B23F62E3400A07A57 /* FreeSans.ttf in CopyFiles */,
 				45C5CA6523F22487000B554D /* stars.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,6 +92,10 @@
 		45BC5E4C23F51D8000A07A57 /* all.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = all.hpp; sourceTree = "<group>"; };
 		45BC5E4E23F5302900A07A57 /* frame_cap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = frame_cap.cpp; sourceTree = "<group>"; };
 		45BC5E4F23F5302900A07A57 /* frame_cap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = frame_cap.hpp; sourceTree = "<group>"; };
+		45BC5E5123F60D9800A07A57 /* libSDL2_ttf-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_ttf-2.0.0.dylib"; path = "../../../../../../../usr/local/Cellar/sdl2_ttf/2.0.15/lib/libSDL2_ttf-2.0.0.dylib"; sourceTree = "<group>"; };
+		45BC5E5823F62BB700A07A57 /* libFontCache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFontCache.a; path = ../../../../../../../usr/local/lib/libFontCache.a; sourceTree = "<group>"; };
+		45BC5E5A23F62E1600A07A57 /* FreeSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FreeSans.ttf; sourceTree = "<group>"; };
+		45BC5E5C23F632FE00A07A57 /* Blue Sparrow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Blue Sparrow.entitlements"; sourceTree = "<group>"; };
 		45C5CA1723ECE3DA000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA1823ECE41E000B554D /* graphics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = graphics.hpp; sourceTree = "<group>"; };
 		45C5CA1923ECE4FD000B554D /* input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
@@ -127,8 +147,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45BC5E5223F60D9800A07A57 /* libSDL2_ttf-2.0.0.dylib in Frameworks */,
 				457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */,
 				457DF47C23EBF1B200405E2D /* libSDL2-2.0.0.dylib in Frameworks */,
+				45BC5E5923F62BCC00A07A57 /* libFontCache.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +160,7 @@
 		457DF43C23EBD70E00405E2D = {
 			isa = PBXGroup;
 			children = (
+				45BC5E5C23F632FE00A07A57 /* Blue Sparrow.entitlements */,
 				45C5CA5323EF8FBF000B554D /* assets */,
 				457DF44723EBD70E00405E2D /* src */,
 				457DF44623EBD70E00405E2D /* Products */,
@@ -168,6 +191,8 @@
 		457DF44F23EBE34E00405E2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45BC5E5823F62BB700A07A57 /* libFontCache.a */,
+				45BC5E5123F60D9800A07A57 /* libSDL2_ttf-2.0.0.dylib */,
 				457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */,
 				457DF45523EBEA8D00405E2D /* libbox2d.a */,
 			);
@@ -261,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				45C5CA6423F22455000B554D /* stars.png */,
+				45BC5E5A23F62E1600A07A57 /* FreeSans.ttf */,
 			);
 			path = assets;
 			sourceTree = "<group>";
@@ -276,6 +302,7 @@
 				457DF44123EBD70E00405E2D /* Sources */,
 				457DF44223EBD70E00405E2D /* Frameworks */,
 				45C5CA5723EF9195000B554D /* CopyFiles */,
+				45BC5E5423F60D9800A07A57 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -464,6 +491,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++2a";
+				CODE_SIGN_ENTITLEMENTS = "Blue Sparrow.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QY44MADGVC;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -477,6 +505,7 @@
 					"$(inherited)",
 					/usr/local/Cellar/sdl2/2.0.10/lib,
 					/usr/local/lib,
+					/usr/local/Cellar/sdl2_ttf/2.0.15/lib,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -502,6 +531,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++2a";
+				CODE_SIGN_ENTITLEMENTS = "Blue Sparrow.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QY44MADGVC;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -515,6 +545,7 @@
 					"$(inherited)",
 					/usr/local/Cellar/sdl2/2.0.10/lib,
 					/usr/local/lib,
+					/usr/local/Cellar/sdl2_ttf/2.0.15/lib,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",

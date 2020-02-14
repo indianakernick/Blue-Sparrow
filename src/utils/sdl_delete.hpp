@@ -11,12 +11,17 @@
 
 #include <memory>
 
+struct FC_Font;
 struct SDL_Window;
 struct SDL_Texture;
 struct SDL_Surface;
 struct SDL_Renderer;
 
 namespace SDL {
+
+struct DeleteFont {
+  void operator()(FC_Font *) const noexcept;
+};
 
 struct DeleteWindow {
   void operator()(SDL_Window *) const noexcept;
@@ -34,6 +39,7 @@ struct DeleteRenderer {
   void operator()(SDL_Renderer *) const noexcept;
 };
 
+using Font = std::unique_ptr<FC_Font, DeleteFont>;
 using Window = std::unique_ptr<SDL_Window, DeleteWindow>;
 using Texture = std::unique_ptr<SDL_Texture, DeleteTexture>;
 using Surface = std::unique_ptr<SDL_Surface, DeleteSurface>;
