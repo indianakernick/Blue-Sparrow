@@ -105,7 +105,7 @@ int main() {
   
   {
     SDL_Point windowSize;
-    SDL_CHECK(SDL_GetRendererOutputSize(renderer.get(), &windowSize.x, &windowSize.y));
+    SDL_GetWindowSize(window.get(), &windowSize.x, &windowSize.y);
     updateViewport(viewport, windowSize);
     updateCameraViewport(reg, viewport);
   }
@@ -146,9 +146,7 @@ int main() {
           break;
         case SDL_WINDOWEVENT:
           if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
-            SDL_Point windowSize;
-            SDL_CHECK(SDL_GetRendererOutputSize(renderer.get(), &windowSize.x, &windowSize.y));
-            updateViewport(viewport, windowSize);
+            updateViewport(viewport, {e.window.data1, e.window.data2});
             updateCameraViewport(reg, viewport);
           }
           break;
