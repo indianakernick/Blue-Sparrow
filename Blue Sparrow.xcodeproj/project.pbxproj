@@ -20,6 +20,10 @@
 		45BC5E5323F60D9800A07A57 /* libSDL2_ttf-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 45BC5E5123F60D9800A07A57 /* libSDL2_ttf-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		45BC5E5923F62BCC00A07A57 /* libFontCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45BC5E5823F62BB700A07A57 /* libFontCache.a */; };
 		45BC5E5B23F62E3400A07A57 /* FreeSans.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45BC5E5A23F62E1600A07A57 /* FreeSans.ttf */; };
+		45BC5E6023F64F4600A07A57 /* game_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E5E23F64F4500A07A57 /* game_view.cpp */; };
+		45BC5E6323F6601500A07A57 /* layout_engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6123F6601500A07A57 /* layout_engine.cpp */; };
+		45BC5E6623F664B700A07A57 /* stats_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6423F664B700A07A57 /* stats_view.cpp */; };
+		45BC5E6923F6754100A07A57 /* resource_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6723F6754100A07A57 /* resource_path.cpp */; };
 		45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA1E23ECE5E6000B554D /* handle_input.cpp */; };
 		45C5CA2323ECE7C3000B554D /* apply_commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2123ECE7C3000B554D /* apply_commands.cpp */; };
 		45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2523ECEA5E000B554D /* camera.cpp */; };
@@ -96,6 +100,14 @@
 		45BC5E5823F62BB700A07A57 /* libFontCache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFontCache.a; path = ../../../../../../../usr/local/lib/libFontCache.a; sourceTree = "<group>"; };
 		45BC5E5A23F62E1600A07A57 /* FreeSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FreeSans.ttf; sourceTree = "<group>"; };
 		45BC5E5C23F632FE00A07A57 /* Blue Sparrow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Blue Sparrow.entitlements"; sourceTree = "<group>"; };
+		45BC5E5E23F64F4500A07A57 /* game_view.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = game_view.cpp; sourceTree = "<group>"; };
+		45BC5E5F23F64F4500A07A57 /* game_view.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = game_view.hpp; sourceTree = "<group>"; };
+		45BC5E6123F6601500A07A57 /* layout_engine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = layout_engine.cpp; sourceTree = "<group>"; };
+		45BC5E6223F6601500A07A57 /* layout_engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = layout_engine.hpp; sourceTree = "<group>"; };
+		45BC5E6423F664B700A07A57 /* stats_view.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stats_view.cpp; sourceTree = "<group>"; };
+		45BC5E6523F664B700A07A57 /* stats_view.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = stats_view.hpp; sourceTree = "<group>"; };
+		45BC5E6723F6754100A07A57 /* resource_path.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resource_path.cpp; sourceTree = "<group>"; };
+		45BC5E6823F6754100A07A57 /* resource_path.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = resource_path.hpp; sourceTree = "<group>"; };
 		45C5CA1723ECE3DA000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA1823ECE41E000B554D /* graphics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = graphics.hpp; sourceTree = "<group>"; };
 		45C5CA1923ECE4FD000B554D /* input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
@@ -179,6 +191,7 @@
 		457DF44723EBD70E00405E2D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				45BC5E5D23F64D7300A07A57 /* ui */,
 				45C5CA2B23ECF022000B554D /* factories */,
 				45C5CA1A23ECE54F000B554D /* systems */,
 				45C5CA1623ECE355000B554D /* comps */,
@@ -213,8 +226,23 @@
 				45C5CA6323F107D8000B554D /* physics.hpp */,
 				45BC5E4E23F5302900A07A57 /* frame_cap.cpp */,
 				45BC5E4F23F5302900A07A57 /* frame_cap.hpp */,
+				45BC5E6723F6754100A07A57 /* resource_path.cpp */,
+				45BC5E6823F6754100A07A57 /* resource_path.hpp */,
 			);
 			path = utils;
+			sourceTree = "<group>";
+		};
+		45BC5E5D23F64D7300A07A57 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				45BC5E6123F6601500A07A57 /* layout_engine.cpp */,
+				45BC5E6223F6601500A07A57 /* layout_engine.hpp */,
+				45BC5E5E23F64F4500A07A57 /* game_view.cpp */,
+				45BC5E5F23F64F4500A07A57 /* game_view.hpp */,
+				45BC5E6423F664B700A07A57 /* stats_view.cpp */,
+				45BC5E6523F664B700A07A57 /* stats_view.hpp */,
+			);
+			path = ui;
 			sourceTree = "<group>";
 		};
 		45C5CA1623ECE355000B554D /* comps */ = {
@@ -354,6 +382,7 @@
 				45C5CA4C23EE599E000B554D /* weapons.cpp in Sources */,
 				45C5CA6223F10652000B554D /* aim_assist.cpp in Sources */,
 				457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */,
+				45BC5E6023F64F4600A07A57 /* game_view.cpp in Sources */,
 				45C5CA5223EF8EE2000B554D /* stb_image.c in Sources */,
 				45C5CA4F23EF8E93000B554D /* load_texture.cpp in Sources */,
 				45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */,
@@ -362,6 +391,7 @@
 				45C5CA2A23ECEE46000B554D /* render.cpp in Sources */,
 				45C5CA3523ED07B6000B554D /* expire.cpp in Sources */,
 				45C5CA2323ECE7C3000B554D /* apply_commands.cpp in Sources */,
+				45BC5E6323F6601500A07A57 /* layout_engine.cpp in Sources */,
 				45C5CA4623EE3B7A000B554D /* find_target.cpp in Sources */,
 				45C5CA4323EE385D000B554D /* physics.cpp in Sources */,
 				45C5CA5B23EF9A0C000B554D /* arena.cpp in Sources */,
@@ -369,8 +399,10 @@
 				45C5CA3A23ED16AF000B554D /* physics.cpp in Sources */,
 				45BC5E4A23F4DBBF00A07A57 /* upgrades.cpp in Sources */,
 				45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */,
+				45BC5E6623F664B700A07A57 /* stats_view.cpp in Sources */,
 				45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */,
 				45BC5E5023F5302900A07A57 /* frame_cap.cpp in Sources */,
+				45BC5E6923F6754100A07A57 /* resource_path.cpp in Sources */,
 				45BC5E4723F3833200A07A57 /* destruction.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -6,38 +6,16 @@
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#include <string>
 #include <SDL2/SDL.h>
-#include <SDL_FontCache.h>
-#include <box2d/b2_world.h>
-#include <entt/entity/registry.hpp>
-
-#include "systems/all.hpp"
-#include "comps/graphics.hpp"
-#include "systems/camera.hpp"
-#include "systems/physics.hpp"
-#include "factories/ships.hpp"
-#include "factories/arena.hpp"
+#include "ui/game_view.hpp"
+#include "ui/stats_view.hpp"
+#include "ui/layout_engine.hpp"
 #include "utils/frame_cap.hpp"
 #include "utils/sdl_check.hpp"
 #include "utils/sdl_delete.hpp"
-#include "utils/load_texture.hpp"
-#include "systems/handle_input.hpp"
+#include <entt/entity/registry.hpp>
 
-SDL::Texture makeTexture(SDL_Renderer *renderer) {
-  SDL::Texture tex{SDL_CHECK(SDL_CreateTexture(
-    renderer, SDL_PIXELFORMAT_ARGB32, SDL_TEXTUREACCESS_STATIC, 1, 1
-  ))};
-  std::uint32_t pixels[] = {0xFFFFFFFF};
-  SDL_CHECK(SDL_UpdateTexture(tex.get(), nullptr, pixels, 4));
-  return tex;
-}
-
-std::string res(const char *path) {
-  return std::string(SDL_CHECK(SDL_GetBasePath())) + path;
-}
-
-SDL::Window initializeWindow(const int width, const int height) {
+SDL::Window initWindow(const int width, const int height) {
   return SDL::Window{SDL_CHECK(SDL_CreateWindow(
     "Blue Sparrow",
     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -46,7 +24,7 @@ SDL::Window initializeWindow(const int width, const int height) {
   ))};
 }
 
-SDL::Renderer initializeRenderer(SDL_Window *window) {
+SDL::Renderer initRenderer(SDL_Window *window) {
   // THIS DOESN'T DO ANYTHING !!!!!!!!!!!!!!!
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
   // Workaround for crash when exiting fullscreen
@@ -55,23 +33,6 @@ SDL::Renderer initializeRenderer(SDL_Window *window) {
   return SDL::Renderer{SDL_CHECK(SDL_CreateRenderer(
     window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
   ))};
-}
-
-void updateViewport(SDL_Rect &viewport, const SDL_Point windowSize) {
-  viewport.w = windowSize.x - viewport.x;
-  viewport.h = windowSize.y - viewport.y;
-}
-
-void initializeWorld(entt::registry &reg, const float arenaSize) {
-  setTransform(reg, makePlayer(reg), {0.0f, 0.0f}, 0.0f);
-  setTransform(reg, makeSniper(reg, Team::enemy), {20.0f, 0.0f}, b2_pi);
-  setTransform(reg, makeScout(reg, Team::enemy), {20.0f, 10.0f}, b2_pi);
-  setTransform(reg, makeScout(reg, Team::enemy), {20.0f, -10.0f}, b2_pi);
-  setTransform(reg, makeScout(reg, Team::ally), {-20.0f, 0.0f}, 0.0f);
-  makeArena(reg, arenaSize, arenaSize);
-  entt::entity rock = makeAsteroid(reg);
-  setTransform(reg, rock, {-30.0f, -40.0f}, 1.0f);
-  setMotion(reg, rock, {1.0f, 1.3f}, 0.1f);
 }
 
 int getFPS(SDL_Window *window) {
@@ -84,39 +45,17 @@ int getFPS(SDL_Window *window) {
 int main() {
   SDL_CHECK(SDL_Init(SDL_INIT_VIDEO));
   
-  SDL::Window window = initializeWindow(1280, 720);
-  SDL::Renderer renderer = initializeRenderer(window.get());
-  SDL::Texture foreground = makeTexture(renderer.get());
-  SDL::Texture background = loadTexture(renderer.get(), res("stars.png").c_str());
-  SDL::Font font{FC_CreateFont()};
-  FC_LoadFont(font.get(), renderer.get(), res("FreeSans.ttf").c_str(), 24, {255, 255, 255, 255}, TTF_STYLE_NORMAL);
-
-  SDL_Rect viewport = {200, 0, 0, 0};
+  SDL::Window window = initWindow(1280, 720);
+  SDL::Renderer renderer = initRenderer(window.get());
+  
   entt::registry reg;
-  initializePhysics(reg);
-  initializeWorld(reg, 150.0f);
-  initializeCamera(reg, 150.0f);
-
-  {
-    SDL_Point bgSize;
-    SDL_CHECK(SDL_QueryTexture(background.get(), nullptr, nullptr, &bgSize.x, &bgSize.y));
-    updateCameraBackground(reg, bgSize);
-  }
+  LayoutEngine layout;
+  GameView game{reg};
+  StatsView stats{reg};
   
-  {
-    SDL_Point windowSize;
-    SDL_GetWindowSize(window.get(), &windowSize.x, &windowSize.y);
-    updateViewport(viewport, windowSize);
-    updateCameraViewport(reg, viewport);
-  }
-  
-  {
-    Drawing drawing;
-    drawing.ren = renderer.get();
-    drawing.fgTex = foreground.get();
-    drawing.bgTex = background.get();
-    reg.set<Drawing>(drawing);
-  }
+  layout.init(window.get());
+  game.init(renderer.get());
+  stats.init(renderer.get());
   
   // TODO: The window could move to a different monitor with a different refresh
   // rate and mess everything up.
@@ -130,55 +69,29 @@ int main() {
     SDL_Event e;
     bool quit = false;
     while (SDL_PollEvent(&e)) {
-      switch (e.type) {
-        case SDL_QUIT:
-          quit = true;
-          break;
-        case SDL_KEYDOWN:
-          if (e.key.repeat == 0) {
-            handleKeyDown(reg, e.key.keysym.scancode);
-          }
-          break;
-        case SDL_KEYUP:
-          if (e.key.repeat == 0) {
-            handleKeyUp(reg, e.key.keysym.scancode);
-          }
-          break;
-        case SDL_WINDOWEVENT:
-          if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
-            updateViewport(viewport, {e.window.data1, e.window.data2});
-            updateCameraViewport(reg, viewport);
-          }
-          break;
-        case SDL_MOUSEMOTION:
-          handleMouseMove(reg, e.motion.x - viewport.x, e.motion.y - viewport.y);
-          break;
-        case SDL_MOUSEBUTTONDOWN:
-          handleMouseDown(reg, e.button.button);
-          break;
-        case SDL_MOUSEBUTTONUP:
-          handleMouseUp(reg, e.button.button);
-          break;
-          
-        default: ;
+      if (e.type == SDL_QUIT) {
+        quit = true;
+        break;
       }
-      if (quit) break;
+      if (layout.event(e)) continue;
+      if (stats.event(e, layout.statsViewport())) continue;
+      if (game.event(e, layout.gameViewport())) continue;
     }
     if (quit) break;
     
-    prePhysicsSystems(reg);
-    stepPhysics(reg, fps);
-    postPhysicsSystems(reg);
+    game.update(fps);
     
+    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), nullptr));
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
     
-    const SDL_Rect uiViewport = {0, 0, viewport.x, viewport.h};
-    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &uiViewport));
-    FC_Draw(font.get(), renderer.get(), 0.0f, 0.0f, "This is a test\n  Next line");
+    const SDL_Rect statsViewport = layout.statsViewport();
+    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &statsViewport));
+    stats.render(renderer.get(), statsViewport);
     
-    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &viewport));
-    renderSystems(reg);
+    const SDL_Rect gameViewport = layout.gameViewport();
+    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &gameViewport));
+    game.render(renderer.get(), gameViewport);
     
     SDL_RenderPresent(renderer.get());
     frame.end();
