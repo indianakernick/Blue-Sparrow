@@ -21,7 +21,7 @@ public:
   
   void init(SDL_Renderer *);
   bool event(const SDL_Event &, SDL_Rect);
-  void update(int);
+  void update(float);
   void render(SDL_Renderer *, SDL_Rect);
 
 private:

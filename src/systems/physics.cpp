@@ -81,8 +81,8 @@ void initializePhysics(entt::registry &reg) {
   reg.on_destroy<Physics>().connect<&destroyBody>();
 }
 
-void stepPhysics(entt::registry &reg, const int fps) {
-  reg.ctx<b2World>().Step(1.0f / fps, 8, 3);
+void stepPhysics(entt::registry &reg, const float delta) {
+  reg.ctx<b2World>().Step(delta, 8, 3);
 }
 
 void limitVelocity(entt::registry &reg) {

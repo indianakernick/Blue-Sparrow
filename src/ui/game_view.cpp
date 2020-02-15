@@ -100,9 +100,9 @@ bool GameView::event(const SDL_Event &e, const SDL_Rect viewport) {
   }
 }
 
-void GameView::update(const int fps) {
+void GameView::update(const float delta) {
   prePhysicsSystems(reg);
-  stepPhysics(reg, fps);
+  stepPhysics(reg, delta);
   postPhysicsSystems(reg);
 }
 

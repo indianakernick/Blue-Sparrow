@@ -13,7 +13,7 @@
 #include <entt/entity/fwd.hpp>
 
 void initializePhysics(entt::registry &);
-void stepPhysics(entt::registry &, int);
+void stepPhysics(entt::registry &, float);
 void limitVelocity(entt::registry &);
 void setTransform(entt::registry &, entt::entity, b2Vec2, float);
 void setMotion(entt::registry &, entt::entity, b2Vec2, float);
