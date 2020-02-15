@@ -12,23 +12,15 @@
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_events.h>
 
-void LayoutEngine::init(SDL_Window *window) {
-  // TODO: LayoutEngine should define the minimum size of the window
-  SDL_Rect viewport;
-  SDL_GetWindowSize(window, &viewport.w, &viewport.h);
-  viewport.x = 0;
-  viewport.y = 0;
-  if (root) root->setViewport(viewport);
-}
+LayoutEngine::LayoutEngine(SDL_Window *window)
+  : window{window} {}
 
 bool LayoutEngine::event(const SDL_Event &e) {
-  if (e.type == SDL_WINDOWEVENT) {
-    if (e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-      if (root) {
-        root->setViewport({0, 0, e.window.data1, e.window.data2});
-      }
-    }
-  }
+  if (!root) return false;
+  if (e.type != SDL_WINDOWEVENT) return false;
+  if (e.window.event != SDL_WINDOWEVENT_SIZE_CHANGED) return false;
+  if (e.window.windowID != SDL_GetWindowID(window)) return false;
+  root->setViewport({0, 0, e.window.data1, e.window.data2});
   return false;
 }
 
@@ -37,5 +29,18 @@ void LayoutEngine::setRoot(LayoutItem *item) {
 }
 
 void LayoutEngine::evaluate() {
-  if (root) root->evaluate();
+  if (root) {
+    root->evaluate();
+    SDL_SetWindowMinimumSize(window, root->minWidth(), root->minHeight());
+  }
+}
+
+void LayoutEngine::setInitialViewport() {
+  if (root) {
+    SDL_Rect viewport;
+    SDL_GetWindowSize(window, &viewport.w, &viewport.h);
+    viewport.x = 0;
+    viewport.y = 0;
+    root->setViewport(viewport);
+  }
 }

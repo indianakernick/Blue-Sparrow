@@ -64,7 +64,7 @@ void Application::run() {
   SDL::Renderer renderer = initRenderer(window.get());
   
   entt::registry reg;
-  LayoutEngine layout;
+  LayoutEngine layout{window.get()};
   GameView game{reg};
   StatsView stats{reg};
   
@@ -80,7 +80,7 @@ void Application::run() {
   
   layout.setRoot(&root);
   layout.evaluate();
-  layout.init(window.get());
+  layout.setInitialViewport();
 
   // TODO: The window could move to a different monitor with a different refresh
   // rate and mess everything up.

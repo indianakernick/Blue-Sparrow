@@ -17,13 +17,15 @@ class LayoutItem;
 
 class LayoutEngine {
 public:
-  void init(SDL_Window *);
+  explicit LayoutEngine(SDL_Window *);
+  
   bool event(const SDL_Event &);
-
   void setRoot(LayoutItem *);
   void evaluate();
+  void setInitialViewport();
 
 private:
+  SDL_Window *window;
   LayoutItem *root = nullptr;
 };
 
