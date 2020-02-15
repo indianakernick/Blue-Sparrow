@@ -88,7 +88,7 @@ void collideShipPair(entt::registry &reg, const entt::entity a, const entt::enti
 
 void collideShip(entt::registry &reg, const entt::entity a, const entt::entity b) {
   const float speed = relativeSpeed(reg, a, b);
-  const int damage = (speed - minSpeed) * damagePerSpeed;
+  const int damage = std::max(0.0f, (speed - minSpeed) * damagePerSpeed);
   int &hull = reg.get<Hull>(a).h;
   hull -= damage;
   if (hull < 0) {
