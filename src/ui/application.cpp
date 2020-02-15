@@ -10,6 +10,7 @@
 
 #include <SDL2/SDL.h>
 #include "game_view.hpp"
+#include "box_layout.hpp"
 #include "stats_view.hpp"
 #include "layout_engine.hpp"
 #include "../utils/frame_cap.hpp"
@@ -34,6 +35,8 @@ SDL::Renderer initRenderer(SDL_Window *window) {
   // Workaround for crash when exiting fullscreen
   // Also a workaround for a possibly related issue with multiple viewports
   SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
+  // Batching is disabled if we ask for a particular render driver
+  SDL_SetHint(SDL_HINT_RENDER_BATCHING, "1");
   return SDL::Renderer{SDL_CHECK(SDL_CreateRenderer(
     window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
   ))};
@@ -65,9 +68,19 @@ void Application::run() {
   GameView game{reg};
   StatsView stats{reg};
   
-  layout.init(window.get());
   game.init(renderer.get());
   stats.init(renderer.get());
+  
+  VertBoxLayout panel;
+  panel.append(&stats);
+  
+  HoriBoxLayout root;
+  root.append(&panel);
+  root.append(&game);
+  
+  layout.setRoot(&root);
+  layout.evaluate();
+  layout.init(window.get());
 
   // TODO: The window could move to a different monitor with a different refresh
   // rate and mess everything up.
@@ -83,8 +96,8 @@ void Application::run() {
     while (SDL_PollEvent(&e)) {
       if (e.type == SDL_QUIT) return;
       if (layout.event(e)) continue;
-      if (stats.event(e, layout.statsViewport())) continue;
-      if (game.event(e, layout.gameViewport())) continue;
+      if (stats.event(e)) continue;
+      if (game.event(e)) continue;
     }
     
     game.update(1.0f / fps);
@@ -93,13 +106,13 @@ void Application::run() {
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
     
-    const SDL_Rect statsViewport = layout.statsViewport();
+    const SDL_Rect statsViewport = stats.viewport();
     SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &statsViewport));
-    stats.render(renderer.get(), statsViewport);
+    stats.render(renderer.get());
     
-    const SDL_Rect gameViewport = layout.gameViewport();
+    const SDL_Rect gameViewport = game.viewport();
     SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &gameViewport));
-    game.render(renderer.get(), gameViewport);
+    game.render(renderer.get());
     
     SDL_RenderPresent(renderer.get());
     

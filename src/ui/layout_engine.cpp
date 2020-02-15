@@ -8,39 +8,34 @@
 
 #include "layout_engine.hpp"
 
+#include "layout_item.hpp"
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_events.h>
 
-namespace {
-
-void updateViewport(SDL_Rect &viewport, const SDL_Point windowSize) {
-  viewport.w = windowSize.x - viewport.x;
-  viewport.h = windowSize.y - viewport.y;
-}
-
-}
-
 void LayoutEngine::init(SDL_Window *window) {
-  SDL_Point windowSize;
-  SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
-  viewport.x = 200;
+  // TODO: LayoutEngine should define the minimum size of the window
+  SDL_Rect viewport;
+  SDL_GetWindowSize(window, &viewport.w, &viewport.h);
+  viewport.x = 0;
   viewport.y = 0;
-  updateViewport(viewport, windowSize);
+  if (root) root->setViewport(viewport);
 }
 
 bool LayoutEngine::event(const SDL_Event &e) {
   if (e.type == SDL_WINDOWEVENT) {
     if (e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-      updateViewport(viewport, {e.window.data1, e.window.data2});
+      if (root) {
+        root->setViewport({0, 0, e.window.data1, e.window.data2});
+      }
     }
   }
   return false;
 }
 
-SDL_Rect LayoutEngine::gameViewport() const {
-  return viewport;
+void LayoutEngine::setRoot(LayoutItem *item) {
+  root = item;
 }
 
-SDL_Rect LayoutEngine::statsViewport() const {
-  return {0, 0, viewport.x, viewport.h};
+void LayoutEngine::evaluate() {
+  if (root) root->evaluate();
 }

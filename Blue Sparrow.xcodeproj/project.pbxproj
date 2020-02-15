@@ -25,6 +25,8 @@
 		45BC5E6623F664B700A07A57 /* stats_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6423F664B700A07A57 /* stats_view.cpp */; };
 		45BC5E6923F6754100A07A57 /* resource_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6723F6754100A07A57 /* resource_path.cpp */; };
 		45BC5E6C23F767EF00A07A57 /* application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6A23F767EF00A07A57 /* application.cpp */; };
+		45BC5E6F23F77F2600A07A57 /* layout_item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6D23F77F2600A07A57 /* layout_item.cpp */; };
+		45BC5E7223F780B500A07A57 /* box_layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E7023F780B500A07A57 /* box_layout.cpp */; };
 		45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA1E23ECE5E6000B554D /* handle_input.cpp */; };
 		45C5CA2323ECE7C3000B554D /* apply_commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2123ECE7C3000B554D /* apply_commands.cpp */; };
 		45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2523ECEA5E000B554D /* camera.cpp */; };
@@ -111,6 +113,10 @@
 		45BC5E6823F6754100A07A57 /* resource_path.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = resource_path.hpp; sourceTree = "<group>"; };
 		45BC5E6A23F767EF00A07A57 /* application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = application.cpp; sourceTree = "<group>"; };
 		45BC5E6B23F767EF00A07A57 /* application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = application.hpp; sourceTree = "<group>"; };
+		45BC5E6D23F77F2600A07A57 /* layout_item.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = layout_item.cpp; sourceTree = "<group>"; };
+		45BC5E6E23F77F2600A07A57 /* layout_item.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = layout_item.hpp; sourceTree = "<group>"; };
+		45BC5E7023F780B500A07A57 /* box_layout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = box_layout.cpp; sourceTree = "<group>"; };
+		45BC5E7123F780B500A07A57 /* box_layout.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = box_layout.hpp; sourceTree = "<group>"; };
 		45C5CA1723ECE3DA000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA1823ECE41E000B554D /* graphics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = graphics.hpp; sourceTree = "<group>"; };
 		45C5CA1923ECE4FD000B554D /* input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
@@ -242,6 +248,10 @@
 				45BC5E6B23F767EF00A07A57 /* application.hpp */,
 				45BC5E6123F6601500A07A57 /* layout_engine.cpp */,
 				45BC5E6223F6601500A07A57 /* layout_engine.hpp */,
+				45BC5E6D23F77F2600A07A57 /* layout_item.cpp */,
+				45BC5E6E23F77F2600A07A57 /* layout_item.hpp */,
+				45BC5E7023F780B500A07A57 /* box_layout.cpp */,
+				45BC5E7123F780B500A07A57 /* box_layout.hpp */,
 				45BC5E5E23F64F4500A07A57 /* game_view.cpp */,
 				45BC5E5F23F64F4500A07A57 /* game_view.hpp */,
 				45BC5E6423F664B700A07A57 /* stats_view.cpp */,
@@ -387,6 +397,7 @@
 				45C5CA4C23EE599E000B554D /* weapons.cpp in Sources */,
 				45C5CA6223F10652000B554D /* aim_assist.cpp in Sources */,
 				457DF48423EBF45E00405E2D /* sdl_delete.cpp in Sources */,
+				45BC5E6F23F77F2600A07A57 /* layout_item.cpp in Sources */,
 				45BC5E6023F64F4600A07A57 /* game_view.cpp in Sources */,
 				45C5CA5223EF8EE2000B554D /* stb_image.c in Sources */,
 				45C5CA4F23EF8E93000B554D /* load_texture.cpp in Sources */,
@@ -407,6 +418,7 @@
 				45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */,
 				45BC5E6623F664B700A07A57 /* stats_view.cpp in Sources */,
 				45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */,
+				45BC5E7223F780B500A07A57 /* box_layout.cpp in Sources */,
 				45BC5E5023F5302900A07A57 /* frame_cap.cpp in Sources */,
 				45BC5E6923F6754100A07A57 /* resource_path.cpp in Sources */,
 				45BC5E4723F3833200A07A57 /* destruction.cpp in Sources */,

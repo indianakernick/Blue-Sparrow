@@ -16,18 +16,21 @@
 #include "../utils/resource_path.hpp"
 
 StatsView::StatsView(entt::registry &reg)
-  : reg{reg} {}
+  : reg{reg} {
+  setFixedWidth(200);
+  setGrowHeight(100);
+}
 
 void StatsView::init(SDL_Renderer *ren) {
   font.reset(FC_CreateFont());
   FC_LoadFont(font.get(), ren, res("FreeSans.ttf"), 16, {255, 255, 255, 255}, TTF_STYLE_NORMAL);
 }
 
-bool StatsView::event(const SDL_Event &, const SDL_Rect) {
+bool StatsView::event(const SDL_Event &) {
   return false;
 }
 
-void StatsView::render(SDL_Renderer *ren, const SDL_Rect) {
+void StatsView::render(SDL_Renderer *ren) {
   auto view = reg.view<Hull, HullParams, CameraFocus>();
   view.less([&](auto hull, auto params) {
     FC_Draw(font.get(), ren, 0.0f, 0.0f, "Hull: %d/%d", hull.h, params.durability);

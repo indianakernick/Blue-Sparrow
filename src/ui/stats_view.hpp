@@ -10,30 +10,19 @@
 #define ui_stats_view_hpp
 
 #include "sdl_delete.hpp"
+#include "layout_item.hpp"
 #include <entt/entity/fwd.hpp>
 
 union SDL_Event;
 struct SDL_Rect;
 
-/*
-Hmm...
-
-class View {
-public:
-  SDL_Rect viewport() const;
-
-private:
-  SDL_Rect view;
-};
-*/
-
-class StatsView {
+class StatsView : public LayoutItem {
 public:
   explicit StatsView(entt::registry &);
 
   void init(SDL_Renderer *);
-  bool event(const SDL_Event &, SDL_Rect);
-  void render(SDL_Renderer *, SDL_Rect);
+  bool event(const SDL_Event &);
+  void render(SDL_Renderer *);
 
 private:
   entt::registry &reg;

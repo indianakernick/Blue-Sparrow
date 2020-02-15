@@ -50,7 +50,10 @@ void initializeWorld(entt::registry &reg, const float arenaSize) {
 }
 
 GameView::GameView(entt::registry &reg)
-  : reg{reg} {}
+  : reg{reg} {
+  setGrowWidth(1);
+  setGrowHeight(1);
+}
 
 void GameView::init(SDL_Renderer *ren) {
   foreground = makeTexture(ren);
@@ -75,7 +78,7 @@ void GameView::init(SDL_Renderer *ren) {
   }
 }
 
-bool GameView::event(const SDL_Event &e, const SDL_Rect viewport) {
+bool GameView::event(const SDL_Event &e) {
   switch (e.type) {
     case SDL_KEYDOWN:
       if (e.key.repeat == 0) {
@@ -89,7 +92,7 @@ bool GameView::event(const SDL_Event &e, const SDL_Rect viewport) {
       return false;
     
     case SDL_MOUSEMOTION:
-      return handleMouseMove(reg, e.motion.x - viewport.x, e.motion.y - viewport.y);
+      return handleMouseMove(reg, e.motion.x - viewport().x, e.motion.y - viewport().y);
     case SDL_MOUSEBUTTONDOWN:
       return handleMouseDown(reg, e.button.button);
     case SDL_MOUSEBUTTONUP:
@@ -106,7 +109,7 @@ void GameView::update(const float delta) {
   postPhysicsSystems(reg);
 }
 
-void GameView::render(SDL_Renderer *, const SDL_Rect viewport) {
-  cameraSystems(reg, viewport);
+void GameView::render(SDL_Renderer *) {
+  cameraSystems(reg, viewport());
   renderSystems(reg);
 }

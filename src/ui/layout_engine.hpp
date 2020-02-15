@@ -13,17 +13,18 @@
 
 union SDL_Event;
 struct SDL_Window;
+class LayoutItem;
 
 class LayoutEngine {
 public:
   void init(SDL_Window *);
   bool event(const SDL_Event &);
 
-  SDL_Rect gameViewport() const;
-  SDL_Rect statsViewport() const;
+  void setRoot(LayoutItem *);
+  void evaluate();
 
 private:
-  SDL_Rect viewport;
+  LayoutItem *root = nullptr;
 };
 
 #endif

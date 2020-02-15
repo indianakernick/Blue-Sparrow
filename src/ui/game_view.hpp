@@ -10,19 +10,20 @@
 #define ui_game_view_hpp
 
 #include "sdl_delete.hpp"
+#include "layout_item.hpp"
 #include <entt/entity/fwd.hpp>
 
 union SDL_Event;
 struct SDL_Rect;
 
-class GameView {
+class GameView : public LayoutItem {
 public:
   explicit GameView(entt::registry &);
   
   void init(SDL_Renderer *);
-  bool event(const SDL_Event &, SDL_Rect);
+  bool event(const SDL_Event &);
   void update(float);
-  void render(SDL_Renderer *, SDL_Rect);
+  void render(SDL_Renderer *);
 
 private:
   entt::registry &reg;
