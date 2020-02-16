@@ -12,6 +12,7 @@
 #include "game_view.hpp"
 #include "box_layout.hpp"
 #include "stats_view.hpp"
+#include "upgrade_view.hpp"
 #include "layout_engine.hpp"
 #include "../utils/frame_cap.hpp"
 #include "../utils/sdl_check.hpp"
@@ -67,12 +68,15 @@ void Application::run() {
   LayoutEngine layout{window.get()};
   GameView game{reg};
   StatsView stats{reg};
+  UpgradeView upgrades{reg};
   
   game.init(renderer.get());
   stats.init(renderer.get());
+  upgrades.init(renderer.get());
   
   VertBoxLayout panel;
   panel.append(&stats);
+  panel.append(&upgrades);
   
   HoriBoxLayout root;
   root.append(&panel);
@@ -97,6 +101,7 @@ void Application::run() {
       if (e.type == SDL_QUIT) return;
       if (layout.event(e)) continue;
       if (stats.event(e)) continue;
+      if (upgrades.event(e)) continue;
       if (game.event(e)) continue;
     }
     
@@ -109,6 +114,10 @@ void Application::run() {
     const SDL_Rect statsViewport = stats.viewport();
     SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &statsViewport));
     stats.render(renderer.get());
+    
+    const SDL_Rect upgradesViewport = upgrades.viewport();
+    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &upgradesViewport));
+    upgrades.render(renderer.get());
     
     const SDL_Rect gameViewport = game.viewport();
     SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &gameViewport));

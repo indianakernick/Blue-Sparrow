@@ -1,13 +1,13 @@
 //
-//  stats_view.hpp
+//  upgrade_view.hpp
 //  Blue Sparrow
 //
-//  Created by Indi Kernick on 14/2/20.
+//  Created by Indi Kernick on 16/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef ui_stats_view_hpp
-#define ui_stats_view_hpp
+#ifndef ui_upgrade_view_hpp
+#define ui_upgrade_view_hpp
 
 #include "sdl_delete.hpp"
 #include "layout_item.hpp"
@@ -15,10 +15,10 @@
 
 union SDL_Event;
 
-class StatsView final : public LayoutItem {
+class UpgradeView final : public LayoutItem {
 public:
-  explicit StatsView(entt::registry &);
-
+  explicit UpgradeView(entt::registry &);
+  
   void init(SDL_Renderer *);
   bool event(const SDL_Event &);
   void render(SDL_Renderer *);

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		450CDBD023F8B5B400CF4CEE /* upgrade_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBCE23F8B5B400CF4CEE /* upgrade_view.cpp */; };
 		457DF44923EBD70E00405E2D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF44823EBD70E00405E2D /* main.cpp */; };
 		457DF47C23EBF1B200405E2D /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; };
 		457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF45523EBEA8D00405E2D /* libbox2d.a */; };
@@ -83,6 +84,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		450CDBCE23F8B5B400CF4CEE /* upgrade_view.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = upgrade_view.cpp; sourceTree = "<group>"; };
+		450CDBCF23F8B5B400CF4CEE /* upgrade_view.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = upgrade_view.hpp; sourceTree = "<group>"; };
 		457DF44523EBD70E00405E2D /* Blue Sparrow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Blue Sparrow"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457DF44823EBD70E00405E2D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		457DF45523EBEA8D00405E2D /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../../../../../../../usr/local/lib/libbox2d.a; sourceTree = "<group>"; };
@@ -256,6 +259,8 @@
 				45BC5E5F23F64F4500A07A57 /* game_view.hpp */,
 				45BC5E6423F664B700A07A57 /* stats_view.cpp */,
 				45BC5E6523F664B700A07A57 /* stats_view.hpp */,
+				450CDBCE23F8B5B400CF4CEE /* upgrade_view.cpp */,
+				450CDBCF23F8B5B400CF4CEE /* upgrade_view.hpp */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 				45C5CA3523ED07B6000B554D /* expire.cpp in Sources */,
 				45C5CA2323ECE7C3000B554D /* apply_commands.cpp in Sources */,
 				45BC5E6323F6601500A07A57 /* layout_engine.cpp in Sources */,
+				450CDBD023F8B5B400CF4CEE /* upgrade_view.cpp in Sources */,
 				45BC5E6C23F767EF00A07A57 /* application.cpp in Sources */,
 				45C5CA4623EE3B7A000B554D /* find_target.cpp in Sources */,
 				45C5CA4323EE385D000B554D /* physics.cpp in Sources */,

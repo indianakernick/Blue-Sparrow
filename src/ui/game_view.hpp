@@ -14,9 +14,8 @@
 #include <entt/entity/fwd.hpp>
 
 union SDL_Event;
-struct SDL_Rect;
 
-class GameView : public LayoutItem {
+class GameView final : public LayoutItem {
 public:
   explicit GameView(entt::registry &);
   

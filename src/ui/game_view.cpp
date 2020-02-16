@@ -36,11 +36,13 @@ SDL::Texture makeTexture(SDL_Renderer *renderer) {
 }
 
 void initializeWorld(entt::registry &reg, const float arenaSize) {
+  // TODO: Does this belong here?
   setTransform(reg, makePlayer(reg), {0.0f, 0.0f}, 0.0f);
   setTransform(reg, makeSniper(reg, Team::enemy), {20.0f, 0.0f}, b2_pi);
   setTransform(reg, makeScout(reg, Team::enemy), {20.0f, 10.0f}, b2_pi);
   setTransform(reg, makeScout(reg, Team::enemy), {20.0f, -10.0f}, b2_pi);
-  setTransform(reg, makeScout(reg, Team::ally), {-20.0f, 0.0f}, 0.0f);
+  setTransform(reg, makeScout(reg, Team::ally), {-20.0f, 10.0f}, 0.0f);
+  setTransform(reg, makeScout(reg, Team::ally), {-20.0f, -10.0f}, 0.0f);
   makeArena(reg, arenaSize, arenaSize);
   entt::entity rock = makeAsteroid(reg);
   setTransform(reg, rock, {-30.0f, -40.0f}, 1.0f);
@@ -104,6 +106,7 @@ bool GameView::event(const SDL_Event &e) {
 }
 
 void GameView::update(const float delta) {
+  // TODO: Does this belong here?
   prePhysicsSystems(reg);
   stepPhysics(reg, delta);
   postPhysicsSystems(reg);
