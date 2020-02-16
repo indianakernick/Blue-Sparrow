@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		450CDBD023F8B5B400CF4CEE /* upgrade_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBCE23F8B5B400CF4CEE /* upgrade_view.cpp */; };
+		450CDBD623F8F05600CF4CEE /* view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBD423F8F05600CF4CEE /* view.cpp */; };
+		450CDBD923F8F93200CF4CEE /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBD723F8F93200CF4CEE /* window.cpp */; };
 		457DF44923EBD70E00405E2D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF44823EBD70E00405E2D /* main.cpp */; };
 		457DF47C23EBF1B200405E2D /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; };
 		457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF45523EBEA8D00405E2D /* libbox2d.a */; };
@@ -22,12 +24,10 @@
 		45BC5E5923F62BCC00A07A57 /* libFontCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45BC5E5823F62BB700A07A57 /* libFontCache.a */; };
 		45BC5E5B23F62E3400A07A57 /* FreeSans.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45BC5E5A23F62E1600A07A57 /* FreeSans.ttf */; };
 		45BC5E6023F64F4600A07A57 /* game_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E5E23F64F4500A07A57 /* game_view.cpp */; };
-		45BC5E6323F6601500A07A57 /* layout_engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6123F6601500A07A57 /* layout_engine.cpp */; };
 		45BC5E6623F664B700A07A57 /* stats_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6423F664B700A07A57 /* stats_view.cpp */; };
 		45BC5E6923F6754100A07A57 /* resource_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6723F6754100A07A57 /* resource_path.cpp */; };
 		45BC5E6C23F767EF00A07A57 /* application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6A23F767EF00A07A57 /* application.cpp */; };
 		45BC5E6F23F77F2600A07A57 /* layout_item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E6D23F77F2600A07A57 /* layout_item.cpp */; };
-		45BC5E7223F780B500A07A57 /* box_layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BC5E7023F780B500A07A57 /* box_layout.cpp */; };
 		45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA1E23ECE5E6000B554D /* handle_input.cpp */; };
 		45C5CA2323ECE7C3000B554D /* apply_commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2123ECE7C3000B554D /* apply_commands.cpp */; };
 		45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA2523ECEA5E000B554D /* camera.cpp */; };
@@ -86,6 +86,10 @@
 /* Begin PBXFileReference section */
 		450CDBCE23F8B5B400CF4CEE /* upgrade_view.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = upgrade_view.cpp; sourceTree = "<group>"; };
 		450CDBCF23F8B5B400CF4CEE /* upgrade_view.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = upgrade_view.hpp; sourceTree = "<group>"; };
+		450CDBD423F8F05600CF4CEE /* view.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = view.cpp; sourceTree = "<group>"; };
+		450CDBD523F8F05600CF4CEE /* view.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = view.hpp; sourceTree = "<group>"; };
+		450CDBD723F8F93200CF4CEE /* window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = window.cpp; sourceTree = "<group>"; };
+		450CDBD823F8F93200CF4CEE /* window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = window.hpp; sourceTree = "<group>"; };
 		457DF44523EBD70E00405E2D /* Blue Sparrow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Blue Sparrow"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457DF44823EBD70E00405E2D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		457DF45523EBEA8D00405E2D /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../../../../../../../usr/local/lib/libbox2d.a; sourceTree = "<group>"; };
@@ -108,8 +112,6 @@
 		45BC5E5C23F632FE00A07A57 /* Blue Sparrow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Blue Sparrow.entitlements"; sourceTree = "<group>"; };
 		45BC5E5E23F64F4500A07A57 /* game_view.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = game_view.cpp; sourceTree = "<group>"; };
 		45BC5E5F23F64F4500A07A57 /* game_view.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = game_view.hpp; sourceTree = "<group>"; };
-		45BC5E6123F6601500A07A57 /* layout_engine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = layout_engine.cpp; sourceTree = "<group>"; };
-		45BC5E6223F6601500A07A57 /* layout_engine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = layout_engine.hpp; sourceTree = "<group>"; };
 		45BC5E6423F664B700A07A57 /* stats_view.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = stats_view.cpp; sourceTree = "<group>"; };
 		45BC5E6523F664B700A07A57 /* stats_view.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = stats_view.hpp; sourceTree = "<group>"; };
 		45BC5E6723F6754100A07A57 /* resource_path.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resource_path.cpp; sourceTree = "<group>"; };
@@ -118,8 +120,6 @@
 		45BC5E6B23F767EF00A07A57 /* application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = application.hpp; sourceTree = "<group>"; };
 		45BC5E6D23F77F2600A07A57 /* layout_item.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = layout_item.cpp; sourceTree = "<group>"; };
 		45BC5E6E23F77F2600A07A57 /* layout_item.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = layout_item.hpp; sourceTree = "<group>"; };
-		45BC5E7023F780B500A07A57 /* box_layout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = box_layout.cpp; sourceTree = "<group>"; };
-		45BC5E7123F780B500A07A57 /* box_layout.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = box_layout.hpp; sourceTree = "<group>"; };
 		45C5CA1723ECE3DA000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA1823ECE41E000B554D /* graphics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = graphics.hpp; sourceTree = "<group>"; };
 		45C5CA1923ECE4FD000B554D /* input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
@@ -249,12 +249,12 @@
 			children = (
 				45BC5E6A23F767EF00A07A57 /* application.cpp */,
 				45BC5E6B23F767EF00A07A57 /* application.hpp */,
-				45BC5E6123F6601500A07A57 /* layout_engine.cpp */,
-				45BC5E6223F6601500A07A57 /* layout_engine.hpp */,
 				45BC5E6D23F77F2600A07A57 /* layout_item.cpp */,
 				45BC5E6E23F77F2600A07A57 /* layout_item.hpp */,
-				45BC5E7023F780B500A07A57 /* box_layout.cpp */,
-				45BC5E7123F780B500A07A57 /* box_layout.hpp */,
+				450CDBD423F8F05600CF4CEE /* view.cpp */,
+				450CDBD523F8F05600CF4CEE /* view.hpp */,
+				450CDBD723F8F93200CF4CEE /* window.cpp */,
+				450CDBD823F8F93200CF4CEE /* window.hpp */,
 				45BC5E5E23F64F4500A07A57 /* game_view.cpp */,
 				45BC5E5F23F64F4500A07A57 /* game_view.hpp */,
 				45BC5E6423F664B700A07A57 /* stats_view.cpp */,
@@ -412,8 +412,8 @@
 				45C5CA2A23ECEE46000B554D /* render.cpp in Sources */,
 				45C5CA3523ED07B6000B554D /* expire.cpp in Sources */,
 				45C5CA2323ECE7C3000B554D /* apply_commands.cpp in Sources */,
-				45BC5E6323F6601500A07A57 /* layout_engine.cpp in Sources */,
 				450CDBD023F8B5B400CF4CEE /* upgrade_view.cpp in Sources */,
+				450CDBD923F8F93200CF4CEE /* window.cpp in Sources */,
 				45BC5E6C23F767EF00A07A57 /* application.cpp in Sources */,
 				45C5CA4623EE3B7A000B554D /* find_target.cpp in Sources */,
 				45C5CA4323EE385D000B554D /* physics.cpp in Sources */,
@@ -424,7 +424,7 @@
 				45C5CA2023ECE5E6000B554D /* handle_input.cpp in Sources */,
 				45BC5E6623F664B700A07A57 /* stats_view.cpp in Sources */,
 				45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */,
-				45BC5E7223F780B500A07A57 /* box_layout.cpp in Sources */,
+				450CDBD623F8F05600CF4CEE /* view.cpp in Sources */,
 				45BC5E5023F5302900A07A57 /* frame_cap.cpp in Sources */,
 				45BC5E6923F6754100A07A57 /* resource_path.cpp in Sources */,
 				45BC5E4723F3833200A07A57 /* destruction.cpp in Sources */,

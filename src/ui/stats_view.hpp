@@ -9,13 +9,13 @@
 #ifndef ui_stats_view_hpp
 #define ui_stats_view_hpp
 
+#include "view.hpp"
 #include "sdl_delete.hpp"
-#include "layout_item.hpp"
 #include <entt/entity/fwd.hpp>
 
 union SDL_Event;
 
-class StatsView final : public LayoutItem {
+class StatsView final : public View {
 public:
   explicit StatsView(entt::registry &);
 

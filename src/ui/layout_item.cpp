@@ -27,18 +27,6 @@ int LayoutItem::maxHeight() const {
   return maxH;
 }
 
-SDL_Rect LayoutItem::viewport() const {
-  return view;
-}
-
-void LayoutItem::setViewport(const SDL_Rect viewport) {
-  assert(viewport.x >= 0);
-  assert(viewport.y >= 0);
-  assert(viewport.w > 0);
-  assert(viewport.h > 0);
-  view = viewport;
-}
-
 void LayoutItem::setFixedWidth(const int w) {
   assert(w > 0);
   minW = maxW = w;

@@ -9,13 +9,13 @@
 #ifndef ui_upgrade_view_hpp
 #define ui_upgrade_view_hpp
 
+#include "view.hpp"
 #include "sdl_delete.hpp"
-#include "layout_item.hpp"
 #include <entt/entity/fwd.hpp>
 
 union SDL_Event;
 
-class UpgradeView final : public LayoutItem {
+class UpgradeView final : public View {
 public:
   explicit UpgradeView(entt::registry &);
   

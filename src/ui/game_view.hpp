@@ -9,13 +9,13 @@
 #ifndef ui_game_view_hpp
 #define ui_game_view_hpp
 
+#include "view.hpp"
 #include "sdl_delete.hpp"
-#include "layout_item.hpp"
 #include <entt/entity/fwd.hpp>
 
 union SDL_Event;
 
-class GameView final : public LayoutItem {
+class GameView final : public View {
 public:
   explicit GameView(entt::registry &);
   

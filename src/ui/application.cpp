@@ -9,11 +9,10 @@
 #include "application.hpp"
 
 #include <SDL2/SDL.h>
+#include "window.hpp"
 #include "game_view.hpp"
-#include "box_layout.hpp"
 #include "stats_view.hpp"
 #include "upgrade_view.hpp"
-#include "layout_engine.hpp"
 #include "../utils/frame_cap.hpp"
 #include "../utils/sdl_check.hpp"
 #include "../utils/sdl_delete.hpp"
@@ -60,31 +59,53 @@ Application::~Application() {
   SDL_Quit();
 }
 
+/*class Renderer {
+public:
+  void drawText();
+private:
+  SDL::Font font;
+};*/
+
+// FC_Draw(font.get(), ren, 0.0f, 0.0f, "Hull: %d/%d", hull.h, params.durability);
+
+// operator!
+// operator+
+
+// can we use a dirty flag to evaluate and set the viewport?
+// setting the size would mark the item as dirty
+// calling evaluate would mark the item as clean
+//   how can parents know that their grandchildren are dirty without checking?
+
+// Whenever a child is added or resized, the parent must be updated
+// If the parent must be resized, it's parent must be updated
+//   we get a lot of unnecessary computation during initialization
+//   if we're careful with initialization order, can we avoid that?
+//   initialize from the bottom up
+//   if an item doesn't have a parent, it doesn't need to update it
+
+// Whenever the viewport is requested
+// Update it if required
+// Somehow use dirty flag
+
 void Application::run() {
   SDL::Window window = initWindow(1280, 720);
   SDL::Renderer renderer = initRenderer(window.get());
   
   entt::registry reg;
-  LayoutEngine layout{window.get()};
-  GameView game{reg};
-  StatsView stats{reg};
-  UpgradeView upgrades{reg};
   
-  game.init(renderer.get());
-  stats.init(renderer.get());
-  upgrades.init(renderer.get());
+  auto panel = std::make_unique<View>();
+  panel->setLayout(LayoutPolicy::vertical);
+  panel->addChild(std::make_unique<StatsView>(reg));
+  panel->addChild(std::make_unique<UpgradeView>(reg));
   
-  VertBoxLayout panel;
-  panel.append(&stats);
-  panel.append(&upgrades);
+  Window root{window.get()};
+  root.setLayout(LayoutPolicy::horizontal);
+  root.addChild(std::move(panel));
+  auto *game = root.addChild(std::make_unique<GameView>(reg));
   
-  HoriBoxLayout root;
-  root.append(&panel);
-  root.append(&game);
-  
-  layout.setRoot(&root);
-  layout.evaluate();
-  layout.setInitialViewport();
+  root.evaluate();
+  root.setInitialViewport();
+  root.init(renderer.get());
 
   // TODO: The window could move to a different monitor with a different refresh
   // rate and mess everything up.
@@ -99,30 +120,15 @@ void Application::run() {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
       if (e.type == SDL_QUIT) return;
-      if (layout.event(e)) continue;
-      if (stats.event(e)) continue;
-      if (upgrades.event(e)) continue;
-      if (game.event(e)) continue;
+      root.event(e);
     }
     
-    game.update(1.0f / fps);
+    game->update(1.0f / fps);
     
     SDL_CHECK(SDL_RenderSetViewport(renderer.get(), nullptr));
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
-    
-    const SDL_Rect statsViewport = stats.viewport();
-    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &statsViewport));
-    stats.render(renderer.get());
-    
-    const SDL_Rect upgradesViewport = upgrades.viewport();
-    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &upgradesViewport));
-    upgrades.render(renderer.get());
-    
-    const SDL_Rect gameViewport = game.viewport();
-    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &gameViewport));
-    game.render(renderer.get());
-    
+    root.render(renderer.get());
     SDL_RenderPresent(renderer.get());
     
     frame.end();
