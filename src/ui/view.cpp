@@ -38,8 +38,8 @@ View *View::addChild(std::unique_ptr<View> view) {
   return ret;
 }
 
-void View::setLayout(LayoutPolicy policy) {
-  layout = policy;
+void View::setLayout(const LayoutDir layout) {
+  dir = layout;
 }
 
 namespace {
@@ -112,11 +112,11 @@ void setViewportHorizontal(const SDL_Rect viewport, const int minWidth, const Ki
 void View::evaluate() {
   if (children.empty()) return;
   SDL_Point size = {0, 0};
-  switch (layout) {
-    case LayoutPolicy::vertical:
+  switch (dir) {
+    case LayoutDir::down:
       size = evaluateVertical(children);
       break;
-    case LayoutPolicy::horizontal:
+    case LayoutDir::right:
       size = evaluateHorizontal(children);
       break;
   }
@@ -126,11 +126,11 @@ void View::evaluate() {
 
 void View::setViewport(const SDL_Rect viewport) {
   rect = viewport;
-  switch (layout) {
-    case LayoutPolicy::vertical:
+  switch (dir) {
+    case LayoutDir::down:
       setViewportVertical(viewport, minHeight(), children);
       break;
-    case LayoutPolicy::horizontal:
+    case LayoutDir::right:
       setViewportHorizontal(viewport, minWidth(), children);
       break;
   }

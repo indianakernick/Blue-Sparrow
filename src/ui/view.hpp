@@ -17,9 +17,9 @@
 union SDL_Event;
 struct SDL_Renderer;
 
-enum class LayoutPolicy {
-  vertical,
-  horizontal
+enum class LayoutDir {
+  down,
+  right
 };
 
 enum class VertAlign {
@@ -48,7 +48,7 @@ public:
     return ret;
   }
   
-  void setLayout(LayoutPolicy);
+  void setLayout(LayoutDir);
   
   void evaluate();
   void setViewport(SDL_Rect);
@@ -61,7 +61,7 @@ public:
 
 private:
   std::vector<std::unique_ptr<View>> children;
-  LayoutPolicy layout = LayoutPolicy::vertical;
+  LayoutDir dir = LayoutDir::down;
   SDL_Rect rect;
   VertAlign vAlign;
   HoriAlign hAlign;

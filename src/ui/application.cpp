@@ -94,12 +94,12 @@ void Application::run() {
   entt::registry reg;
   
   auto panel = std::make_unique<View>();
-  panel->setLayout(LayoutPolicy::vertical);
+  panel->setLayout(LayoutDir::down);
   panel->addChild(std::make_unique<StatsView>(reg));
   panel->addChild(std::make_unique<UpgradeView>(reg));
   
   Window root{window.get()};
-  root.setLayout(LayoutPolicy::horizontal);
+  root.setLayout(LayoutDir::right);
   root.addChild(std::move(panel));
   auto *game = root.addChild(std::make_unique<GameView>(reg));
   
