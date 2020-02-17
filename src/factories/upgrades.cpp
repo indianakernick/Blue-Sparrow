@@ -38,7 +38,7 @@ const MoveParams moveParams[] = {
 
 const MoveUpgrade moveUpgrades[] = {
   {{.cost = 3, .level = 1}},
-  {{.cost = -1, .level = -1}}
+  {{.cost = -1, .level = 2}}
 };
 
 const BlasterParams blasterParams[] = {
@@ -55,7 +55,7 @@ const BlasterParams blasterParams[] = {
 
 const BlasterUpgrade blasterUpgrades[] = {
   {{.cost = 4, .level = 1}},
-  {{.cost = -1, .level = -1}}
+  {{.cost = -1, .level = 2}}
 };
 
 const MissileParams missileParams[] = {
@@ -78,7 +78,7 @@ const MissileParams missileParams[] = {
 
 const MissileUpgrade missileUpgrades[] = {
   {{.cost = 25, .level = 1}},
-  {{.cost = -1, .level = -1}}
+  {{.cost = -1, .level = 2}}
 };
 
 const HullParams hullParams[] = {
@@ -92,26 +92,52 @@ const HullUpgrade hullUpgrades[] = {
   {{.cost = 4, .level = 1}},
   {{.cost = 6, .level = 2}},
   {{.cost = 10, .level = 3}},
-  {{.cost = -1, .level = -1}}
+  {{.cost = -1, .level = 4}}
 };
 
 #pragma clang diagnostic pop
 
-bool canUpgrade(Coins &coins, const Upgrade &upgrade) {
-  if (upgrade.level == -1) return false;
-  if (upgrade.cost > coins.c) return false;
-  coins.c -= upgrade.cost;
-  return true;
+template <typename Upgrade, typename Params, size_t Size>
+bool upgrade(entt::registry &reg, const Upgrade (&upgrades)[Size], const Params (&params)[Size]) {
+  bool success = false;
+  auto view = reg.view<Upgrade, Params, Coins>();
+  view.each([&](auto &upgrade, auto &param, auto &coins) {
+    if (upgrade.cost == -1) return;
+    if (upgrade.cost > coins.c) return;
+    coins.c -= upgrade.cost;
+    param = params[upgrade.level];
+    upgrade = upgrades[upgrade.level];
+    success = true;
+  });
+  return success;
+}
+
+template <typename Upgrade, size_t Size>
+bool getInfo(entt::registry &reg, UpgradeInfo &info, const Upgrade (&)[Size]) {
+  bool success = false;
+  auto view = reg.view<Upgrade, Coins>();
+  view.each([&](auto upgrade, auto coins) {
+    info.total = Size;
+    info.level = upgrade.level;
+    info.cost = upgrade.cost;
+    info.able = upgrade.cost != -1 && upgrade.cost <= coins.c;
+    success = true;
+  });
+  return success;
 }
 
 }
 
-int motionUpgradeLevels() {
-  return std::size(moveParams);
+bool upgradeMotion(entt::registry &reg) {
+  return upgrade(reg, moveUpgrades, moveParams);
+}
+
+bool motionUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
+  return getInfo(reg, info, moveUpgrades);
 }
 
 void setMotion(entt::registry &reg, const entt::entity e, const int level) {
-  assert(level < motionUpgradeLevels());
+  assert(level < int{std::size(moveParams)});
   reg.assign<MoveParams>(e, moveParams[level]);
   reg.assign<VelocityLimit>(e, moveParams[level].speed);
   reg.assign<MoveCommand>(e);
@@ -122,20 +148,16 @@ void setUpgradableMotion(entt::registry &reg, const entt::entity e, const int le
   reg.assign<MoveUpgrade>(e, moveUpgrades[level]);
 }
 
-bool upgradeMotion(entt::registry &reg, const entt::entity e) {
-  const auto &upgrade = reg.get<MoveUpgrade>(e);
-  if (!canUpgrade(reg.get<Coins>(e), upgrade)) return false;
-  reg.replace<MoveParams>(e, moveParams[upgrade.level]);
-  reg.replace<MoveUpgrade>(e, moveUpgrades[upgrade.level]);
-  return true;
+bool upgradeBlaster(entt::registry &reg) {
+  return upgrade(reg, blasterUpgrades, blasterParams);
 }
 
-int blasterUpgradeLevels() {
-  return std::size(blasterParams);
+bool blasterUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
+  return getInfo(reg, info, blasterUpgrades);
 }
 
 void setBlaster(entt::registry &reg, const entt::entity e, const int level) {
-  assert(level < blasterUpgradeLevels());
+  assert(level < int{std::size(blasterParams)});
   reg.assign<BlasterParams>(e, blasterParams[level]);
   reg.assign<BlasterTimer>(e, std::uint32_t{});
   reg.assign<BlasterCommand>(e);
@@ -146,20 +168,16 @@ void setUpgradableBlaster(entt::registry &reg, const entt::entity e, const int l
   reg.assign<BlasterUpgrade>(e, blasterUpgrades[level]);
 }
 
-bool upgradeBlaster(entt::registry &reg, const entt::entity e) {
-  const auto &upgrade = reg.get<BlasterUpgrade>(e);
-  if (!canUpgrade(reg.get<Coins>(e), upgrade)) return false;
-  reg.replace<BlasterParams>(e, blasterParams[upgrade.level]);
-  reg.replace<BlasterUpgrade>(e, blasterUpgrades[upgrade.level]);
-  return true;
+bool upgradeMissile(entt::registry &reg) {
+  return upgrade(reg, missileUpgrades, missileParams);
 }
 
-int missileUpgradeLevels() {
-  return std::size(missileParams);
+bool missileUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
+  return getInfo(reg, info, missileUpgrades);
 }
 
 void setMissile(entt::registry &reg, const entt::entity e, const int level) {
-  assert(level < missileUpgradeLevels());
+  assert(level < int{std::size(missileParams)});
   reg.assign<MissileParams>(e, missileParams[level]);
   reg.assign<MissileCommand>(e);
   reg.assign<MissileTimer>(e, std::uint32_t{});
@@ -171,20 +189,16 @@ void setUpgradableMissile(entt::registry &reg, const entt::entity e, const int l
   reg.assign<MissileUpgrade>(e, missileUpgrades[level]);
 }
 
-bool upgradeMissile(entt::registry &reg, const entt::entity e) {
-  const auto &upgrade = reg.get<MissileUpgrade>(e);
-  if (!canUpgrade(reg.get<Coins>(e), upgrade)) return false;
-  reg.replace<MissileParams>(e, missileParams[upgrade.level]);
-  reg.replace<MissileUpgrade>(e, missileUpgrades[upgrade.level]);
-  return true;
+bool upgradeHull(entt::registry &reg) {
+  return upgrade(reg, hullUpgrades, hullParams);
 }
 
-int hullUpgradeLevels() {
-  return std::size(hullParams);
+bool hullUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
+  return getInfo(reg, info, hullUpgrades);
 }
 
 void setHull(entt::registry &reg, const entt::entity e, const int level) {
-  assert(level < hullUpgradeLevels());
+  assert(level < int{std::size(hullParams)});
   reg.assign<Hull>(e, hullParams[level].durability);
   reg.assign<HullParams>(e, hullParams[level]);
   reg.assign<BarRect>(e);
@@ -193,12 +207,4 @@ void setHull(entt::registry &reg, const entt::entity e, const int level) {
 void setUpgradableHull(entt::registry &reg, const entt::entity e, const int level) {
   setHull(reg, e, level);
   reg.assign<HullUpgrade>(e, hullUpgrades[level]);
-}
-
-bool upgradeHull(entt::registry &reg, const entt::entity e) {
-  const auto &upgrade = reg.get<HullUpgrade>(e);
-  if (!canUpgrade(reg.get<Coins>(e), upgrade)) return false;
-  reg.replace<HullParams>(e, hullParams[upgrade.level]);
-  reg.replace<HullUpgrade>(e, hullUpgrades[upgrade.level]);
-  return true;
 }

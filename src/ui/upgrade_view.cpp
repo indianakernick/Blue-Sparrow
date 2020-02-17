@@ -32,10 +32,7 @@ bool UpgradeView::event(const SDL_Event &e) {
       const SDL_Point pos = {e.button.x - viewport().x, e.button.y - viewport().y};
       const SDL_Rect button = {0, 0, 200, 28};
       if (SDL_PointInRect(&pos, &button)) {
-        auto view = reg.view<MoveUpgrade>();
-        view.each([this](entt::entity e, auto) {
-          upgradeMotion(reg, e);
-        });
+        upgradeMotion(reg);
         return true;
       }
   }
@@ -43,21 +40,20 @@ bool UpgradeView::event(const SDL_Event &e) {
 }
 
 void UpgradeView::render(SDL_Renderer *ren) {
-  auto view = reg.view<MoveUpgrade>();
-  view.each([&](auto upgrade) {
-    const SDL_Rect rect = {0, 0, 200, 28};
-    SDL_CHECK(SDL_SetRenderDrawColor(ren, 127, 127, 127, 255));
-    SDL_CHECK(SDL_RenderFillRect(ren, &rect));
-    if (upgrade.level == -1) {
-      FC_Draw(font.get(), ren, 0.0f, 0.0f,
-        "Upgrade thrusters: %d/%d",
-        motionUpgradeLevels(), motionUpgradeLevels()
-      );
-    } else {
-      FC_Draw(font.get(), ren, 0.0f, 0.0f,
-        "Upgrade thrusters: %d/%d (%d)",
-        upgrade.level, motionUpgradeLevels(), upgrade.cost
-      );
-    }
-  });
+  UpgradeInfo info;
+  if (!motionUpgradeInfo(reg, info)) return;
+  const SDL_Rect rect = {0, 0, 200, 28};
+  SDL_CHECK(SDL_SetRenderDrawColor(ren, 127, 127, 127, 255));
+  SDL_CHECK(SDL_RenderFillRect(ren, &rect));
+  if (info.cost == -1) {
+    FC_Draw(font.get(), ren, 0.0f, 0.0f,
+      "Upgrade thrusters: %d/%d",
+      info.level, info.total
+    );
+  } else {
+    FC_Draw(font.get(), ren, 0.0f, 0.0f,
+      "Upgrade thrusters: %d/%d (%d)",
+      info.level, info.total, info.cost
+    );
+  }
 }

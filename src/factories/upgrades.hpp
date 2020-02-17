@@ -11,24 +11,31 @@
 
 #include <entt/entity/fwd.hpp>
 
-int motionUpgradeLevels();
+struct UpgradeInfo {
+  int level;
+  int total;
+  int cost;
+  bool able;
+};
+
+bool upgradeMotion(entt::registry &);
+bool motionUpgradeInfo(entt::registry &, UpgradeInfo &);
 void setMotion(entt::registry &, entt::entity, int);
 void setUpgradableMotion(entt::registry &, entt::entity, int);
-bool upgradeMotion(entt::registry &, entt::entity);
 
-int blasterUpgradeLevels();
+bool upgradeBlaster(entt::registry &);
+bool blasterUpgradeInfo(entt::registry &, UpgradeInfo &);
 void setBlaster(entt::registry &, entt::entity, int);
 void setUpgradableBlaster(entt::registry &, entt::entity, int);
-bool upgradeBlaster(entt::registry &, entt::entity);
 
-int missileUpgradeLevels();
+bool upgradeMissile(entt::registry &);
+bool missileUpgradeInfo(entt::registry &, UpgradeInfo &);
 void setMissile(entt::registry &, entt::entity, int);
 void setUpgradableMissile(entt::registry &, entt::entity, int);
-bool upgradeMissile(entt::registry &, entt::entity);
 
-int hullUpgradeLevels();
+bool upgradeHull(entt::registry &);
+bool hullUpgradeInfo(entt::registry &, UpgradeInfo &);
 void setHull(entt::registry &, entt::entity, int);
 void setUpgradableHull(entt::registry &, entt::entity, int);
-bool upgradeHull(entt::registry &, entt::entity);
 
 #endif
