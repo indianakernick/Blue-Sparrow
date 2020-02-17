@@ -13,8 +13,6 @@
 #include "sdl_delete.hpp"
 #include <entt/entity/fwd.hpp>
 
-union SDL_Event;
-
 class StatsView final : public View {
 public:
   explicit StatsView(entt::registry &);

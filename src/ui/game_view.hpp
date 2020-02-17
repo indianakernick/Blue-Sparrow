@@ -13,8 +13,6 @@
 #include "sdl_delete.hpp"
 #include <entt/entity/fwd.hpp>
 
-union SDL_Event;
-
 class GameView final : public View {
 public:
   explicit GameView(entt::registry &);

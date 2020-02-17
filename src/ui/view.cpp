@@ -89,7 +89,7 @@ void setViewportVertical(const SDL_Rect viewport, const int minHeight, const Kid
     const int x = applyAlignment(child->horiAlign(), w, viewport.w);
     const int useExtra = std::min(extra, child->maxHeight() - child->minHeight());
     extra -= useExtra;
-    child->setViewport({x, y, w, child->minHeight() + useExtra});
+    child->setViewport({x + viewport.x, y + viewport.y, w, child->minHeight() + useExtra});
     y += child->minHeight();
   }
 }
@@ -102,7 +102,7 @@ void setViewportHorizontal(const SDL_Rect viewport, const int minWidth, const Ki
     const int y = applyAlignment(child->vertAlign(), h, viewport.h);
     const int useExtra = std::min(extra, child->maxWidth() - child->minWidth());
     extra -= useExtra;
-    child->setViewport({x, y, child->minWidth() + useExtra, h});
+    child->setViewport({x + viewport.x, y + viewport.y, child->minWidth() + useExtra, h});
     x += child->minWidth();
   }
 }

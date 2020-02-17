@@ -10,22 +10,11 @@
 #define ui_upgrade_view_hpp
 
 #include "view.hpp"
-#include "sdl_delete.hpp"
 #include <entt/entity/fwd.hpp>
-
-union SDL_Event;
 
 class UpgradeView final : public View {
 public:
   explicit UpgradeView(entt::registry &);
-  
-  void init(SDL_Renderer *, FontCache &) override;
-  bool event(const SDL_Event &) override;
-  void render(SDL_Renderer *, FontCache &) override;
-
-private:
-  entt::registry &reg;
-  FC_Font *font = nullptr;
 };
 
 #endif
