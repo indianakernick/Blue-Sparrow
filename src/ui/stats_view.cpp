@@ -8,7 +8,7 @@
 
 #include "stats_view.hpp"
 
-#include <SDL_FontCache.h>
+#include "font_cache.hpp"
 #include "../comps/ammo.hpp"
 #include "../comps/params.hpp"
 #include "../comps/graphics.hpp"
@@ -21,20 +21,19 @@ StatsView::StatsView(entt::registry &reg)
   setGrowHeight(100);
 }
 
-void StatsView::init(SDL_Renderer *ren) {
-  font.reset(FC_CreateFont());
-  FC_LoadFont(font.get(), ren, res("FreeSans.ttf"), 16, {255, 255, 255, 255}, TTF_STYLE_NORMAL);
+void StatsView::init(SDL_Renderer *, FontCache &cache) {
+  font = cache.load(res("FreeSans.ttf"), 16);
 }
 
 bool StatsView::event(const SDL_Event &) {
   return false;
 }
 
-void StatsView::render(SDL_Renderer *ren) {
+void StatsView::render(SDL_Renderer *, FontCache &cache) {
   auto view = reg.view<Hull, HullParams, Coins, MissileAmmo, CameraFocus>();
   view.less([&](auto hull, auto params, auto coins, auto ammo) {
-    FC_Draw(font.get(), ren, 0.0f, 0.0f, "Hull: %d/%d", hull.h, params.durability);
-    FC_Draw(font.get(), ren, 0.0f, 18.0f, "Coins: %d", coins.c);
-    FC_Draw(font.get(), ren, 0.0f, 36.0f, "Missiles: %d", ammo.n);
+    cache.draw(font, 0.0f, 0.0f, "Hull: %d/%d", hull.h, params.durability);
+    cache.draw(font, 0.0f, 18.0f, "Coins: %d", coins.c);
+    cache.draw(font, 0.0f, 36.0f, "Missiles: %d", ammo.n);
   });
 }

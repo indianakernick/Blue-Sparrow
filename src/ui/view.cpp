@@ -11,9 +11,9 @@
 #include <SDL2/SDL_render.h>
 #include "../utils/sdl_check.hpp"
 
-void View::init(SDL_Renderer *ren) {
+void View::init(SDL_Renderer *ren, FontCache &cache) {
   for (auto &child : children) {
-    child->init(ren);
+    child->init(ren, cache);
   }
 }
 
@@ -24,11 +24,11 @@ bool View::event(const SDL_Event &e) {
   return false;
 }
 
-void View::render(SDL_Renderer *ren) {
+void View::render(SDL_Renderer *ren, FontCache &cache) {
   for (auto &child : children) {
     const SDL_Rect viewport = child->viewport();
     SDL_CHECK(SDL_RenderSetViewport(ren, &viewport));
-    child->render(ren);
+    child->render(ren, cache);
   }
 }
 

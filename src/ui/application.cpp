@@ -11,6 +11,7 @@
 #include <SDL2/SDL.h>
 #include "window.hpp"
 #include "game_view.hpp"
+#include "font_cache.hpp"
 #include "stats_view.hpp"
 #include "upgrade_view.hpp"
 #include "../utils/frame_cap.hpp"
@@ -59,13 +60,6 @@ Application::~Application() {
   SDL_Quit();
 }
 
-/*class Renderer {
-public:
-  void drawText();
-private:
-  SDL::Font font;
-};*/
-
 // FC_Draw(font.get(), ren, 0.0f, 0.0f, "Hull: %d/%d", hull.h, params.durability);
 
 // operator!
@@ -90,7 +84,7 @@ private:
 void Application::run() {
   SDL::Window window = initWindow(1280, 720);
   SDL::Renderer renderer = initRenderer(window.get());
-  
+  FontCache cache{renderer.get()};
   entt::registry reg;
   
   auto panel = std::make_unique<View>();
@@ -105,7 +99,7 @@ void Application::run() {
   
   root.evaluate();
   root.setInitialViewport();
-  root.init(renderer.get());
+  root.init(renderer.get(), cache);
 
   // TODO: The window could move to a different monitor with a different refresh
   // rate and mess everything up.
@@ -128,7 +122,7 @@ void Application::run() {
     SDL_CHECK(SDL_RenderSetViewport(renderer.get(), nullptr));
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
-    root.render(renderer.get());
+    root.render(renderer.get(), cache);
     SDL_RenderPresent(renderer.get());
     
     frame.end();

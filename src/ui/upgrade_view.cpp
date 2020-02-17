@@ -8,7 +8,7 @@
 
 #include "upgrade_view.hpp"
 
-#include <SDL_FontCache.h>
+#include "font_cache.hpp"
 #include "../comps/params.hpp"
 #include "../utils/sdl_check.hpp"
 #include <entt/entity/registry.hpp>
@@ -21,9 +21,8 @@ UpgradeView::UpgradeView(entt::registry &reg)
   setFixedHeight(100);
 }
 
-void UpgradeView::init(SDL_Renderer *ren) {
-  font.reset(FC_CreateFont());
-  FC_LoadFont(font.get(), ren, res("FreeSans.ttf"), 16, {255, 255, 255, 255}, TTF_STYLE_NORMAL);
+void UpgradeView::init(SDL_Renderer *, FontCache &cache) {
+  font = cache.load(res("FreeSans.ttf"), 16);
 }
 
 bool UpgradeView::event(const SDL_Event &e) {
@@ -39,19 +38,19 @@ bool UpgradeView::event(const SDL_Event &e) {
   return false;
 }
 
-void UpgradeView::render(SDL_Renderer *ren) {
+void UpgradeView::render(SDL_Renderer *ren, FontCache &cache) {
   UpgradeInfo info;
   if (!motionUpgradeInfo(reg, info)) return;
   const SDL_Rect rect = {0, 0, 200, 28};
   SDL_CHECK(SDL_SetRenderDrawColor(ren, 127, 127, 127, 255));
   SDL_CHECK(SDL_RenderFillRect(ren, &rect));
   if (info.cost == -1) {
-    FC_Draw(font.get(), ren, 0.0f, 0.0f,
+    cache.draw(font, 0.0f, 0.0f,
       "Upgrade thrusters: %d/%d",
       info.level, info.total
     );
   } else {
-    FC_Draw(font.get(), ren, 0.0f, 0.0f,
+    cache.draw(font, 0.0f, 0.0f,
       "Upgrade thrusters: %d/%d (%d)",
       info.level, info.total, info.cost
     );

@@ -57,7 +57,7 @@ GameView::GameView(entt::registry &reg)
   setGrowHeight(100);
 }
 
-void GameView::init(SDL_Renderer *ren) {
+void GameView::init(SDL_Renderer *ren, FontCache &) {
   foreground = makeTexture(ren);
   background = loadTexture(ren, res("stars.png"));
   
@@ -112,7 +112,7 @@ void GameView::update(const float delta) {
   postPhysicsSystems(reg);
 }
 
-void GameView::render(SDL_Renderer *) {
+void GameView::render(SDL_Renderer *, FontCache &) {
   cameraSystems(reg, viewport());
   renderSystems(reg);
 }

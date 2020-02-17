@@ -19,13 +19,13 @@ class StatsView final : public View {
 public:
   explicit StatsView(entt::registry &);
 
-  void init(SDL_Renderer *);
-  bool event(const SDL_Event &);
-  void render(SDL_Renderer *);
+  void init(SDL_Renderer *, FontCache &) override;
+  bool event(const SDL_Event &) override;
+  void render(SDL_Renderer *, FontCache &) override;
 
 private:
   entt::registry &reg;
-  SDL::Font font;
+  FC_Font *font = nullptr;
 };
 
 #endif

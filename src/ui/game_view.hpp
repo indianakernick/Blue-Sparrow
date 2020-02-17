@@ -19,10 +19,10 @@ class GameView final : public View {
 public:
   explicit GameView(entt::registry &);
   
-  void init(SDL_Renderer *);
-  bool event(const SDL_Event &);
+  void init(SDL_Renderer *, FontCache &) override;
+  bool event(const SDL_Event &) override;
   void update(float);
-  void render(SDL_Renderer *);
+  void render(SDL_Renderer *, FontCache &) override;
 
 private:
   entt::registry &reg;

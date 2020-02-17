@@ -10,6 +10,7 @@
 		450CDBD023F8B5B400CF4CEE /* upgrade_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBCE23F8B5B400CF4CEE /* upgrade_view.cpp */; };
 		450CDBD623F8F05600CF4CEE /* view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBD423F8F05600CF4CEE /* view.cpp */; };
 		450CDBD923F8F93200CF4CEE /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBD723F8F93200CF4CEE /* window.cpp */; };
+		450CDBFA23FA363C00CF4CEE /* font_cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBF823FA363C00CF4CEE /* font_cache.cpp */; };
 		457DF44923EBD70E00405E2D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF44823EBD70E00405E2D /* main.cpp */; };
 		457DF47C23EBF1B200405E2D /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; };
 		457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF45523EBEA8D00405E2D /* libbox2d.a */; };
@@ -90,6 +91,8 @@
 		450CDBD523F8F05600CF4CEE /* view.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = view.hpp; sourceTree = "<group>"; };
 		450CDBD723F8F93200CF4CEE /* window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = window.cpp; sourceTree = "<group>"; };
 		450CDBD823F8F93200CF4CEE /* window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = window.hpp; sourceTree = "<group>"; };
+		450CDBF823FA363C00CF4CEE /* font_cache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = font_cache.cpp; sourceTree = "<group>"; };
+		450CDBF923FA363C00CF4CEE /* font_cache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = font_cache.hpp; sourceTree = "<group>"; };
 		457DF44523EBD70E00405E2D /* Blue Sparrow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Blue Sparrow"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457DF44823EBD70E00405E2D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		457DF45523EBEA8D00405E2D /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../../../../../../../usr/local/lib/libbox2d.a; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 				45BC5E6523F664B700A07A57 /* stats_view.hpp */,
 				450CDBCE23F8B5B400CF4CEE /* upgrade_view.cpp */,
 				450CDBCF23F8B5B400CF4CEE /* upgrade_view.hpp */,
+				450CDBF823FA363C00CF4CEE /* font_cache.cpp */,
+				450CDBF923FA363C00CF4CEE /* font_cache.hpp */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -428,6 +433,7 @@
 				45BC5E5023F5302900A07A57 /* frame_cap.cpp in Sources */,
 				45BC5E6923F6754100A07A57 /* resource_path.cpp in Sources */,
 				45BC5E4723F3833200A07A57 /* destruction.cpp in Sources */,
+				450CDBFA23FA363C00CF4CEE /* font_cache.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,7 +561,10 @@
 					"$(inherited)",
 					STBI_ONLY_PNG,
 				);
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					/usr/local/Cellar/sdl2/2.0.10/include/SDL2,
+				);
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -595,7 +604,10 @@
 					NDEBUG,
 					STBI_ONLY_PNG,
 				);
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					/usr/local/Cellar/sdl2/2.0.10/include/SDL2,
+				);
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

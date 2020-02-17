@@ -16,6 +16,7 @@
 
 union SDL_Event;
 struct SDL_Renderer;
+class FontCache;
 
 enum class LayoutDir {
   down,
@@ -34,9 +35,9 @@ class View : public LayoutItem {
 public:
   virtual ~View() = default;
   
-  virtual void init(SDL_Renderer *);
+  virtual void init(SDL_Renderer *, FontCache &);
   virtual bool event(const SDL_Event &);
-  virtual void render(SDL_Renderer *);
+  virtual void render(SDL_Renderer *, FontCache &);
   
   View *addChild(std::unique_ptr<View>);
   
