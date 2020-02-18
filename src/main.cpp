@@ -12,3 +12,46 @@ int main() {
   Application app;
   app.run();
 }
+
+// Objects
+//   Walls
+//     Could build a simple labrinth
+//   Beacons
+//     TF2 Control points
+//       Team members occupy the area for some amount of time to capture
+//       More team members means faster capturing
+//     Diep.io Dominators
+//       Deal damage to capture
+//       The beacon acts like a turret and shoots back
+//   Turrets
+//     Should beacons shoot?
+
+// AIs
+//   (for the different roles of a team)
+//   Dodging (missiles that dodge)
+//   Picking up drops
+//   Defending
+//   Guarding
+//   Attacking
+
+// Drops
+//   AIs that seek out drops
+//   Drops for each team maybe?
+//   Drops only for the player maybe?
+//   Currently, drops are accidently picked up by other ships
+//   Perhaps drops could just spawn in a few places
+//     Similar to TF2
+
+// Controls
+//   Should be move away from digital controls and use analog controls?
+//     Would make AIs a little bit more effect
+//     Might help improve aim assist for the player
+//   Aim assist
+//     Currently pretty terrible
+//     Could benefit from analog controls
+
+// Weapons
+//   Drop mines that only effect the enemy
+//     Perhaps fancy mines could have tiny blasters on them
+//   Pulsing laser
+//     Bouncing the laser off of mirrors could provide some interesting gameplay

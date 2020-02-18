@@ -60,8 +60,6 @@ Application::~Application() {
   SDL_Quit();
 }
 
-// FC_Draw(font.get(), ren, 0.0f, 0.0f, "Hull: %d/%d", hull.h, params.durability);
-
 // operator!
 // operator+
 
