@@ -24,6 +24,12 @@ bool View::event(const SDL_Event &e) {
   return false;
 }
 
+void View::update(const float delta) {
+  for (auto &child : children) {
+    child->update(delta);
+  }
+}
+
 void View::render(SDL_Renderer *ren, FontCache &cache) {
   for (auto &child : children) {
     const SDL_Rect viewport = child->viewport();

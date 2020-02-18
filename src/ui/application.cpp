@@ -95,7 +95,7 @@ void Application::run() {
   Window root{window.get()};
   root.setLayout({LayoutDir::right});
   root.addChild(std::move(panel));
-  auto *game = root.addChild(std::make_unique<GameView>(reg));
+  root.addChild(std::make_unique<GameView>(reg));
   
   root.setInitialViewport();
   root.init(renderer.get(), cache);
@@ -116,7 +116,7 @@ void Application::run() {
       root.event(e);
     }
     
-    game->update(1.0f / fps);
+    root.update(1.0f / fps);
     
     SDL_CHECK(SDL_RenderSetViewport(renderer.get(), nullptr));
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));

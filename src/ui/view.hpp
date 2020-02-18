@@ -88,6 +88,7 @@ public:
   
   virtual void init(SDL_Renderer *, FontCache &);
   virtual bool event(const SDL_Event &);
+  virtual void update(float);
   virtual void render(SDL_Renderer *, FontCache &);
   
   View *addChild(std::unique_ptr<View>);

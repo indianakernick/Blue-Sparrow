@@ -19,7 +19,7 @@ public:
   
   void init(SDL_Renderer *, FontCache &) override;
   bool event(const SDL_Event &) override;
-  void update(float);
+  void update(float) override;
   void render(SDL_Renderer *, FontCache &) override;
 
 private:
