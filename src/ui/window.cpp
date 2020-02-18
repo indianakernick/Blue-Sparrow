@@ -18,19 +18,18 @@ bool Window::event(const SDL_Event &e) {
     if (e.type != SDL_WINDOWEVENT) break;
     if (e.window.event != SDL_WINDOWEVENT_SIZE_CHANGED) break;
     if (e.window.windowID != SDL_GetWindowID(window)) break;
+    setWidth({e.window.data1, 1, 0});
+    setHeight({e.window.data2, 1, 0});
     setViewport({0, 0, e.window.data1, e.window.data2});
   } while (false);
   return View::event(e);
 }
 
-void Window::evaluate() {
-  View::evaluate();
-  SDL_SetWindowMinimumSize(window, minWidth(), minHeight());
-}
-
 void Window::setInitialViewport() {
   SDL_Rect viewport;
   SDL_GetWindowSize(window, &viewport.w, &viewport.h);
+  setWidth({viewport.w, 1, 0});
+  setHeight({viewport.h, 1, 0});
   viewport.x = 0;
   viewport.y = 0;
   setViewport(viewport);

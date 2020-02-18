@@ -30,8 +30,8 @@ public:
       name{name},
       upgrade{upgrade},
       getInfo{getInfo} {
-    setFixedWidth(200);
-    setFixedHeight(30);
+    setWidth({200, 0, 0});
+    setHeight({30, 0, 0});
   }
   
   void init(SDL_Renderer *, FontCache &cache) override {
@@ -77,8 +77,7 @@ private:
 }
 
 UpgradeView::UpgradeView(entt::registry &reg) {
-  setFixedWidth(200);
-  setFixedHeight(120);
+  setLayout({LayoutDir::down});
   addChild(std::make_unique<UpgradeButton>(
     reg, "thrusters", &upgradeMotion, &motionUpgradeInfo
   ));

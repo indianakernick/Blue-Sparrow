@@ -38,120 +38,230 @@ View *View::addChild(std::unique_ptr<View> view) {
   return ret;
 }
 
-void View::setLayout(const LayoutDir layout) {
-  dir = layout;
+void View::setLayout(const Layout newLayout) {
+  layout = newLayout;
 }
 
-namespace {
-
-int applyAlignment(const HoriAlign align, const int inner, const int outer) {
-  switch (align) {
-    case HoriAlign::left:   return 0;
-    case HoriAlign::center: return (outer - inner) / 2;
-    case HoriAlign::right:  return outer - inner;
-  }
+void View::setSize(const Size newSize) {
+  setWidth(newSize.width);
+  setHeight(newSize.height);
 }
 
-int applyAlignment(const VertAlign align, const int inner, const int outer) {
-  return applyAlignment(static_cast<HoriAlign>(align), inner, outer);
+void View::setWidth(const AxisSize width) {
+  assert(width.grow >= 0);
+  assert(width.shrink >= 0);
+  size.width = width;
 }
 
-using Kids = std::vector<std::unique_ptr<View>>;
-
-SDL_Point evaluateVertical(const Kids &children) {
-  int width = 0;
-  int height = 0;
-  for (auto &child : children) {
-    child->evaluate();
-    width = std::max(width, child->minWidth());
-    height += child->minHeight();
-  }
-  return {width, height};
-}
-
-SDL_Point evaluateHorizontal(const Kids &children) {
-  int width = 0;
-  int height = 0;
-  for (auto &child : children) {
-    child->evaluate();
-    width += child->minWidth();
-    height = std::max(height, child->minHeight());
-  }
-  return {width, height};
-}
-
-void setViewportVertical(const SDL_Rect viewport, const int minHeight, const Kids &children) {
-  int extra = viewport.h - minHeight;
-  assert(extra >= 0);
-  int y = 0;
-  for (auto &child : children) {
-    const int w = std::min(viewport.w, child->maxWidth());
-    const int x = applyAlignment(child->horiAlign(), w, viewport.w);
-    const int useExtra = std::min(extra, child->maxHeight() - child->minHeight());
-    extra -= useExtra;
-    child->setViewport({x + viewport.x, y + viewport.y, w, child->minHeight() + useExtra});
-    y += child->minHeight();
-  }
-}
-
-void setViewportHorizontal(const SDL_Rect viewport, const int minWidth, const Kids &children) {
-  int extra = viewport.w - minWidth;
-  int x = 0;
-  for (auto &child : children) {
-    const int h = std::min(viewport.h, child->maxHeight());
-    const int y = applyAlignment(child->vertAlign(), h, viewport.h);
-    const int useExtra = std::min(extra, child->maxWidth() - child->minWidth());
-    extra -= useExtra;
-    child->setViewport({x + viewport.x, y + viewport.y, child->minWidth() + useExtra, h});
-    x += child->minWidth();
-  }
-}
-
-}
-
-void View::evaluate() {
-  if (children.empty()) return;
-  SDL_Point size = {0, 0};
-  switch (dir) {
-    case LayoutDir::down:
-      size = evaluateVertical(children);
-      break;
-    case LayoutDir::right:
-      size = evaluateHorizontal(children);
-      break;
-  }
-  setFixedWidth(size.x);
-  setFixedHeight(size.y);
-}
-
-void View::setViewport(const SDL_Rect viewport) {
-  rect = viewport;
-  switch (dir) {
-    case LayoutDir::down:
-      setViewportVertical(viewport, minHeight(), children);
-      break;
-    case LayoutDir::right:
-      setViewportHorizontal(viewport, minWidth(), children);
-      break;
-  }
+void View::setHeight(const AxisSize height) {
+  assert(height.grow >= 0);
+  assert(height.shrink >= 0);
+  size.height = height;
 }
 
 SDL_Rect View::viewport() const {
   return rect;
 }
 
-VertAlign View::vertAlign() const {
-  return vAlign;
+void View::setViewport(const SDL_Rect viewport) {
+  rect = viewport;
+  switch (layout.dir) {
+    case LayoutDir::right:
+      return setViewport<LayoutDir::right>();
+    case LayoutDir::down:
+      return setViewport<LayoutDir::down>();
+  }
 }
 
-void View::setVertAlign(const VertAlign align) {
-  vAlign = align;
+namespace {
+
+template <LayoutDir>
+struct AxisTraits;
+
+template <>
+struct AxisTraits<LayoutDir::right> {
+  using CrossTraits = AxisTraits<LayoutDir::down>;
+  static constexpr auto mainDir = LayoutDir::right;
+  
+  static AxisSize mainSize(const Size &size) {
+    return size.width;
+  }
+  static AxisSize crossSize(const Size &size) {
+    return size.height;
+  }
+  
+  static int mainRectSize(const SDL_Rect &rect) {
+    return rect.w;
+  }
+  static int crossRectSize(const SDL_Rect &rect) {
+    return rect.h;
+  }
+  
+  static SDL_Rect viewport(
+    const SDL_Rect &rect,
+    const int mainOffset,
+    const int crossOffset,
+    const int mainSize,
+    const int crossSize
+  ) {
+    return {rect.x + mainOffset, rect.y + crossOffset, mainSize, crossSize};
+  }
+};
+
+template <>
+struct AxisTraits<LayoutDir::down> {
+  using CrossTraits = AxisTraits<LayoutDir::right>;
+  static constexpr auto mainDir = LayoutDir::down;
+  
+  static AxisSize mainSize(const Size &size) {
+    return size.height;
+  }
+  static AxisSize crossSize(const Size &size) {
+    return size.width;
+  }
+  
+  static int mainRectSize(const SDL_Rect &rect) {
+    return rect.h;
+  }
+  static int crossRectSize(const SDL_Rect &rect) {
+    return rect.w;
+  }
+  
+  static SDL_Rect viewport(
+    const SDL_Rect &rect,
+    const int mainOffset,
+    const int crossOffset,
+    const int mainSize,
+    const int crossSize
+  ) {
+    return {rect.x + crossOffset, rect.y + mainOffset, crossSize, mainSize};
+  }
+};
+
 }
 
-HoriAlign View::horiAlign() const {
-  return hAlign;
+template <LayoutDir Dir>
+void View::setViewport() const {
+  using Traits = AxisTraits<Dir>;
+
+  const int mainSize = Traits::mainRectSize(rect);
+  const int crossSize = Traits::crossRectSize(rect);
+  ChildStats stats = getChildStats<Traits>();
+  
+  applyMainFactors<Traits>(mainSize - stats.totalSpace, stats);
+  
+  const AlignOffset mainAlign = applyMainAlign(mainSize - stats.totalSpace);
+  int offset = mainAlign.start;
+  
+  for (size_t i = 0; i != children.size(); ++i) {
+    auto &child = *children[i];
+    const int crossSpace = child.applyCrossFactor<Traits>(crossSize);
+    const int crossExtra = crossSize - crossSpace;
+    
+    child.setViewport(Traits::viewport(
+      rect, offset, applyCrossAlign(crossExtra), stats.space[i], crossSpace
+    ));
+    
+    offset += stats.space[i];
+    offset += mainAlign.between;
+  }
 }
 
-void View::setHoriAlign(const HoriAlign align) {
-  hAlign = align;
+template <typename Traits>
+int View::baseSize() const {
+  if (Traits::mainSize(size).basis < 0) {
+    if (Traits::mainDir == layout.dir) {
+      int sum = 0;
+      for (auto &child : children) {
+        sum += child->baseSize<Traits>();
+      }
+      return sum;
+    } else {
+      int max = 0;
+      for (auto &child : children) {
+        max = std::max(max, child->baseSize<Traits>());
+      }
+      return max;
+    }
+  } else {
+    return Traits::mainSize(size).basis;
+  }
+}
+
+template <typename Traits>
+View::ChildStats View::getChildStats() const {
+  ChildStats stats = {
+    0, 0, 0, std::vector<int>(children.size(), 0)
+  };
+  for (size_t i = 0; i != children.size(); ++i) {
+    View &child = *children[i];
+    const int space = child.baseSize<Traits>();
+    stats.totalGrow += Traits::mainSize(child.size).grow;
+    stats.totalShrink += Traits::mainSize(child.size).shrink;
+    stats.totalSpace += space;
+    stats.space[i] = space;
+  }
+  return stats;
+}
+
+View::AlignOffset View::applyMainAlign(const int extra) const {
+  const int childCount = static_cast<int>(children.size());
+  switch (layout.main) {
+    case MainAlign::start:
+      return {0, 0};
+    case MainAlign::end:
+      return {extra, 0};
+    case MainAlign::center:
+      return {extra / 2, 0};
+    case MainAlign::space_between:
+      return {0, extra / (childCount - 1)};
+    case MainAlign::space_around:
+      return {extra / (childCount * 2), extra / childCount};
+    case MainAlign::space_evenly:
+      return {extra / (childCount + 1), extra / (childCount + 1)};
+  }
+}
+
+int View::applyCrossAlign(const int extra) const {
+  switch (layout.cross) {
+    case CrossAlign::start:
+      return 0;
+    case CrossAlign::end:
+      return extra;
+    case CrossAlign::center:
+      return extra / 2;
+  }
+}
+
+template <typename Traits, int (AxisSize::*Factor)>
+void View::applyMainFactor(const int extra, ChildStats &stats, const int total) const {
+  for (size_t i = 0; i != children.size(); ++i) {
+    const int factor = Traits::mainSize(children[i]->size).*Factor;
+    const int used = (extra * factor) / total;
+    stats.totalSpace += used;
+    stats.space[i] += used;
+  }
+}
+
+template <typename Traits>
+void View::applyMainFactors(const int extra, ChildStats &stats) const {
+  if (extra > 0 && stats.totalGrow > 0) {
+    applyMainFactor<Traits, &AxisSize::grow>(extra, stats, stats.totalGrow);
+  } else if (extra < 0 && stats.totalShrink > 0) {
+    applyMainFactor<Traits, &AxisSize::shrink>(extra, stats, stats.totalShrink);
+  }
+}
+
+template <typename Traits>
+int View::applyCrossFactor(const int crossSize) const {
+  int crossSpace = baseSize<typename Traits::CrossTraits>();
+  int crossExtra = crossSize - crossSpace;
+                        
+  if (crossExtra > 0 && Traits::crossSize(size).grow > 0) {
+    crossSpace = crossSize;
+  } else if (crossExtra < 0 && Traits::crossSize(size).shrink > 0) {
+    crossSpace = crossSize;
+  }
+  
+  return crossSpace;
 }

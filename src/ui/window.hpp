@@ -19,7 +19,6 @@ public:
 
   bool event(const SDL_Event &e) override;
 
-  void evaluate();
   void setInitialViewport();
   
 private:

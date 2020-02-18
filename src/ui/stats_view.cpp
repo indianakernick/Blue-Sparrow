@@ -17,8 +17,8 @@
 
 StatsView::StatsView(entt::registry &reg)
   : reg{reg} {
-  setFixedWidth(200);
-  setGrowHeight(100);
+  setWidth({200, 0, 0});
+  setHeight({100, 0, 1});
 }
 
 void StatsView::init(SDL_Renderer *, FontCache &cache) {

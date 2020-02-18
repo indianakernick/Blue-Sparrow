@@ -53,8 +53,8 @@ void initializeWorld(entt::registry &reg, const float arenaSize) {
 
 GameView::GameView(entt::registry &reg)
   : reg{reg} {
-  setGrowWidth(100);
-  setGrowHeight(100);
+  setWidth({100, 1, 1});
+  setHeight({100, 1, 1});
 }
 
 void GameView::init(SDL_Renderer *ren, FontCache &) {
