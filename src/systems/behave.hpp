@@ -17,7 +17,7 @@ void behaveOrbit(entt::registry &);
 void behaveSeek(entt::registry &);
 /// Remain stationary and aim carefully
 void behaveSniper(entt::registry &);
-/// Rotate to mouse position
+/// Rotate to mouse position and adjust aim if AimAssist is present
 void behaveMouse(entt::registry &);
 
 // Behaviour that dodges the player and launches homing missiles

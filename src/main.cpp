@@ -39,16 +39,13 @@ int main() {
 //   Drops for each team maybe?
 //   Drops only for the player maybe?
 //   Currently, drops are accidently picked up by other ships
-//   Perhaps drops could just spawn in a few places
+//   Perhaps drops could spawn in a few places
 //     Similar to TF2
 
 // Controls
-//   Should be move away from digital controls and use analog controls?
-//     Would make AIs a little bit more effect
+//   Should we move away from digital controls and use analog controls?
+//     Would make AIs a little bit more effective
 //     Might help improve aim assist for the player
-//   Aim assist
-//     Currently pretty terrible
-//     Could benefit from analog controls
 
 // Weapons
 //   Drop mines that only effect the enemy

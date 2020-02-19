@@ -8,7 +8,6 @@
 
 #include "apply_commands.hpp"
 
-#include "aim_assist.hpp"
 #include <box2d/b2_body.h>
 #include <box2d/b2_world.h>
 #include <box2d/b2_fixture.h>
@@ -45,7 +44,7 @@ void applyMoveCommands(entt::registry &reg) {
 }
 
 void applyBlasterCommands(entt::registry &reg) {
-  entt::each(reg, [&](entt::entity e, Physics phys, BlasterParams params, BlasterCommand input, BlasterTimer &timer, Team team) {
+  entt::each(reg, [&](Physics phys, BlasterParams params, BlasterCommand input, BlasterTimer &timer, Team team) {
     if (!input.fire) return;
     
     const std::uint32_t now = SDL_GetTicks();
@@ -55,8 +54,7 @@ void applyBlasterCommands(entt::registry &reg) {
     const b2Vec2 shipPos = phys.body->GetPosition();
     const float shipAngle = phys.body->GetAngle();
     const b2Vec2 shipVel = phys.body->GetLinearVelocity();
-    const float aim = reg.has<AimAssist>(e) ? assistAim(reg, e) : shipAngle;
-    const b2Vec2 boltVel = angleMag(aim, params.speed) + shipVel;
+    const b2Vec2 boltVel = angleMag(shipAngle, params.speed) + shipVel;
     
     entt::entity bolt = makeBolt(reg, team);
     b2Body *boltBody = reg.get<Physics>(bolt).body;

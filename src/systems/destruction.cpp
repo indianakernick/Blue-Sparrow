@@ -61,6 +61,8 @@ const float minSpeed = 4.0f;
 const float damagePerSpeed = 0.5f;
 
 float relativeSpeed(entt::registry &reg, const entt::entity a, const entt::entity b) {
+  // TODO: This could be improved
+  // http://www.iforce2d.net/b2dtut/collision-anatomy
   const b2Vec2 velA = reg.get<Physics>(a).body->GetLinearVelocity();
   const b2Vec2 velB = reg.get<Physics>(b).body->GetLinearVelocity();
   return (velA - velB).Length();
