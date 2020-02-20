@@ -79,6 +79,13 @@ Application::~Application() {
 // Update it if required
 // Somehow use dirty flag
 
+// would an ECS UI work?
+// I probably should waste any more time on the UI at this point
+// https://raphlinus.github.io/personal/2018/05/08/ecs-ui.html
+// https://skypjack.github.io/2019-06-25-ecs-baf-part-4/
+// https://skypjack.github.io/2019-08-20-ecs-baf-part-4-insights/
+// http://victor.madtriangles.com/code%20experiment/2018/06/11/post-ecs-battle-huge.html
+
 void Application::run() {
   SDL::Window window = initWindow(1280, 720);
   SDL::Renderer renderer = initRenderer(window.get());
