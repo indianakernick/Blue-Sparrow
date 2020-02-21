@@ -21,16 +21,16 @@ inline b2Vec2 angleMag(const float angle, const float mag) {
 
 static_assert(sizeof(void *) >= sizeof(entt::entity));
 
-inline void *toUserData(const entt::entity e) {
-  void *userData = nullptr;
-  std::memcpy(&userData, &e, sizeof(entt::entity));
+inline void *toUserData(const entt::entity entity) {
+  void *userData{};
+  std::memcpy(&userData, &entity, sizeof(entt::entity));
   return userData;
 }
 
 inline entt::entity fromUserData(void *userData) {
-  entt::entity e;
-  std::memcpy(&e, &userData, sizeof(entt::entity));
-  return e;
+  entt::entity entity{};
+  std::memcpy(&entity, &userData, sizeof(entt::entity));
+  return entity;
 }
 
 #endif
