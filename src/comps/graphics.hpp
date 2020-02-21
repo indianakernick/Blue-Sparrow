@@ -27,6 +27,7 @@ struct Sprite {
 /// The position of a bar on the screen (used for hull bars)
 struct BarRect {
   int x, y;
+  int width, height;
   float progress;
 };
 

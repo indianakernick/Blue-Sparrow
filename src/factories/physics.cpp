@@ -169,3 +169,23 @@ void setDropPhysics(entt::registry &reg, const entt::entity e) {
   body->CreateFixture(&fixDef);
   reg.assign<Physics>(e, body, halfSize * 2.0f, halfSize * 2.0f);
 }
+
+void setBeaconPhysics(entt::registry &reg, const entt::entity e) {
+  const float halfSize = 4.0f;
+  
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_staticBody;
+  bodyDef.userData = toUserData(e);
+  
+  b2PolygonShape shape;
+  shape.SetAsBox(halfSize, halfSize);
+  
+  b2FixtureDef fixDef;
+  fixDef.shape = &shape;
+  fixDef.restitution = 0.1f;
+  fixDef.filter.categoryBits = asteroid_bit;
+  
+  b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
+  body->CreateFixture(&fixDef);
+  reg.assign<Physics>(e, body, halfSize * 2.0f, halfSize * 2.0f);
+}

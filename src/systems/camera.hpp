@@ -15,8 +15,11 @@
 /// Read the position and angle of Physics bodies and update the SpriteRect
 void writeSpriteRect(entt::registry &);
 
-/// Read the position hull level of ships and update the BarRect
-void writeBarRect(entt::registry &);
+/// Read the position and hull level of ships and update the BarRect
+void writeHullBarRect(entt::registry &);
+
+/// Read the position and health of beacons and update the BarREct
+void writeBeaconBarRect(entt::registry &);
 
 /// Move the Camera to focus on the object width CameraFocus
 void moveCamera(entt::registry &);

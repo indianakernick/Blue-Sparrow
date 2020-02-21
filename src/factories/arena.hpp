@@ -16,5 +16,6 @@ entt::entity makeAsteroid(entt::registry &);
 entt::entity makeCoin(entt::registry &);
 entt::entity makeAmmo(entt::registry &);
 entt::entity makeScrap(entt::registry &);
+entt::entity makeBeacon(entt::registry &);
 
 #endif

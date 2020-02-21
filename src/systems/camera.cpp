@@ -11,6 +11,7 @@
 #include <box2d/b2_body.h>
 #include "../utils/each.hpp"
 #include "../comps/ammo.hpp"
+#include "../comps/arena.hpp"
 #include "../comps/params.hpp"
 #include "../utils/physics.hpp"
 #include "../comps/physics.hpp"
@@ -30,14 +31,44 @@ void writeSpriteRect(entt::registry &reg) {
   });
 }
 
-void writeBarRect(entt::registry &reg) {
+void writeHullBarRect(entt::registry &reg) {
   auto cam = reg.ctx<Camera>();
-  entt::each(reg, [=](Physics phys, Hull hull, HullParams params, BarRect &rect) {
+  entt::each(reg, [&](Physics phys, Hull hull, HullParams params, BarRect &rect) {
     const float yOffset = (phys.width + phys.height) / 4.0f;
     const b2Vec2 pos = phys.body->GetPosition();
-    rect.x = (pos.x - cam.x) * cam.zoom - 25 + 0.5f;
-    rect.y = (pos.y - yOffset - cam.y) * cam.zoom + 0.5f;
+    rect.width = 50;
+    rect.height = 4;
+    rect.x = (pos.x           - cam.x) * cam.zoom - rect.width / 2 + 0.5f;
+    rect.y = (pos.y - yOffset - cam.y) * cam.zoom                  + 0.5f;
     rect.progress = static_cast<float>(hull.h) / params.durability;
+  });
+}
+
+void writeBeaconBarRect(entt::registry &reg) {
+  auto cam = reg.ctx<Camera>();
+  entt::each(reg, [&](Physics phys, Beacon beacon, BarRect &rect, Sprite &sprite) {
+    const float yOffset = phys.height * 2.0f / 3.0f;
+    const b2Vec2 pos = phys.body->GetPosition();
+    rect.width = 150;
+    rect.height = 4;
+    rect.x = (pos.x           - cam.x) * cam.zoom - rect.width / 2 + 0.5f;
+    rect.y = (pos.y - yOffset - cam.y) * cam.zoom                  + 0.5f;
+    switch (beacon.state) {
+      // TODO: Should probably set beacon sprite in separate system
+      // TODO: Should also have separate system for rendering ships (MoveCommand)
+      case BeaconState::ally:
+        sprite = Sprite{0, 0, 255};
+        rect.progress = static_cast<float>(beacon.ally) / beacon.max;
+        break;
+      case BeaconState::enemy:
+        sprite = Sprite{255, 0, 0};
+        rect.progress = static_cast<float>(beacon.enemy) / beacon.max;
+        break;
+      case BeaconState::neutral:
+        sprite = Sprite{255, 255, 0};
+        rect.progress = static_cast<float>(beacon.neutral) / beacon.max;
+        break;
+    }
   });
 }
 

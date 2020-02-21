@@ -17,6 +17,7 @@ struct Physics {
   float width, height;
 };
 
+/// The maximum speed that the physics body will be allowed to move
 struct VelocityLimit {
   float vel;
 };

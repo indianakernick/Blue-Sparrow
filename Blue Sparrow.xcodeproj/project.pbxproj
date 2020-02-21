@@ -44,6 +44,7 @@
 		45C5CA5B23EF9A0C000B554D /* arena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5923EF9A0C000B554D /* arena.cpp */; };
 		45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5D23F0E020000B554D /* collisions.cpp */; };
 		45C5CA6523F22487000B554D /* stars.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45C5CA6423F22455000B554D /* stars.png */; };
+		45DE83EB23FF69FE000B3F12 /* arena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45DE83E923FF69FE000B3F12 /* arena.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -161,6 +162,9 @@
 		45C5CA6323F107D8000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA6423F22455000B554D /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
 		45C5CA6923F25263000B554D /* ai.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ai.hpp; sourceTree = "<group>"; };
+		45DE83E823FF633B000B3F12 /* arena.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = arena.hpp; sourceTree = "<group>"; };
+		45DE83E923FF69FE000B3F12 /* arena.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arena.cpp; sourceTree = "<group>"; };
+		45DE83EA23FF69FE000B3F12 /* arena.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = arena.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +279,7 @@
 				45C5CA5C23F0DC85000B554D /* ammo.hpp */,
 				45C5CA6923F25263000B554D /* ai.hpp */,
 				45BC5E4423F37F3B00A07A57 /* drops.hpp */,
+				45DE83E823FF633B000B3F12 /* arena.hpp */,
 			);
 			path = comps;
 			sourceTree = "<group>";
@@ -304,6 +309,8 @@
 				45BC5E4623F3833200A07A57 /* destruction.hpp */,
 				45BC5E4B23F51D8000A07A57 /* all.cpp */,
 				45BC5E4C23F51D8000A07A57 /* all.hpp */,
+				45DE83E923FF69FE000B3F12 /* arena.cpp */,
+				45DE83EA23FF69FE000B3F12 /* arena.hpp */,
 			);
 			path = systems;
 			sourceTree = "<group>";
@@ -418,6 +425,7 @@
 				45BC5E6623F664B700A07A57 /* stats_view.cpp in Sources */,
 				45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */,
 				450CDBD623F8F05600CF4CEE /* view.cpp in Sources */,
+				45DE83EB23FF69FE000B3F12 /* arena.cpp in Sources */,
 				45BC5E5023F5302900A07A57 /* frame_cap.cpp in Sources */,
 				45BC5E6923F6754100A07A57 /* resource_path.cpp in Sources */,
 				45BC5E4723F3833200A07A57 /* destruction.cpp in Sources */,

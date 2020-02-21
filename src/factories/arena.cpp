@@ -9,6 +9,7 @@
 #include "arena.hpp"
 
 #include "physics.hpp"
+#include "../comps/arena.hpp"
 #include "../comps/drops.hpp"
 #include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
@@ -53,5 +54,21 @@ entt::entity makeScrap(entt::registry &reg) {
   reg.assign<Scrap>(e);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{63, 63, 63});
+  return e;
+}
+
+entt::entity makeBeacon(entt::registry &reg) {
+  entt::entity e = reg.create();
+  setBeaconPhysics(reg, e);
+  Beacon beacon;
+  beacon.max = 1000;
+  beacon.ally = 0;
+  beacon.enemy = 0;
+  beacon.neutral = beacon.max;
+  beacon.state = BeaconState::neutral;
+  reg.assign<Beacon>(e, beacon);
+  reg.assign<BarRect>(e);
+  reg.assign<SpriteRect>(e);
+  reg.assign<Sprite>(e, Sprite{255, 255, 0});
   return e;
 }

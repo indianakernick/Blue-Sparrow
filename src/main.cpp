@@ -16,13 +16,6 @@ int main() {
 // Objects
 //   Walls
 //     Could build a simple labrinth
-//   Beacons
-//     TF2 Control points
-//       Team members occupy the area for some amount of time to capture
-//       More team members means faster capturing
-//     Diep.io Dominators
-//       Deal damage to capture
-//       The beacon acts like a turret and shoots back
 //   Turrets
 //     Should beacons shoot?
 

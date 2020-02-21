@@ -38,7 +38,8 @@ void cameraSystems(entt::registry &reg, const SDL_Rect viewport) {
   updateCameraViewport(reg, viewport);
   moveCamera(reg);
   writeSpriteRect(reg);
-  writeBarRect(reg);
+  writeHullBarRect(reg);
+  writeBeaconBarRect(reg);
 }
 
 void renderSystems(entt::registry &reg) {

@@ -8,8 +8,11 @@
 
 #include "collisions.hpp"
 
+#include "arena.hpp"
 #include "destruction.hpp"
 #include "../comps/ammo.hpp"
+#include "../comps/teams.hpp"
+#include "../comps/arena.hpp"
 #include "../comps/drops.hpp"
 #include "../comps/params.hpp"
 #include <entt/entity/registry.hpp>
@@ -43,7 +46,10 @@ void handleCollisions(entt::registry &reg) {
           if (hull->h <= 0) {
             destroyShip(reg, b);
           }
+        } else if (auto *beacon = reg.try_get<Beacon>(b)) {
+          damageBeacon(*beacon, reg.get<Team>(a), damage->d);
         }
+        
         reg.destroy(a);
         return true;
       }
