@@ -32,6 +32,7 @@ void prePhysicsSystems(entt::registry &reg) {
 void postPhysicsSystems(entt::registry &reg) {
   limitVelocity(reg);
   handleCollisions(reg);
+  handlePostCollisions(reg);
 }
 
 void cameraSystems(entt::registry &reg, const SDL_Rect viewport) {

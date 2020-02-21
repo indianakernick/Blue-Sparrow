@@ -15,25 +15,23 @@
 #include "../comps/arena.hpp"
 #include "../comps/drops.hpp"
 #include "../comps/params.hpp"
+#include "../comps/collisions.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
 
-using CollisionPair = std::pair<entt::entity, entt::entity>;
-using Collisions = std::vector<CollisionPair>;
-
 template <typename Func>
 bool visit(CollisionPair pair, Func func) {
-  if (func(pair.first, pair.second)) return true;
-  return func(pair.second, pair.first);
+  if (func(pair.a, pair.b)) return true;
+  return func(pair.b, pair.a);
 }
 
 }
 
 void handleCollisions(entt::registry &reg) {
-  Collisions &collisions = reg.ctx<Collisions>();
+  auto &collisions = reg.ctx<CollisionPairs>();
   for (CollisionPair pair : collisions) {
-    if (!reg.valid(pair.first) || !reg.valid(pair.second)) {
+    if (!reg.valid(pair.a) || !reg.valid(pair.b)) {
       continue;
     }
     
@@ -94,20 +92,24 @@ void handleCollisions(entt::registry &reg) {
       return false;
     });
     if (handled) continue;
-    
-    if (reg.has<Hull>(pair.first) && reg.has<Hull>(pair.second)) {
-      collideShipPair(reg, pair.first, pair.second);
+  }
+  collisions.clear();
+}
+
+void handlePostCollisions(entt::registry &reg) {
+  auto &collisions = reg.ctx<PostCollisionPairs>();
+  for (PostCollisionPair pair : collisions) {
+    if (!reg.valid(pair.a) && !reg.valid(pair.b)) {
       continue;
     }
     
-    handled = visit(pair, [&reg](entt::entity a, entt::entity b) {
-      if (reg.has<Hull>(a)) {
-        collideShip(reg, a, b);
-        return true;
-      }
-      return false;
-    });
-    if (handled) continue;
+    if (reg.has<Hull>(pair.a) && reg.has<Hull>(pair.b)) {
+      collideShipPair(reg, pair.a, pair.b, pair.impulse);
+    } else if (reg.has<Hull>(pair.a)) {
+      collideShip(reg, pair.a, pair.impulse);
+    } else if (reg.has<Hull>(pair.b)) {
+      collideShip(reg, pair.b, pair.impulse);
+    }
   }
   collisions.clear();
 }

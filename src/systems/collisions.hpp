@@ -11,6 +11,10 @@
 
 #include <entt/entity/fwd.hpp>
 
+/// Handle the collisions that occured during the last time step (BeginContact)
 void handleCollisions(entt::registry &);
+
+/// Handle the collisions that occured during the last time step (PostSolve)
+void handlePostCollisions(entt::registry &);
 
 #endif

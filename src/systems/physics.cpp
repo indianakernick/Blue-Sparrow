@@ -15,12 +15,10 @@
 #include <box2d/b2_contact.h>
 #include "../utils/physics.hpp"
 #include "../comps/physics.hpp"
+#include "../comps/collisions.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
-
-using CollisionPair = std::pair<entt::entity, entt::entity>;
-using Collisions = std::vector<CollisionPair>;
 
 entt::entity fromFixture(b2Fixture *fixture) {
   return fromUserData(fixture->GetBody()->GetUserData());
@@ -39,28 +37,41 @@ class ContactListener final : public b2ContactListener {
 public:
   explicit ContactListener(entt::registry &reg)
     : reg{reg} {
-    reg.set<Collisions>();
+    reg.set<CollisionPairs>();
+    reg.set<PostCollisionPairs>();
   }
 
   void BeginContact(b2Contact *contact) override {
     const entt::entity a = fromFixture(contact->GetFixtureA());
     const entt::entity b = fromFixture(contact->GetFixtureB());
-    reg.ctx<Collisions>().emplace_back(a, b);
+    reg.ctx<CollisionPairs>().push_back({a, b});
   }
   
   void PreSolve(b2Contact *contact, const b2Manifold *) override {
     const std::uint16_t catA = catFromFixture(contact->GetFixtureA());
     const std::uint16_t catB = catFromFixture(contact->GetFixtureB());
+    
     if (catA == asteroid_bit) {
       if (catB == asteroid_bit || catB == arena_bit) {
         return bounce(contact);
       }
     }
+    
     if (catB == asteroid_bit) {
       if (catA == asteroid_bit || catA == arena_bit) {
         return bounce(contact);
       }
     }
+  }
+  
+  void PostSolve(b2Contact *contact, const b2ContactImpulse *impulse) override {
+    const entt::entity a = fromFixture(contact->GetFixtureA());
+    const entt::entity b = fromFixture(contact->GetFixtureB());
+    float sum = 0.0f;
+    for (int32 i = 0; i != impulse->count; ++i) {
+      sum += impulse->normalImpulses[i];
+    }
+    reg.ctx<PostCollisionPairs>().push_back({a, b, sum});
   }
 
 private:

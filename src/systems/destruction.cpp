@@ -57,22 +57,22 @@ void destroyShip(entt::registry &reg, const entt::entity e) {
 
 namespace {
 
-const float minSpeed = 4.0f;
-const float damagePerSpeed = 0.5f;
+const float minImpulse = 100.0f;
+const float damagePerImpulse = 1.0f / 10.0f;
 
-float relativeSpeed(entt::registry &reg, const entt::entity a, const entt::entity b) {
-  // TODO: Calculate the force of a collision
-  // http://www.iforce2d.net/b2dtut/collision-anatomy
-  const b2Vec2 velA = reg.get<Physics>(a).body->GetLinearVelocity();
-  const b2Vec2 velB = reg.get<Physics>(b).body->GetLinearVelocity();
-  return (velA - velB).Length();
+int calcDamage(const float impulse) {
+  return std::max(0.0f, (impulse - minImpulse) * damagePerImpulse + 0.5f);
 }
 
 }
 
-void collideShipPair(entt::registry &reg, const entt::entity a, const entt::entity b) {
-  const float speed = relativeSpeed(reg, a, b);
-  const int damage = (speed - minSpeed) * damagePerSpeed + 0.5f;
+void collideShipPair(
+  entt::registry &reg,
+  const entt::entity a,
+  const entt::entity b,
+  const float impulse
+) {
+  const int damage = calcDamage(impulse);
   int &hullA = reg.get<Hull>(a).h;
   int &hullB = reg.get<Hull>(b).h;
   // TODO: Should both ships take the same amount of damage?
@@ -88,9 +88,8 @@ void collideShipPair(entt::registry &reg, const entt::entity a, const entt::enti
   }
 }
 
-void collideShip(entt::registry &reg, const entt::entity a, const entt::entity b) {
-  const float speed = relativeSpeed(reg, a, b);
-  const int damage = std::max(0.0f, (speed - minSpeed) * damagePerSpeed);
+void collideShip(entt::registry &reg, const entt::entity a, const float impulse) {
+  const int damage = calcDamage(impulse);
   int &hull = reg.get<Hull>(a).h;
   hull -= damage;
   if (hull < 0) {
