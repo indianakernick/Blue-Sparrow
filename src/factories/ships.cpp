@@ -122,6 +122,7 @@ void setSniperBlaster(entt::registry &reg, const entt::entity e) {
   blasterParams.rof = 0.25f;
   blasterParams.speed = 160.0f;
   blasterParams.damage = 30;
+  blasterParams.spread = 0.0f;
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterCommand>(e);
   reg.assign<BlasterTimer>(e, std::uint32_t{});

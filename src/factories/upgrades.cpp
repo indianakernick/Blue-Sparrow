@@ -45,11 +45,13 @@ const BlasterParams blasterParams[] = {
   {
     .rof = 1.5f,
     .speed = 60.0f,
-    .damage = 5
+    .damage = 5,
+    .spread = 0.05f
   }, {
     .rof = 1.5f,
     .speed = 60.0f,
-    .damage = 10
+    .damage = 10,
+    .spread = 0.05f
   }
 };
 

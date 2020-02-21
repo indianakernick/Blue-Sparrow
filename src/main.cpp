@@ -46,9 +46,14 @@ int main() {
 //   Should we move away from digital controls and use analog controls?
 //     Would make AIs a little bit more effective
 //     Might help improve aim assist for the player
+//     https://gamedev.stackexchange.com/questions/1083/what-makes-aiming-in-a-console-first-person-shooter-feel-good/1325#1325
 
 // Weapons
 //   Drop mines that only effect the enemy
 //     Perhaps fancy mines could have tiny blasters on them
 //   Pulsing laser
 //     Bouncing the laser off of mirrors could provide some interesting gameplay
+
+// CMake
+//   https://cmake.org/cmake/help/v3.11/module/FetchContent.html
+//   https://discourse.libsdl.org/t/deploying-for-macos-how-are-we-supposed-to-do-it/23897

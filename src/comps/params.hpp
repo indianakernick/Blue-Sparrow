@@ -38,6 +38,7 @@ struct BlasterParams {
   float rof;
   float speed;
   int damage;
+  float spread;
 };
 
 /// Properties of the secondary weapon.
