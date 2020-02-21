@@ -99,7 +99,7 @@ void handleCollisions(entt::registry &reg) {
 void handlePostCollisions(entt::registry &reg) {
   auto &collisions = reg.ctx<PostCollisionPairs>();
   for (PostCollisionPair pair : collisions) {
-    if (!reg.valid(pair.a) && !reg.valid(pair.b)) {
+    if (!reg.valid(pair.a) || !reg.valid(pair.b)) {
       continue;
     }
     
