@@ -36,7 +36,7 @@ void setArenaPhysics(
 
   b2BodyDef bodyDef;
   bodyDef.type = b2_staticBody;
-  bodyDef.userData = toUserData(entt::null);
+  bodyDef.userData = toUserData(e);
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   
   const b2Vec2 offset = {width / 2.0f, height / 2.0f};
@@ -143,7 +143,7 @@ void setAsteroidPhysics(entt::registry &reg, const entt::entity e) {
   fixDef.shape = &shape;
   fixDef.density = 2.0f;
   fixDef.restitution = 0.2f;
-  fixDef.filter.categoryBits = asteroid_bit;
+  fixDef.filter.categoryBits = arena_bit;
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
@@ -183,9 +183,31 @@ void setBeaconPhysics(entt::registry &reg, const entt::entity e) {
   b2FixtureDef fixDef;
   fixDef.shape = &shape;
   fixDef.restitution = 0.1f;
-  fixDef.filter.categoryBits = asteroid_bit;
+  fixDef.filter.categoryBits = arena_bit;
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
   reg.assign<Physics>(e, body, halfSize * 2.0f, halfSize * 2.0f);
+}
+
+void setWallPhysics(
+  entt::registry &reg,
+  const entt::entity e,
+  const float width,
+  const float height
+) {
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_staticBody;
+  bodyDef.userData = toUserData(e);
+  
+  b2PolygonShape shape;
+  shape.SetAsBox(width / 2.0f, height / 2.0f);
+  
+  b2FixtureDef fixDef;
+  fixDef.shape = &shape;
+  fixDef.filter.categoryBits = arena_bit;
+  
+  b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
+  body->CreateFixture(&fixDef);
+  reg.assign<Physics>(e, body, width, height);
 }

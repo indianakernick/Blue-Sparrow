@@ -48,6 +48,7 @@ void initializeWorld(entt::registry &reg, const float arenaSize) {
   setTransform(reg, rock, {-30.0f, -40.0f}, 1.0f);
   setMotion(reg, rock, {1.0f, 1.3f}, 0.1f);
   setTransform(reg, makeBeacon(reg), {-30.0f, 40.0f}, 0.0f);
+  setTransform(reg, makeWall(reg, 1.0f, 8.0f), {0.0f, -15.0f}, 0.0f);
 }
 
 }

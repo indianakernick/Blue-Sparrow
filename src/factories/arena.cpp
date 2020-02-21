@@ -72,3 +72,11 @@ entt::entity makeBeacon(entt::registry &reg) {
   reg.assign<Sprite>(e, Sprite{255, 255, 0});
   return e;
 }
+
+entt::entity makeWall(entt::registry &reg, const float width, const float height) {
+  entt::entity e = reg.create();
+  setWallPhysics(reg, e, width, height);
+  reg.assign<SpriteRect>(e);
+  reg.assign<Sprite>(e, Sprite{191, 191, 191});
+  return e;
+}

@@ -51,16 +51,8 @@ public:
     const std::uint16_t catA = catFromFixture(contact->GetFixtureA());
     const std::uint16_t catB = catFromFixture(contact->GetFixtureB());
     
-    if (catA == asteroid_bit) {
-      if (catB == asteroid_bit || catB == arena_bit) {
-        return bounce(contact);
-      }
-    }
-    
-    if (catB == asteroid_bit) {
-      if (catA == asteroid_bit || catA == arena_bit) {
-        return bounce(contact);
-      }
+    if (catA == arena_bit && catB == arena_bit) {
+      bounce(contact);
     }
   }
   

@@ -19,5 +19,6 @@ void setSmallMissilePhysics(entt::registry &, entt::entity, Team);
 void setAsteroidPhysics(entt::registry &, entt::entity);
 void setDropPhysics(entt::registry &, entt::entity);
 void setBeaconPhysics(entt::registry &, entt::entity);
+void setWallPhysics(entt::registry &, entt::entity, float, float);
 
 #endif

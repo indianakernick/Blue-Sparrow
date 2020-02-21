@@ -14,8 +14,6 @@ int main() {
 }
 
 // Objects
-//   Walls
-//     Could build a simple labrinth
 //   Turrets
 //     Should beacons shoot?
 
