@@ -36,8 +36,13 @@ int main() {
 // Controls
 //   Should we move away from digital controls and use analog controls?
 //     Would make AIs a little bit more effective
+//     AIs can take full advantage of it but players only get improved aiming
 //     Might help improve aim assist for the player
 //     https://gamedev.stackexchange.com/questions/1083/what-makes-aiming-in-a-console-first-person-shooter-feel-good/1325#1325
+//   Should it be possible to move laterally?
+//     Would make it easier to move and aim at the same time
+//     I still think controls should be relative to the ship
+//       rather than relative to the world like they are in diep.io
 
 // Weapons
 //   Drop mines that only effect the enemy
