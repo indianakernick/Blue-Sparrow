@@ -28,6 +28,7 @@ struct HullUpgrade : Upgrade {};
 struct MoveParams {
   float forwardForce;
   float reverseForce;
+  float lateralForce;
   float turnTorque;
   float speed;
 };

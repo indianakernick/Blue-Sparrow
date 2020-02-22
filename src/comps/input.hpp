@@ -25,6 +25,8 @@ struct AimAssist {};
 struct MoveCommand {
   bool forward = false;
   bool reverse = false;
+  bool ccw = false;
+  bool cw = false;
   bool left = false;
   bool right = false;
 };

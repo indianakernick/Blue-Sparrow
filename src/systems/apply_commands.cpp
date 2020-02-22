@@ -35,11 +35,19 @@ void applyMoveCommands(entt::registry &reg) {
       const b2Vec2 force = angleMag(phys.body->GetAngle(), -params.reverseForce);
       phys.body->ApplyForceToCenter(force, true);
     }
-    if (input.left && !input.right) {
+    if (input.ccw && !input.cw) {
       phys.body->ApplyTorque(-params.turnTorque, true);
     }
-    if (input.right && !input.left) {
+    if (input.cw && !input.ccw) {
       phys.body->ApplyTorque(params.turnTorque, true);
+    }
+    if (input.left && !input.right) {
+      const b2Vec2 force = angleMag(phys.body->GetAngle() - b2_pi / 2.0f, params.lateralForce);
+      phys.body->ApplyForceToCenter(force, true);
+    }
+    if (input.right && !input.left) {
+      const b2Vec2 force = angleMag(phys.body->GetAngle() + b2_pi / 2.0f, params.lateralForce);
+      phys.body->ApplyForceToCenter(force, true);
     }
   });
 }
@@ -94,6 +102,7 @@ void applyMissileCommands(entt::registry &reg) {
     MoveParams moveParams;
     moveParams.forwardForce = params.forwardForce;
     moveParams.reverseForce = 0.0f;
+    moveParams.lateralForce = 0.0f;
     moveParams.turnTorque = params.turnTorque;
     reg.assign<MoveParams>(missile, moveParams);
     reg.assign<SeekBehaviour>(missile, params.speed, params.level);

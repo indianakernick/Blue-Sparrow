@@ -87,21 +87,37 @@ void renderSprite(entt::registry &reg) {
         renderRelativeRect(draw, rect, {x, y, width, height, 0}, thrustSprite);
       }
       
-      const float width = rect.width / 6.0f;
-      const float height = width;
-      const float x1 = rect.width / 4.0f - width / 2.0f;
-      const float x2 = rect.width * 3.0f/4.0f - width / 2.0f;
-      const float y1 = -height;
-      const float y2 = rect.height;
-      
-      if (input->left && !input->right) {
-        renderRelativeRect(draw, rect, {x1, y1, width, height, 0}, thrustSprite);
-        renderRelativeRect(draw, rect, {x2, y2, width, height, 0}, thrustSprite);
+      {
+        const float width = rect.width / 6.0f;
+        const float height = width;
+        const float x1 = rect.width / 4.0f - width / 2.0f;
+        const float x2 = rect.width * 3.0f/4.0f - width / 2.0f;
+        const float y1 = -height;
+        const float y2 = rect.height;
+        
+        if (input->ccw && !input->cw) {
+          renderRelativeRect(draw, rect, {x1, y1, width, height, 0}, thrustSprite);
+          renderRelativeRect(draw, rect, {x2, y2, width, height, 0}, thrustSprite);
+        }
+        
+        if (input->cw && !input->ccw) {
+          renderRelativeRect(draw, rect, {x1, y2, width, height, 0}, thrustSprite);
+          renderRelativeRect(draw, rect, {x2, y1, width, height, 0}, thrustSprite);
+        }
       }
       
-      if (input->right && !input->left) {
-        renderRelativeRect(draw, rect, {x1, y2, width, height, 0}, thrustSprite);
-        renderRelativeRect(draw, rect, {x2, y1, width, height, 0}, thrustSprite);
+      {
+        const float width = rect.width / 5.0f;
+        const float height = width;
+        const float x = (rect.width - width) / 2.0f;
+        
+        if (input->left) {
+          renderRelativeRect(draw, rect, {x, rect.height, width, height, 0}, thrustSprite);
+        }
+        
+        if (input->right) {
+          renderRelativeRect(draw, rect, {x, -height, width, height, 0}, thrustSprite);
+        }
       }
     }
   });

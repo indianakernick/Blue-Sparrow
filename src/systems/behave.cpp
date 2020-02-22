@@ -31,13 +31,13 @@ float normalizeAngle(float angle) {
 
 void rotateByAngle(MoveCommand &move, const float deltaAngle, const float threshold = 0.5f) {
   if (b2Abs(deltaAngle) < threshold * deg2rad) {
-    move.left = move.right = false;
+    move.ccw = move.cw = false;
   } else if (deltaAngle < 0.0f) {
-    move.right = false;
-    move.left = true;
+    move.cw = false;
+    move.ccw = true;
   } else {
-    move.left = false;
-    move.right = true;
+    move.ccw = false;
+    move.cw = true;
   }
 }
 
@@ -98,7 +98,7 @@ void behaveOrbit(entt::registry &reg) {
   view.each([&](auto phys, auto target, auto &move, auto &blaster, auto behave, auto params) {
     if (target.e == entt::null) {
       blaster.fire = false;
-      move.forward = move.reverse = move.left = move.right = false;
+      move.forward = move.reverse = move.ccw = move.cw = false;
       return;
     } else {
       blaster.fire = true;
@@ -136,13 +136,13 @@ void behaveOrbit(entt::registry &reg) {
 void behaveSeek(entt::registry &reg) {
   entt::each(reg, [&](Physics phys, Target target, MoveCommand &move, SeekBehaviour behave) {
     if (target.e == entt::null) {
-      move.forward = move.reverse = move.left = move.right = false;
+      move.forward = move.reverse = move.ccw = move.cw = false;
       return;
     }
     
     if (behave.level == SeekLevel::no_aim) {
       move.forward = true;
-      move.reverse = move.left = move.right = false;
+      move.reverse = move.ccw = move.cw = false;
       return;
     }
     
@@ -185,7 +185,7 @@ void behaveSniper(entt::registry &reg) {
   view.less([&](auto phys, auto target, auto &move, auto &blaster, auto params) {
     if (target.e == entt::null) {
       blaster.fire = false;
-      move.forward = move.reverse = move.left = move.right = false;
+      move.forward = move.reverse = move.ccw = move.cw = false;
       return;
     } else {
       blaster.fire = true;

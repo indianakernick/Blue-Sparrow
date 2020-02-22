@@ -111,6 +111,7 @@ void setSniperMotion(entt::registry &reg, const entt::entity e) {
   MoveParams moveParams;
   moveParams.forwardForce = 30.0f;
   moveParams.reverseForce = 30.0f;
+  moveParams.lateralForce = 30.0f;
   moveParams.turnTorque = 100.0f;
   reg.assign<MoveParams>(e, moveParams);
   reg.assign<MoveCommand>(e);

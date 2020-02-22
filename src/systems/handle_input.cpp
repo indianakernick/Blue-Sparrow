@@ -37,6 +37,13 @@ bool handleKey(entt::registry &reg, const SDL_Scancode key, const bool press) {
     case SDL_SCANCODE_D:
       setMouse(reg, &MoveCommand::reverse, press);
       return true;
+    case SDL_SCANCODE_S:
+      setMouse(reg, &MoveCommand::left, press);
+      return true;
+    case SDL_SCANCODE_F:
+      setMouse(reg, &MoveCommand::right, press);
+      return true;
+    
     case SDL_SCANCODE_I:
     case SDL_SCANCODE_UP:
       setKey(reg, &MoveCommand::forward, press);
@@ -45,12 +52,18 @@ bool handleKey(entt::registry &reg, const SDL_Scancode key, const bool press) {
     case SDL_SCANCODE_DOWN:
       setKey(reg, &MoveCommand::reverse, press);
       return true;
-    case SDL_SCANCODE_J:
+    case SDL_SCANCODE_U:
     case SDL_SCANCODE_LEFT:
+      setKey(reg, &MoveCommand::ccw, press);
+      return true;
+    case SDL_SCANCODE_O:
+    case SDL_SCANCODE_RIGHT:
+      setKey(reg, &MoveCommand::cw, press);
+      return true;
+    case SDL_SCANCODE_J:
       setKey(reg, &MoveCommand::left, press);
       return true;
     case SDL_SCANCODE_L:
-    case SDL_SCANCODE_RIGHT:
       setKey(reg, &MoveCommand::right, press);
       return true;
     case SDL_SCANCODE_Z:
@@ -59,6 +72,7 @@ bool handleKey(entt::registry &reg, const SDL_Scancode key, const bool press) {
     case SDL_SCANCODE_X:
       setKey(reg, &MissileCommand::fire, press);
       return true;
+    
     default:
       return false;
   }

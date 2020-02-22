@@ -26,10 +26,12 @@ const MoveParams moveParams[] = {
   {
     .forwardForce = 80.0f,
     .reverseForce = 50.0f,
+    .lateralForce = 70.0f,
     .turnTorque = 200.0f,
     .speed = 15.0f
   }, {
     .forwardForce = 100.0f,
+    .lateralForce = 90.0f,
     .reverseForce = 60.0f,
     .turnTorque = 200.0f,
     .speed = 18.0f
