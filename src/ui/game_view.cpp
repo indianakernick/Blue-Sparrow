@@ -57,12 +57,6 @@ void GameView::init(SDL_Renderer *ren, FontCache &) {
   initializePhysics(reg);
   MapInfo info = makeMap0(reg);
   initializeCamera(reg, info.width, info.height);
-  
-  {
-    SDL_Point bgSize;
-    SDL_CHECK(SDL_QueryTexture(background.get(), nullptr, nullptr, &bgSize.x, &bgSize.y));
-    updateCameraBackground(reg, bgSize);
-  }
 }
 
 bool GameView::event(const SDL_Event &e) {

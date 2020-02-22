@@ -17,11 +17,23 @@
 
 void renderBackground(entt::registry &reg) {
   auto draw = reg.ctx<Drawing>();
-  auto cam = reg.ctx<Camera>();
+  int texW, texH;
+  SDL_CHECK(SDL_QueryTexture(draw.bgTex, nullptr, nullptr, &texW, &texH));
   entt::each(reg, [=](SpriteRect rect, BackgroundSprite) {
-    const SDL_Rect srcrect = {0, 0, int(cam.arenaWidth * cam.maxZoom), int(cam.arenaHeight * cam.maxZoom)};
-    const SDL_FRect dstrect = {rect.x, rect.y, rect.width, rect.height};
-    SDL_CHECK(SDL_RenderCopyF(draw.ren, draw.bgTex, &srcrect, &dstrect));
+    int repeatW = rect.width / texW + 1.0f;
+    int repeatH = rect.height / texH + 1.0f;
+    const SDL_Rect srcrect = {0, 0, texW, texH};
+    for (int y = 0; y != repeatH; ++y) {
+      for (int x = 0; x != repeatW; ++x) {
+        const SDL_FRect dstrect = {
+          rect.x + x * texW,
+          rect.y + y * texH,
+          static_cast<float>(texW),
+          static_cast<float>(texH)
+        };
+        SDL_CHECK(SDL_RenderCopyF(draw.ren, draw.bgTex, &srcrect, &dstrect));
+      }
+    }
   });
 }
 

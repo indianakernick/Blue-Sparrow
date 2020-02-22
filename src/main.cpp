@@ -18,10 +18,7 @@ int main() {
 //     Should beacons shoot?
 
 // Camera
-//   Camera zoom is very broken at the moment
-//   The background should repeat to maintain the best resolution
-//   The camera should zoom such that the player has a maximum view distance
-//   All ships should use this view distance for targeting
+//   All ships should use view distance for targeting
 //   View distance might be larger for snipers
 
 // UI

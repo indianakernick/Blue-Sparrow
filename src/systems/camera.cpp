@@ -74,16 +74,19 @@ void writeBeaconBarRect(entt::registry &reg) {
 
 void moveCamera(entt::registry &reg) {
   auto &cam = reg.ctx<Camera>();
-  entt::each(reg, [&](Physics phys, CameraFocus) {
-    // TODO: Make this less jittery
+  entt::each(reg, [&](Physics phys, ViewDistance dist, CameraFocus) {
+    cam.zoom = std::max({
+      cam.width / 2.0f / dist.max,
+      cam.height / 2.0f / dist.max,
+      cam.minZoom
+    });
+    
     const b2Vec2 pos = phys.body->GetPosition();
-    const b2Vec2 vel = phys.body->GetLinearVelocity();
-    const b2Vec2 futurePos = pos + 0.0f * vel;
     const float width = cam.width / cam.zoom;
     const float height = cam.height / cam.zoom;
     
-    cam.x = futurePos.x - width / 2.0f;
-    cam.y = futurePos.y - height / 2.0f;
+    cam.x = pos.x - width / 2.0f;
+    cam.y = pos.y - height / 2.0f;
     cam.x = std::max(cam.x, -cam.arenaWidth / 2.0f);
     cam.x = std::min(cam.x, cam.arenaWidth / 2.0f - width);
     cam.y = std::max(cam.y, -cam.arenaHeight / 2.0f);
@@ -97,7 +100,7 @@ void initializeCamera(entt::registry &reg, const float width, const float height
   cam.y = 0.0f;
   cam.arenaWidth = width;
   cam.arenaHeight = height;
-  cam.zoom = INFINITY;
+  cam.zoom = 0.0f;
   reg.set<Camera>(cam);
 }
 
@@ -107,10 +110,4 @@ void updateCameraViewport(entt::registry &reg, const SDL_Rect viewport) {
   cam.height = viewport.h;
   cam.minZoom = std::max(viewport.w / cam.arenaWidth, viewport.h / cam.arenaHeight);
   cam.zoom = std::max(cam.zoom, cam.minZoom);
-}
-
-void updateCameraBackground(entt::registry &reg, const SDL_Point bgSize) {
-  auto &cam = reg.ctx<Camera>();
-  cam.maxZoom = std::min(bgSize.x / cam.arenaWidth, bgSize.y / cam.arenaHeight);
-  cam.zoom = std::min(cam.zoom, cam.maxZoom);
 }

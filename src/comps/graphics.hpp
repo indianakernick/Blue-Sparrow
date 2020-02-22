@@ -36,6 +36,13 @@ struct BackgroundSprite {};
 /// Indicates which object the camera should focus on
 struct CameraFocus {};
 
+/// The maximum number of meters that a ship (not only the player) can see in
+/// either axis
+struct ViewDistance {
+  float max;
+};
+
+/// A context component describing the camera
 struct Camera {
   float x;           // offset meters
   float y;           // offset meters
@@ -45,9 +52,9 @@ struct Camera {
   float arenaHeight; // arena meters
   float zoom;        // pixels per meter
   float minZoom;     // pixels per meter
-  float maxZoom;     // pixels per meter
 };
 
+/// A context component describing the rendering context
 struct Drawing {
   SDL_Renderer *ren;
   SDL_Texture *fgTex;
