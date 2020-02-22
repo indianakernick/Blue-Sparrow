@@ -55,7 +55,7 @@ void writeBeaconBarRect(entt::registry &reg) {
     rect.y = (pos.y - yOffset - cam.y) * cam.zoom                  + 0.5f;
     switch (beacon.state) {
       // TODO: Should probably set beacon sprite in separate system
-      // TODO: Should also have separate system for rendering ships (MoveCommand)
+      // TODO: Should also have separate system for rendering ships (MotionCommand)
       case BeaconState::ally:
         sprite = Sprite{0, 0, 255};
         rect.progress = static_cast<float>(beacon.ally) / beacon.max;

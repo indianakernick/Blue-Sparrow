@@ -111,13 +111,13 @@ void setSniperSprite(entt::registry &reg, const entt::entity e, const Team team)
 }
 
 void setSniperMotion(entt::registry &reg, const entt::entity e) {
-  MoveParams moveParams;
-  moveParams.forwardForce = 30.0f;
-  moveParams.reverseForce = 30.0f;
-  moveParams.lateralForce = 30.0f;
-  moveParams.turnTorque = 100.0f;
-  reg.assign<MoveParams>(e, moveParams);
-  reg.assign<MoveCommand>(e);
+  MotionParams motionParams;
+  motionParams.forwardForce = 30.0f;
+  motionParams.reverseForce = 30.0f;
+  motionParams.lateralForce = 30.0f;
+  motionParams.turnTorque = 100.0f;
+  reg.assign<MotionParams>(e, motionParams);
+  reg.assign<MotionCommand>(e);
   reg.assign<VelocityLimit>(e, 15.0f);
 }
 

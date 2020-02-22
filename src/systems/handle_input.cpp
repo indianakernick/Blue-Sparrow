@@ -15,33 +15,33 @@
 
 namespace {
 
-template <typename Input>
-void setKey(entt::registry &reg, bool Input::*mem, const bool value) {
-  entt::each(reg, [=](Input &input, KeyInput) {
-    input.*mem = value;
+template <typename Command>
+void setKey(entt::registry &reg, bool Command::*mem, const bool value) {
+  entt::each(reg, [=](Command &command, KeyInput) {
+    command.*mem = value;
   });
 }
 
-template <typename Input>
-void setMouse(entt::registry &reg, bool Input::*mem, const bool value) {
-  entt::each(reg, [=](Input &input, MouseInput) {
-    input.*mem = value;
+template <typename Command>
+void setMouse(entt::registry &reg, bool Command::*mem, const bool value) {
+  entt::each(reg, [=](Command &command, MouseInput) {
+    command.*mem = value;
   });
 }
 
 bool handleKey(entt::registry &reg, const SDL_Scancode key, const bool press) {
   switch (key) {
     case SDL_SCANCODE_E:
-      setKey(reg, &MoveCommand::forward, press);
+      setKey(reg, &MotionCommand::forward, press);
       return true;
     case SDL_SCANCODE_D:
-      setKey(reg, &MoveCommand::reverse, press);
+      setKey(reg, &MotionCommand::reverse, press);
       return true;
     case SDL_SCANCODE_S:
-      setKey(reg, &MoveCommand::left, press);
+      setKey(reg, &MotionCommand::left, press);
       return true;
     case SDL_SCANCODE_F:
-      setKey(reg, &MoveCommand::right, press);
+      setKey(reg, &MotionCommand::right, press);
       return true;
     
     default:

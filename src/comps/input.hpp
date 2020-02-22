@@ -9,10 +9,10 @@
 #ifndef comps_input_hpp
 #define comps_input_hpp
 
-/// If present, the keyboard will control MoveInput
+/// If present, the keyboard will control MotionCommand
 struct KeyInput {};
 
-/// If present, the mouse will control MoveInput
+/// If present, the mouse will control MotionCommand
 struct MouseInput {
   int x = 0;
   int y = 0;
@@ -22,7 +22,7 @@ struct MouseInput {
 struct AimAssist {};
 
 /// Influences forces and torques applied to the physics body.
-struct MoveCommand {
+struct MotionCommand {
   bool forward = false;
   bool reverse = false;
   bool ccw = false;

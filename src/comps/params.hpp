@@ -16,16 +16,14 @@ struct Upgrade {
   int level;
 };
 
-struct MoveUpgrade : Upgrade {};
+struct MotionUpgrade : Upgrade {};
 struct BlasterUpgrade : Upgrade {};
 struct MissileUpgrade : Upgrade {};
 struct HullUpgrade : Upgrade {};
 
-// TODO: Perhaps rename MoveParams to MotionParams
-
 /// Forces and torques used to move the physics body.
 /// Can be changed when the player upgrades their ship.
-struct MoveParams {
+struct MotionParams {
   float forwardForce;
   float reverseForce;
   float lateralForce;

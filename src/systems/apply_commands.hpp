@@ -11,13 +11,13 @@
 
 #include <entt/entity/fwd.hpp>
 
-/// Read the MoveInput and MoveParams to apply forces to the Physics body
-void applyMoveCommands(entt::registry &);
+/// Read the MotionCommand and MotionParams to apply forces to the Physics body
+void applyMotionCommands(entt::registry &);
 
-/// Read the BlasterInput and BlasterParams to fire the blaster
+/// Read the BlasterCommand and BlasterParams to fire the blaster
 void applyBlasterCommands(entt::registry &);
 
-/// Read the MissileInput and MissileParams to fire a missile
+/// Read the MissileCommand and MissileParams to fire a missile
 void applyMissileCommands(entt::registry &);
 
 #endif

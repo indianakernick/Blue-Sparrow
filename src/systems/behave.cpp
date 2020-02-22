@@ -29,27 +29,27 @@ float normalizeAngle(float angle) {
   return angle;
 }
 
-void rotateByAngle(MoveCommand &move, const float deltaAngle, const float threshold = 0.5f) {
+void rotateByAngle(MotionCommand &motion, const float deltaAngle, const float threshold = 0.5f) {
   if (b2Abs(deltaAngle) < threshold * deg2rad) {
-    move.ccw = move.cw = false;
+    motion.ccw = motion.cw = false;
   } else if (deltaAngle < 0.0f) {
-    move.cw = false;
-    move.ccw = true;
+    motion.cw = false;
+    motion.ccw = true;
   } else {
-    move.ccw = false;
-    move.cw = true;
+    motion.ccw = false;
+    motion.cw = true;
   }
 }
 
-void moveByAccel(MoveCommand &move, const float accel) {
+void moveByAccel(MotionCommand &motion, const float accel) {
   if (b2Abs(accel) < 0.5f) {
-    move.forward = move.reverse = false;
+    motion.forward = motion.reverse = false;
   } else if (accel < 0.0f) {
-    move.reverse = true;
-    move.forward = false;
+    motion.reverse = true;
+    motion.forward = false;
   } else {
-    move.forward = true;
-    move.reverse = false;
+    motion.forward = true;
+    motion.reverse = false;
   }
 }
 
@@ -94,11 +94,11 @@ b2Vec2 interseptPoint(
 // TODO: I wonder if I could use the genetic algorithm to train the ultimate bot!
 
 void behaveOrbit(entt::registry &reg) {
-  auto view = reg.view<Physics, Target, MoveCommand, BlasterCommand, OrbitBehaviour, BlasterParams>();
-  view.each([&](auto phys, auto target, auto &move, auto &blaster, auto behave, auto params) {
+  auto view = reg.view<Physics, Target, MotionCommand, BlasterCommand, OrbitBehaviour, BlasterParams>();
+  view.each([&](auto phys, auto target, auto &motion, auto &blaster, auto behave, auto params) {
     if (target.e == entt::null) {
       blaster.fire = false;
-      move.forward = move.reverse = move.ccw = move.cw = false;
+      motion.forward = motion.reverse = motion.ccw = motion.cw = false;
       return;
     } else {
       blaster.fire = true;
@@ -115,7 +115,7 @@ void behaveOrbit(entt::registry &reg) {
     const b2Vec2 desiredPos = targetPos - behave.dist * toTarget + 0.5f * relativeVel;
     const b2Vec2 desiredVel = scaleToLength(desiredPos - shipPos, behave.speed);
     const b2Vec2 accel = desiredVel - shipVel;
-    moveByAccel(move, b2Dot(accel, toTarget));
+    moveByAccel(motion, b2Dot(accel, toTarget));
     
     b2Vec2 aimPos;
     switch (behave.level) {
@@ -129,20 +129,20 @@ void behaveOrbit(entt::registry &reg) {
     
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
-    rotateByAngle(move, normalizeAngle(aimAngle - phys.body->GetAngle()));
+    rotateByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
   });
 }
 
 void behaveSeek(entt::registry &reg) {
-  entt::each(reg, [&](Physics phys, Target target, MoveCommand &move, SeekBehaviour behave) {
+  entt::each(reg, [&](Physics phys, Target target, MotionCommand &motion, SeekBehaviour behave) {
     if (target.e == entt::null) {
-      move.forward = move.reverse = move.ccw = move.cw = false;
+      motion.forward = motion.reverse = motion.ccw = motion.cw = false;
       return;
     }
     
     if (behave.level == SeekLevel::no_aim) {
-      move.forward = true;
-      move.reverse = move.ccw = move.cw = false;
+      motion.forward = true;
+      motion.reverse = motion.ccw = motion.cw = false;
       return;
     }
     
@@ -173,19 +173,19 @@ void behaveSeek(entt::registry &reg) {
     
     const float aimAngle = std::atan2(accel.y, accel.x);
     const float angleChange = normalizeAngle(aimAngle - phys.body->GetAngle());
-    rotateByAngle(move, angleChange);
+    rotateByAngle(motion, angleChange);
     
-    move.forward = (b2Abs(angleChange) < b2_pi / 4.0f);
-    move.reverse = false;
+    motion.forward = (b2Abs(angleChange) < b2_pi / 4.0f);
+    motion.reverse = false;
   });
 }
 
 void behaveSniper(entt::registry &reg) {
-  auto view = reg.view<Physics, Target, MoveCommand, BlasterCommand, SniperBehaviour, BlasterParams>();
-  view.less([&](auto phys, auto target, auto &move, auto &blaster, auto params) {
+  auto view = reg.view<Physics, Target, MotionCommand, BlasterCommand, SniperBehaviour, BlasterParams>();
+  view.less([&](auto phys, auto target, auto &motion, auto &blaster, auto params) {
     if (target.e == entt::null) {
       blaster.fire = false;
-      move.forward = move.reverse = move.ccw = move.cw = false;
+      motion.forward = motion.reverse = motion.ccw = motion.cw = false;
       return;
     } else {
       blaster.fire = true;
@@ -201,7 +201,7 @@ void behaveSniper(entt::registry &reg) {
     const b2Vec2 aimPos = interseptPoint(targetPos, targetVel - shipVel, shipPos, params.speed);
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
-    rotateByAngle(move, normalizeAngle(aimAngle - shipAngle), 0.1f);
+    rotateByAngle(motion, normalizeAngle(aimAngle - shipAngle), 0.1f);
   });
 }
 
@@ -237,7 +237,7 @@ private:
 }
 
 void behaveMouse(entt::registry &reg) {
-  entt::each(reg, [&](entt::entity e, Physics phys, MoveCommand &move, MouseInput mouse, BlasterParams params) {
+  entt::each(reg, [&](entt::entity e, Physics phys, MotionCommand &motion, MouseInput mouse, BlasterParams params) {
     const auto &cam = reg.ctx<Camera>();
     const b2Vec2 shipPos = phys.body->GetPosition();
     float aimX = mouse.x / cam.zoom + cam.x;
@@ -266,6 +266,6 @@ void behaveMouse(entt::registry &reg) {
       aimY - shipPos.y,
       aimX - shipPos.x
     );
-    rotateByAngle(move, normalizeAngle(aimAngle - phys.body->GetAngle()));
+    rotateByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
   });
 }

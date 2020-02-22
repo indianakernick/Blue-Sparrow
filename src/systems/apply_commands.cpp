@@ -25,27 +25,27 @@
 #include "../factories/weapons.hpp"
 #include <entt/entity/registry.hpp>
 
-void applyMoveCommands(entt::registry &reg) {
-  entt::each(reg, [](Physics phys, MoveParams params, MoveCommand input) {
-    if (input.forward) {
+void applyMotionCommands(entt::registry &reg) {
+  entt::each(reg, [](Physics phys, MotionParams params, MotionCommand command) {
+    if (command.forward) {
       const b2Vec2 force = angleMag(phys.body->GetAngle(), params.forwardForce);
       phys.body->ApplyForceToCenter(force, true);
     }
-    if (input.reverse) {
+    if (command.reverse) {
       const b2Vec2 force = angleMag(phys.body->GetAngle(), -params.reverseForce);
       phys.body->ApplyForceToCenter(force, true);
     }
-    if (input.ccw && !input.cw) {
+    if (command.ccw && !command.cw) {
       phys.body->ApplyTorque(-params.turnTorque, true);
     }
-    if (input.cw && !input.ccw) {
+    if (command.cw && !command.ccw) {
       phys.body->ApplyTorque(params.turnTorque, true);
     }
-    if (input.left && !input.right) {
+    if (command.left && !command.right) {
       const b2Vec2 force = angleMag(phys.body->GetAngle() - b2_pi / 2.0f, params.lateralForce);
       phys.body->ApplyForceToCenter(force, true);
     }
-    if (input.right && !input.left) {
+    if (command.right && !command.left) {
       const b2Vec2 force = angleMag(phys.body->GetAngle() + b2_pi / 2.0f, params.lateralForce);
       phys.body->ApplyForceToCenter(force, true);
     }
@@ -55,8 +55,8 @@ void applyMoveCommands(entt::registry &reg) {
 void applyBlasterCommands(entt::registry &reg) {
   static std::mt19937 gen;
   
-  entt::each(reg, [&](Physics phys, BlasterParams params, BlasterCommand input, BlasterTimer &timer, Team team) {
-    if (!input.fire) return;
+  entt::each(reg, [&](Physics phys, BlasterParams params, BlasterCommand command, BlasterTimer &timer, Team team) {
+    if (!command.fire) return;
     
     const std::uint32_t now = SDL_GetTicks();
     if (!SDL_TICKS_PASSED(now, timer.done)) return;
@@ -80,8 +80,8 @@ void applyBlasterCommands(entt::registry &reg) {
 }
 
 void applyMissileCommands(entt::registry &reg) {
-  entt::each(reg, [&](Physics phys, MissileParams params, MissileCommand input, MissileAmmo &ammo, MissileTimer &timer, Team team) {
-    if (!input.fire) return;
+  entt::each(reg, [&](Physics phys, MissileParams params, MissileCommand command, MissileAmmo &ammo, MissileTimer &timer, Team team) {
+    if (!command.fire) return;
     if (ammo.n <= 0) return;
     
     const std::uint32_t now = SDL_GetTicks();
@@ -99,12 +99,12 @@ void applyMissileCommands(entt::registry &reg) {
     missileBody->SetTransform(shipPos, shipAngle);
     missileBody->SetLinearVelocity(missileVel);
     phys.body->ApplyLinearImpulseToCenter(-missileBody->GetMass() * missileVel, true);
-    MoveParams moveParams;
-    moveParams.forwardForce = params.forwardForce;
-    moveParams.reverseForce = 0.0f;
-    moveParams.lateralForce = 0.0f;
-    moveParams.turnTorque = params.turnTorque;
-    reg.assign<MoveParams>(missile, moveParams);
+    MotionParams motionParams;
+    motionParams.forwardForce = params.forwardForce;
+    motionParams.reverseForce = 0.0f;
+    motionParams.lateralForce = 0.0f;
+    motionParams.turnTorque = params.turnTorque;
+    reg.assign<MotionParams>(missile, motionParams);
     reg.assign<SeekBehaviour>(missile, params.speed, params.level);
     reg.assign<VelocityLimit>(missile, params.speed * 0.75f);
     reg.assign<Damage>(missile, params.damage);

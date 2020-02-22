@@ -22,7 +22,7 @@ namespace {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wc99-extensions"
 
-const MoveParams moveParams[] = {
+const MotionParams motionParams[] = {
   {
     .forwardForce = 80.0f,
     .reverseForce = 50.0f,
@@ -38,7 +38,7 @@ const MoveParams moveParams[] = {
   }
 };
 
-const MoveUpgrade moveUpgrades[] = {
+const MotionUpgrade motionUpgrades[] = {
   {{.cost = 3, .level = 1}},
   {{.cost = -1, .level = 2}}
 };
@@ -133,23 +133,23 @@ bool getInfo(entt::registry &reg, UpgradeInfo &info, const Upgrade (&)[Size]) {
 }
 
 bool upgradeMotion(entt::registry &reg) {
-  return upgrade(reg, moveUpgrades, moveParams);
+  return upgrade(reg, motionUpgrades, motionParams);
 }
 
 bool motionUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
-  return getInfo(reg, info, moveUpgrades);
+  return getInfo(reg, info, motionUpgrades);
 }
 
 void setMotion(entt::registry &reg, const entt::entity e, const int level) {
-  assert(level < int{std::size(moveParams)});
-  reg.assign<MoveParams>(e, moveParams[level]);
-  reg.assign<VelocityLimit>(e, moveParams[level].speed);
-  reg.assign<MoveCommand>(e);
+  assert(level < int{std::size(motionParams)});
+  reg.assign<MotionParams>(e, motionParams[level]);
+  reg.assign<VelocityLimit>(e, motionParams[level].speed);
+  reg.assign<MotionCommand>(e);
 }
 
 void setUpgradableMotion(entt::registry &reg, const entt::entity e, const int level) {
   setMotion(reg, e, level);
-  reg.assign<MoveUpgrade>(e, moveUpgrades[level]);
+  reg.assign<MotionUpgrade>(e, motionUpgrades[level]);
 }
 
 bool upgradeBlaster(entt::registry &reg) {

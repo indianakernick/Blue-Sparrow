@@ -29,10 +29,12 @@ int main() {
 //   Winning and losing
 //   Respawning
 //   Healing over time
+//   Maybe the ability to grab onto asteroids and move them around
 
 // AIs
 //   (for the different roles of a team)
-//   Dodging (missiles that dodge)
+//   Avoiding walls (missiles should do this)
+//   Dodging (missiles should do this)
 //   Picking up drops
 //   Defending
 //   Guarding

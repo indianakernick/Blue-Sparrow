@@ -80,10 +80,10 @@ void renderSprite(entt::registry &reg) {
   entt::each(reg, [&](entt::entity e, SpriteRect rect, Sprite sprite) {
     renderRect(draw, rect, sprite, rect.width / 2.0f, rect.height / 2.0f);
     
-    if (auto *input = reg.try_get<MoveCommand>(e)) {
+    if (auto *command = reg.try_get<MotionCommand>(e)) {
       const Sprite thrustSprite = {255, 109, 0};
       
-      if (input->forward) {
+      if (command->forward) {
         const float width = rect.width / 4.0f;
         const float height = rect.height / 3.0f;
         const float x = -width;
@@ -91,7 +91,7 @@ void renderSprite(entt::registry &reg) {
         renderRelativeRect(draw, rect, {x, y, width, height, 0}, thrustSprite);
       }
       
-      if (input->reverse) {
+      if (command->reverse) {
         const float width = rect.width / 5.0f;
         const float height = rect.height / 4.0f;
         const float x = rect.width;
@@ -107,12 +107,12 @@ void renderSprite(entt::registry &reg) {
         const float y1 = -height;
         const float y2 = rect.height;
         
-        if (input->ccw && !input->cw) {
+        if (command->ccw && !command->cw) {
           renderRelativeRect(draw, rect, {x1, y1, width, height, 0}, thrustSprite);
           renderRelativeRect(draw, rect, {x2, y2, width, height, 0}, thrustSprite);
         }
         
-        if (input->cw && !input->ccw) {
+        if (command->cw && !command->ccw) {
           renderRelativeRect(draw, rect, {x1, y2, width, height, 0}, thrustSprite);
           renderRelativeRect(draw, rect, {x2, y1, width, height, 0}, thrustSprite);
         }
@@ -123,11 +123,11 @@ void renderSprite(entt::registry &reg) {
         const float height = width;
         const float x = (rect.width - width) / 2.0f;
         
-        if (input->left) {
+        if (command->left) {
           renderRelativeRect(draw, rect, {x, rect.height, width, height, 0}, thrustSprite);
         }
         
-        if (input->right) {
+        if (command->right) {
           renderRelativeRect(draw, rect, {x, -height, width, height, 0}, thrustSprite);
         }
       }
