@@ -22,6 +22,7 @@ void damageBeacon(Beacon &beacon, const Team shooter, const int damage) {
         beacon.enemy = beacon.max;
       }
       break;
+    
     case BeaconState::enemy:
       if (shooter == Team::enemy) return;
       beacon.enemy -= damage;
@@ -31,6 +32,7 @@ void damageBeacon(Beacon &beacon, const Team shooter, const int damage) {
         beacon.ally = beacon.max;
       }
       break;
+    
     case BeaconState::neutral:
       beacon.neutral -= damage;
       switch (shooter) {

@@ -39,8 +39,13 @@ int main() {
 //   Defending
 //   Guarding
 //   Attacking
-//   AIs should only target the player if they can actually see the player
-//     shooting the player from way across the map is really unfair
+//   High level AI
+//     We have behaviours (seek and orbit) that define an immediate goal
+//     We have levels that define how well the immediate goal is reached
+//     We need some way of switching between behaviours dynamically
+//     Example:
+//       if there are no nearby targets, wander around
+//       if a target is spotted, engage in the target
 
 // Drops
 //   AIs that seek out drops
