@@ -57,19 +57,33 @@ entt::entity makeScrap(entt::registry &reg) {
   return e;
 }
 
-entt::entity makeBeacon(entt::registry &reg) {
+entt::entity makeBeacon(entt::registry &reg, const BeaconState state) {
   entt::entity e = reg.create();
   setBeaconPhysics(reg, e);
+  
   Beacon beacon;
   beacon.max = 1000;
   beacon.ally = 0;
   beacon.enemy = 0;
-  beacon.neutral = beacon.max;
-  beacon.state = BeaconState::neutral;
+  beacon.neutral = 0;
+  beacon.state = state;
+  
+  switch (state) {
+    case BeaconState::ally:
+      beacon.ally = beacon.max;
+      break;
+    case BeaconState::enemy:
+      beacon.enemy = beacon.max;
+      break;
+    case BeaconState::neutral:
+      beacon.neutral = beacon.max;
+      break;
+  }
+  
   reg.assign<Beacon>(e, beacon);
   reg.assign<BarRect>(e);
   reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{255, 255, 0});
+  reg.assign<Sprite>(e);
   return e;
 }
 

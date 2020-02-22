@@ -9,6 +9,7 @@
 #ifndef factories_arena_hpp
 #define factories_arena_hpp
 
+#include "../comps/arena.hpp"
 #include <entt/entity/fwd.hpp>
 
 entt::entity makeArena(entt::registry &, float, float);
@@ -16,7 +17,7 @@ entt::entity makeAsteroid(entt::registry &);
 entt::entity makeCoin(entt::registry &);
 entt::entity makeAmmo(entt::registry &);
 entt::entity makeScrap(entt::registry &);
-entt::entity makeBeacon(entt::registry &);
+entt::entity makeBeacon(entt::registry &, BeaconState);
 entt::entity makeWall(entt::registry &, float, float);
 
 #endif

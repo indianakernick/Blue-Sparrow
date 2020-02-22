@@ -24,7 +24,7 @@ void writeBeaconBarRect(entt::registry &);
 /// Move the Camera to focus on the object width CameraFocus
 void moveCamera(entt::registry &);
 
-void initializeCamera(entt::registry &, float);
+void initializeCamera(entt::registry &, float, float);
 void updateCameraViewport(entt::registry &, SDL_Rect);
 void updateCameraBackground(entt::registry &, SDL_Point);
 

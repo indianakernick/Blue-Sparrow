@@ -91,12 +91,12 @@ void moveCamera(entt::registry &reg) {
   });
 }
 
-void initializeCamera(entt::registry &reg, const float arenaSize) {
+void initializeCamera(entt::registry &reg, const float width, const float height) {
   Camera cam;
   cam.x = 0.0f;
   cam.y = 0.0f;
-  cam.arenaWidth = arenaSize;
-  cam.arenaHeight = arenaSize;
+  cam.arenaWidth = width;
+  cam.arenaHeight = height;
   cam.zoom = INFINITY;
   reg.set<Camera>(cam);
 }

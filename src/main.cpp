@@ -17,6 +17,22 @@ int main() {
 //   Turrets
 //     Should beacons shoot?
 
+// Camera
+//   Camera zoom is very broken at the moment
+//   The background should repeat to maintain the best resolution
+//   The camera should zoom such that the player has a maximum view distance
+//   All ships should use this view distance for targeting
+//   View distance might be larger for snipers
+
+// UI
+//   Might need a minimap
+//     Should include the status of the beacons
+
+// Game mechanics
+//   Winning and losing
+//   Respawning
+//   Healing over time
+
 // AIs
 //   (for the different roles of a team)
 //   Dodging (missiles that dodge)
@@ -24,6 +40,8 @@ int main() {
 //   Defending
 //   Guarding
 //   Attacking
+//   AIs should only target the player if they can actually see the player
+//     shooting the player from way across the map is really unfair
 
 // Drops
 //   AIs that seek out drops

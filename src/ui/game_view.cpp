@@ -19,9 +19,8 @@
 #include "../systems/all.hpp"
 #include "../comps/graphics.hpp"
 #include "../systems/camera.hpp"
+#include "../factories/maps.hpp"
 #include "../systems/physics.hpp"
-#include "../factories/ships.hpp"
-#include "../factories/arena.hpp"
 #include "../systems/handle_input.hpp"
 
 namespace {
@@ -33,22 +32,6 @@ SDL::Texture makeTexture(SDL_Renderer *renderer) {
   std::uint32_t pixels[] = {0xFFFFFFFF};
   SDL_CHECK(SDL_UpdateTexture(tex.get(), nullptr, pixels, 4));
   return tex;
-}
-
-void initializeWorld(entt::registry &reg, const float arenaSize) {
-  // TODO: Does this belong here?
-  setTransform(reg, makePlayer(reg), {0.0f, 0.0f}, 0.0f);
-  setTransform(reg, makeSniper(reg, Team::enemy), {20.0f, 0.0f}, b2_pi);
-  setTransform(reg, makeScout(reg, Team::enemy), {20.0f, 10.0f}, b2_pi);
-  setTransform(reg, makeScout(reg, Team::enemy), {20.0f, -10.0f}, b2_pi);
-  setTransform(reg, makeScout(reg, Team::ally), {-20.0f, 10.0f}, 0.0f);
-  setTransform(reg, makeScout(reg, Team::ally), {-20.0f, -10.0f}, 0.0f);
-  makeArena(reg, arenaSize, arenaSize);
-  entt::entity rock = makeAsteroid(reg);
-  setTransform(reg, rock, {-30.0f, -40.0f}, 1.0f);
-  setMotion(reg, rock, {1.0f, 1.3f}, 0.1f);
-  setTransform(reg, makeBeacon(reg), {-30.0f, 40.0f}, 0.0f);
-  setTransform(reg, makeWall(reg, 1.0f, 8.0f), {0.0f, -15.0f}, 0.0f);
 }
 
 }
@@ -72,8 +55,8 @@ void GameView::init(SDL_Renderer *ren, FontCache &) {
   }
   
   initializePhysics(reg);
-  initializeWorld(reg, 150.0f);
-  initializeCamera(reg, 150.0f);
+  MapInfo info = makeMap0(reg);
+  initializeCamera(reg, info.width, info.height);
   
   {
     SDL_Point bgSize;

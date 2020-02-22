@@ -129,8 +129,8 @@ void setSmallMissilePhysics(entt::registry &reg, const entt::entity e, const Tea
 }
 
 void setAsteroidPhysics(entt::registry &reg, const entt::entity e) {
-  const float halfWidth = 8.0f;
-  const float halfHeight = 8.0f;
+  const float halfWidth = 7.5f;
+  const float halfHeight = 7.5f;
   
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
@@ -171,7 +171,7 @@ void setDropPhysics(entt::registry &reg, const entt::entity e) {
 }
 
 void setBeaconPhysics(entt::registry &reg, const entt::entity e) {
-  const float halfSize = 4.0f;
+  const float halfSize = 5.0f;
   
   b2BodyDef bodyDef;
   bodyDef.type = b2_staticBody;
