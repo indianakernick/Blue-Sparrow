@@ -32,45 +32,16 @@ void setMouse(entt::registry &reg, bool Input::*mem, const bool value) {
 bool handleKey(entt::registry &reg, const SDL_Scancode key, const bool press) {
   switch (key) {
     case SDL_SCANCODE_E:
-      setMouse(reg, &MoveCommand::forward, press);
-      return true;
-    case SDL_SCANCODE_D:
-      setMouse(reg, &MoveCommand::reverse, press);
-      return true;
-    case SDL_SCANCODE_S:
-      setMouse(reg, &MoveCommand::left, press);
-      return true;
-    case SDL_SCANCODE_F:
-      setMouse(reg, &MoveCommand::right, press);
-      return true;
-    
-    case SDL_SCANCODE_I:
-    case SDL_SCANCODE_UP:
       setKey(reg, &MoveCommand::forward, press);
       return true;
-    case SDL_SCANCODE_K:
-    case SDL_SCANCODE_DOWN:
+    case SDL_SCANCODE_D:
       setKey(reg, &MoveCommand::reverse, press);
       return true;
-    case SDL_SCANCODE_U:
-    case SDL_SCANCODE_LEFT:
-      setKey(reg, &MoveCommand::ccw, press);
-      return true;
-    case SDL_SCANCODE_O:
-    case SDL_SCANCODE_RIGHT:
-      setKey(reg, &MoveCommand::cw, press);
-      return true;
-    case SDL_SCANCODE_J:
+    case SDL_SCANCODE_S:
       setKey(reg, &MoveCommand::left, press);
       return true;
-    case SDL_SCANCODE_L:
+    case SDL_SCANCODE_F:
       setKey(reg, &MoveCommand::right, press);
-      return true;
-    case SDL_SCANCODE_Z:
-      setKey(reg, &BlasterCommand::fire, press);
-      return true;
-    case SDL_SCANCODE_X:
-      setKey(reg, &MissileCommand::fire, press);
       return true;
     
     default:
