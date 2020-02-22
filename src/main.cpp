@@ -13,17 +13,17 @@ int main() {
   app.run();
 }
 
+// Code
+//   Should we abandon entt::each?
+
 // Objects
 //   Turrets
 //     Should beacons shoot?
 
-// Camera
-//   All ships should use view distance for targeting
-//   View distance might be larger for snipers
-
 // UI
 //   Might need a minimap
 //     Should include the status of the beacons
+//   Should the health bar of a beacon indicate ally/enemy/neutral?
 
 // Game mechanics
 //   Winning and losing

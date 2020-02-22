@@ -30,6 +30,7 @@ entt::entity makePlayer(entt::registry &reg) {
   setUpgradableMotion(reg, e, 0);
   setUpgradableBlaster(reg, e, 0);
   setUpgradableMissile(reg, e, 0);
+  reg.assign<ViewDistance>(e, 30.0f);
   return e;
 }
 
@@ -45,6 +46,7 @@ entt::entity makeScout(entt::registry &reg, const Team team) {
   setScoutSprite(reg, e, team);
   setMotion(reg, e, 0);
   setBlaster(reg, e, 0);
+  reg.assign<ViewDistance>(e, 30.0f);
   return e;
 }
 
@@ -60,6 +62,7 @@ entt::entity makeSniper(entt::registry &reg, const Team team) {
   setSniperBehave(reg, e);
   setSniperMotion(reg, e);
   setSniperBlaster(reg, e);
+  reg.assign<ViewDistance>(e, 50.0f);
   return e;
 }
 
@@ -74,7 +77,6 @@ void setPlayer(entt::registry &reg, const entt::entity e) {
   reg.assign<MouseInput>(e);
   reg.assign<AimAssist>(e);
   reg.assign<Coins>(e, 0);
-  reg.assign<ViewDistance>(e, 30.0f);
 }
 
 void setOrbitBehave(entt::registry &reg, const entt::entity e) {
