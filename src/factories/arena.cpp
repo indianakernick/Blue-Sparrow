@@ -94,3 +94,11 @@ entt::entity makeWall(entt::registry &reg, const float width, const float height
   reg.assign<Sprite>(e, Sprite{191, 191, 191});
   return e;
 }
+
+entt::entity makeDebugPoint(entt::registry &reg) {
+  entt::entity e = reg.create();
+  setDebugPointPhysics(reg, e);
+  reg.assign<SpriteRect>(e);
+  reg.assign<Sprite>(e, Sprite{255, 0, 255});
+  return e;
+}

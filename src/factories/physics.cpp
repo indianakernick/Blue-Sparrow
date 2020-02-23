@@ -211,3 +211,21 @@ void setWallPhysics(
   body->CreateFixture(&fixDef);
   reg.assign<Physics>(e, body, width, height);
 }
+
+void setDebugPointPhysics(entt::registry &reg, const entt::entity e) {
+  const float halfSize = 0.25f;
+  
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_staticBody;
+  
+  b2PolygonShape shape;
+  shape.SetAsBox(halfSize, halfSize);
+  
+  b2FixtureDef fixDef;
+  fixDef.shape = &shape;
+  fixDef.isSensor = true;
+  
+  b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
+  body->CreateFixture(&fixDef);
+  reg.assign<Physics>(e, body, halfSize * 2.0f, halfSize * 2.0f);
+}

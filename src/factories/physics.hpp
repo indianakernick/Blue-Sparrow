@@ -20,5 +20,6 @@ void setAsteroidPhysics(entt::registry &, entt::entity);
 void setDropPhysics(entt::registry &, entt::entity);
 void setBeaconPhysics(entt::registry &, entt::entity);
 void setWallPhysics(entt::registry &, entt::entity, float, float);
+void setDebugPointPhysics(entt::registry &, entt::entity);
 
 #endif
