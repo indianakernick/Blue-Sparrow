@@ -19,5 +19,7 @@ void behaveSeek(entt::registry &);
 void behaveSniper(entt::registry &);
 /// Rotate to mouse position and adjust aim if AimAssist is present
 void behaveMouse(entt::registry &);
+/// Move to some location on the map
+void behaveNavigate(entt::registry &);
 
 #endif

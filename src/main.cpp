@@ -46,6 +46,7 @@ int main() {
 //     Example:
 //       if there are no nearby targets, wander around
 //       if a target is spotted, engage in the target
+//   Can/should we separate aiming behaviours from moving behaviours?
 
 // Drops
 //   AIs that seek out drops

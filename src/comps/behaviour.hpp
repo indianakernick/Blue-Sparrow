@@ -38,4 +38,9 @@ struct SniperBehaviour {
   float x, y;
 };
 
+struct NavigateBehaviour {
+  float x, y;
+  float nearX, nearY;
+};
+
 #endif

@@ -8,9 +8,11 @@
 
 #include "behave.hpp"
 
+#include <queue>
 #include <box2d/b2_body.h>
 #include <box2d/b2_world.h>
 #include "../utils/each.hpp"
+#include "../comps/arena.hpp"
 #include <box2d/b2_fixture.h>
 #include "../comps/teams.hpp"
 #include "../comps/input.hpp"
@@ -290,5 +292,186 @@ void behaveMouse(entt::registry &reg) {
       aimX - shipPos.x
     );
     cwByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
+  });
+}
+
+namespace {
+
+template <typename Vec>
+struct Node {
+  Vec pos;
+  Vec prev;
+  int steps;
+  float cost;
+};
+
+template <typename Vec>
+struct CompareNodes {
+  bool operator()(const Node<Vec> &lhs, const Node<Vec> &rhs) const noexcept {
+    return lhs.cost > rhs.cost;
+  }
+};
+
+template <typename Vec>
+struct NodeQueue : std::priority_queue<Node<Vec>, std::vector<Node<Vec>>, CompareNodes<Vec>> {
+  using NodeQueue::priority_queue::c;
+};
+
+/*
+struct Policy {
+  // a type that represents a 2D position
+  // should support comparison and addition
+  using Vec = ...
+
+  // what is the distance between these points?
+  float distance(Vec, Vec) const;
+  // is it possible to walk to this point by walking in this direction?
+  bool walkable(Vec, Vec) const;
+  // get a range of Vecs pointing at the neighbors
+  range<Vec> neighbors() const;
+  
+  // this node is now being processed
+  // (makes it possible to get list of points that make up the path)
+  void next(const Node &);
+  
+  // no path was found
+  void fail();
+  // a path was found
+  void succeed(Node &);
+};
+*/
+
+template <typename Policy>
+void astar(Policy &policy, const typename Policy::Vec from, const typename Policy::Vec to) {
+  // TODO: this never returns when there is no route
+  
+  NodeQueue<typename Policy::Vec> queue;
+  queue.push({to, to, 0, policy.distance(from, to)});
+  
+  while (true) {
+    if (queue.empty()) {
+      policy.fail();
+      return;
+    } else if (queue.top().pos == from) {
+      policy.succeed(queue.top());
+      return;
+    }
+    
+    const Node top = queue.top();
+    queue.pop();
+    policy.next(top);
+    const int neighborSteps = top.steps + 1;
+    
+    for (const auto dir : policy.neighbors()) {
+      const auto neighborPos = top.pos + dir;
+      if (neighborPos == top.prev) continue;
+      if (!policy.walkable(neighborPos, dir)) continue;
+      
+      // http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1021r2.html
+      const Node<typename Policy::Vec> neighbor = {
+        neighborPos,
+        top.pos,
+        neighborSteps,
+        neighborSteps + policy.distance(neighborPos, from)
+      };
+      bool found = false;
+      
+      for (auto n = queue.c.begin(); n != queue.c.end(); ++n) {
+        if (n->pos == neighborPos) {
+          found = true;
+          if (neighbor.steps < n->steps) {
+            // TODO: Could remove n
+            // but that's a bit tricky
+            queue.push(neighbor);
+          }
+          break;
+        }
+      }
+      
+      if (!found) {
+        queue.push(neighbor);
+      }
+    }
+  }
+}
+
+struct Policy {
+  using Vec = b2Vec2;
+  using Node = Node<Vec>;
+
+  static float distance(const Vec a, const Vec b) {
+    return b2Distance(a, b);
+  }
+  bool walkable(const Vec to, Vec) const {
+    return !map.data[to.y * map.width + to.x];
+  }
+  
+  static inline const b2Vec2 neighborArray[] = {
+    {0.0f, -1.0f},
+    //{1.0f, -1.0f},
+    {1.0f, 0.0f},
+    //{1.0f, 1.0f},
+    {0.0f, 1.0f},
+    //{-1.0f, 1.0f},
+    {-1.0f, 0.0f},
+    //{-1.0f, -1.0f}
+  };
+  
+  static const auto &neighbors() {
+    return neighborArray;
+  }
+  
+  void next(const Node &) {}
+  
+  void fail() {
+    assert(false);
+  }
+  void succeed(const Node &node) {
+    dest = node.prev;
+  }
+  
+  MapData map;
+  b2Vec2 dest = {0.0f, 0.0f};
+};
+
+}
+
+void behaveNavigate(entt::registry &reg) {
+  Policy policy;
+  policy.map = reg.ctx<MapData>();
+  const float scale = policy.map.scale;
+  const float invScale = 1.0f / scale;
+  const b2Vec2 center = {policy.map.width / 2.0f, policy.map.height / 2.0f};
+  
+  auto tilePos = [=](b2Vec2 pos) {
+    pos = center + invScale * pos;
+    return b2Vec2{std::floor(pos.x), std::floor(pos.y)};
+  };
+  auto worldPos = [=](b2Vec2 pos) {
+    return scale * (pos - center + b2Vec2{0.5f, 0.5f});
+  };
+  
+  entt::each(reg, [&](Physics phys, MotionCommand &motion, MotionParams params, NavigateBehaviour &behave) {
+    // would looking further than the first time help?
+    
+    b2Vec2 nearPos = b2Vec2{behave.nearX, behave.nearY};
+    
+    if (b2DistanceSquared(phys.body->GetPosition(), nearPos) < 3.0f) {
+      const b2Vec2 fromPos = tilePos(phys.body->GetPosition());
+      const b2Vec2 toPos = tilePos({behave.x, behave.y});
+      astar(policy, fromPos, toPos);
+      nearPos = worldPos(policy.dest);
+      behave.nearX = nearPos.x;
+      behave.nearY = nearPos.y;
+    }
+    
+    const b2Vec2 desiredVel = scaleToLength(nearPos - phys.body->GetPosition(), params.speed);
+    // const b2Vec2 desiredVel = nearPos - phys.body->GetPosition();
+    const b2Vec2 accel = desiredVel - phys.body->GetLinearVelocity();
+    const b2Vec2 forwardDir = angleMag(phys.body->GetAngle(), 1.0f);
+    const b2Vec2 rightDir = forwardDir.Skew();
+    
+    forwardByAccel(motion, b2Dot(accel, forwardDir));
+    rightByAccel(motion, b2Dot(accel, rightDir));
   });
 }

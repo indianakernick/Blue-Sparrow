@@ -9,6 +9,8 @@
 #ifndef comps_arena_hpp
 #define comps_arena_hpp
 
+#include <vector>
+
 enum class BeaconState {
   ally,
   enemy,
@@ -22,6 +24,12 @@ struct Beacon {
   int enemy;
   int neutral;
   BeaconState state;
+};
+
+struct MapData {
+  std::vector<bool> data;
+  int width, height;
+  int scale;
 };
 
 #endif
