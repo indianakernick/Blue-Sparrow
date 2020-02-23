@@ -295,6 +295,9 @@ void behaveMouse(entt::registry &reg) {
   });
 }
 
+#include <chrono>
+#include <iostream>
+
 namespace {
 
 template <typename Vec>
@@ -446,6 +449,7 @@ public:
     assert(false);
   }
   void succeed(const Node &node) {
+    std::cout << "Path length: " << node.steps << '\n';
     nodes.push_back(node);
   }
   
@@ -478,6 +482,10 @@ bool sameDirection(b2Vec2 a, b2Vec2 b) {
   b.Normalize();
   return b2Dot(a, b) > 0.9f;
 }
+
+using Clock = std::chrono::system_clock;
+Clock::time_point start, end;
+bool done = false;
 
 }
 
@@ -514,19 +522,29 @@ void behaveNavigate(entt::registry &reg) {
           behave.path.push_back(worldPos(pos));
         });
       }
+      start = Clock::now();
     }
     
     if (behave.path.size() > 1) {
-      if (b2DistanceSquared(phys.body->GetPosition(), behave.path.front()) < 3.0f) {
+      if (b2DistanceSquared(phys.body->GetPosition(), behave.path.front()) < 4.0f) {
         behave.path.erase(behave.path.begin());
       }
     }
     
-    b2Vec2 desiredVel = 2.0f * (behave.path[0] - phys.body->GetPosition());
+    const b2Vec2 shipPos = phys.body->GetPosition();
+    b2Vec2 desiredVel = 2.0f * (behave.path[0] - shipPos);
     if (behave.path.size() > 1) {
-      const b2Vec2 flooredPos = floorPos(phys.body->GetPosition());
+      desiredVel = behave.path[0] + behave.path[1] - 2.0f * shipPos;
+      
+      const b2Vec2 flooredPos = floorPos(shipPos);
       if (sameDirection(behave.path[1] - behave.path[0], behave.path[0] - flooredPos)) {
-        desiredVel = scaleToLength(behave.path[0] - phys.body->GetPosition(), params.speed);
+        desiredVel = scaleToLength(desiredVel, params.speed);
+      }
+    } else {
+      if (!std::exchange(done, true)) {
+        end = Clock::now();
+        auto time = std::chrono::duration_cast<std::chrono::seconds>(end - start);
+        std::cout << "Travel time: " << time.count() << " seconds\n";
       }
     }
     
