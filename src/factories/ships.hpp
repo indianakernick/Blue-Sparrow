@@ -28,4 +28,6 @@ void setSniperSprite(entt::registry &, entt::entity, Team);
 void setSniperMotion(entt::registry &, entt::entity);
 void setSniperBlaster(entt::registry &, entt::entity);
 
+void setSniperPosition(entt::registry &, entt::entity, float, float);
+
 #endif

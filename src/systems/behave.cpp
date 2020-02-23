@@ -29,20 +29,20 @@ float normalizeAngle(float angle) {
   return angle;
 }
 
-void rotateByAngle(MotionCommand &motion, const float deltaAngle, const float threshold = 0.5f) {
+void cwByAngle(MotionCommand &motion, const float deltaAngle, const float threshold = 0.5f) {
   if (b2Abs(deltaAngle) < threshold * deg2rad) {
     motion.ccw = motion.cw = false;
   } else if (deltaAngle < 0.0f) {
-    motion.cw = false;
     motion.ccw = true;
+    motion.cw = false;
   } else {
-    motion.ccw = false;
     motion.cw = true;
+    motion.ccw = false;
   }
 }
 
-void moveByAccel(MotionCommand &motion, const float accel) {
-  if (b2Abs(accel) < 0.5f) {
+void forwardByAccel(MotionCommand &motion, const float accel, const float threshold = 0.5f) {
+  if (b2Abs(accel) < threshold) {
     motion.forward = motion.reverse = false;
   } else if (accel < 0.0f) {
     motion.reverse = true;
@@ -50,6 +50,18 @@ void moveByAccel(MotionCommand &motion, const float accel) {
   } else {
     motion.forward = true;
     motion.reverse = false;
+  }
+}
+
+void rightByAccel(MotionCommand &motion, const float accel, const float threshold = 0.5f) {
+  if (b2Abs(accel) < threshold) {
+    motion.left = motion.right = false;
+  } else if (accel < 0.0f) {
+    motion.left = true;
+    motion.right = false;
+  } else {
+    motion.right = true;
+    motion.left = false;
   }
 }
 
@@ -112,10 +124,11 @@ void behaveOrbit(entt::registry &reg) {
     
     const b2Vec2 toTarget = normalized(targetPos - shipPos);
     const b2Vec2 relativeVel = targetVel - shipVel;
+    // TODO: Is interceptPoint applicable here?
     const b2Vec2 desiredPos = targetPos - behave.dist * toTarget + 0.5f * relativeVel;
     const b2Vec2 desiredVel = scaleToLength(desiredPos - shipPos, behave.speed);
     const b2Vec2 accel = desiredVel - shipVel;
-    moveByAccel(motion, b2Dot(accel, toTarget));
+    forwardByAccel(motion, b2Dot(accel, toTarget));
     
     b2Vec2 aimPos;
     switch (behave.level) {
@@ -129,7 +142,7 @@ void behaveOrbit(entt::registry &reg) {
     
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
-    rotateByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
+    cwByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
   });
 }
 
@@ -168,12 +181,13 @@ void behaveSeek(entt::registry &reg) {
         accel = desiredVel - shipVel;
         break;
       }
-      case SeekLevel::no_aim: ;
+      case SeekLevel::no_aim:
+        assert(false);
     }
     
     const float aimAngle = std::atan2(accel.y, accel.x);
     const float angleChange = normalizeAngle(aimAngle - phys.body->GetAngle());
-    rotateByAngle(motion, angleChange);
+    cwByAngle(motion, angleChange);
     
     motion.forward = (b2Abs(angleChange) < b2_pi / 4.0f);
     motion.reverse = false;
@@ -182,10 +196,12 @@ void behaveSeek(entt::registry &reg) {
 
 void behaveSniper(entt::registry &reg) {
   auto view = reg.view<Physics, Target, MotionCommand, BlasterCommand, SniperBehaviour, BlasterParams>();
-  view.less([&](auto phys, auto target, auto &motion, auto &blaster, auto params) {
+  view.each([&](auto phys, auto target, auto &motion, auto &blaster, auto behave, auto params) {
     if (target.e == entt::null) {
       blaster.fire = false;
-      motion.forward = motion.reverse = motion.ccw = motion.cw = false;
+      motion.forward = motion.reverse = false;
+      motion.ccw = motion.cw = false;
+      motion.left = motion.right = false;
       return;
     } else {
       blaster.fire = true;
@@ -198,10 +214,17 @@ void behaveSniper(entt::registry &reg) {
     const b2Vec2 shipVel = phys.body->GetLinearVelocity();
     const float shipAngle = phys.body->GetAngle();
     
+    const b2Vec2 desiredVel = b2Vec2{behave.x, behave.y} - shipPos;
+    const b2Vec2 accel = desiredVel - shipVel;
+    const b2Vec2 forwardDir = angleMag(shipAngle, 1.0f);
+    const b2Vec2 rightDir = forwardDir.Skew();
+    forwardByAccel(motion, b2Dot(accel, forwardDir), 0.2f);
+    rightByAccel(motion, b2Dot(accel, rightDir), 0.2f);
+    
     const b2Vec2 aimPos = interseptPoint(targetPos, targetVel - shipVel, shipPos, params.speed);
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
-    rotateByAngle(motion, normalizeAngle(aimAngle - shipAngle), 0.1f);
+    cwByAngle(motion, normalizeAngle(aimAngle - shipAngle), 0.1f);
   });
 }
 
@@ -266,6 +289,6 @@ void behaveMouse(entt::registry &reg) {
       aimY - shipPos.y,
       aimX - shipPos.x
     );
-    rotateByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
+    cwByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
   });
 }

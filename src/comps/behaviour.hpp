@@ -33,7 +33,9 @@ struct SeekBehaviour {
   SeekLevel level;
 };
 
-/// Remain stationary and aim carefully
-struct SniperBehaviour {};
+/// Remain at a given location and aim carefully
+struct SniperBehaviour {
+  float x, y;
+};
 
 #endif

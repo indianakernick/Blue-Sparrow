@@ -85,7 +85,7 @@ void setOrbitBehave(entt::registry &reg, const entt::entity e) {
 }
 
 void setSniperBehave(entt::registry &reg, const entt::entity e) {
-  reg.assign<SniperBehaviour>(e);
+  reg.assign<SniperBehaviour>(e, 0.0f, 0.0f);
   reg.assign<Target>(e, true);
 }
 
@@ -112,9 +112,9 @@ void setSniperSprite(entt::registry &reg, const entt::entity e, const Team team)
 
 void setSniperMotion(entt::registry &reg, const entt::entity e) {
   MotionParams motionParams;
-  motionParams.forwardForce = 30.0f;
-  motionParams.reverseForce = 30.0f;
-  motionParams.lateralForce = 30.0f;
+  motionParams.forwardForce = 150.0f;
+  motionParams.reverseForce = 150.0f;
+  motionParams.lateralForce = 150.0f;
   motionParams.turnTorque = 100.0f;
   reg.assign<MotionParams>(e, motionParams);
   reg.assign<MotionCommand>(e);
@@ -130,4 +130,15 @@ void setSniperBlaster(entt::registry &reg, const entt::entity e) {
   reg.assign<BlasterParams>(e, blasterParams);
   reg.assign<BlasterCommand>(e);
   reg.assign<BlasterTimer>(e, std::uint32_t{});
+}
+
+void setSniperPosition(
+  entt::registry &reg,
+  const entt::entity e,
+  const float x,
+  const float y
+) {
+  auto &behave = reg.get<SniperBehaviour>(e);
+  behave.x = x;
+  behave.y = y;
 }

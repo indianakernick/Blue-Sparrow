@@ -44,7 +44,9 @@ MapInfo makeMap0(entt::registry &reg) {
   setTransform(reg, makeBeacon(reg, BeaconState::neutral), {0.0f, 13.0f * scale}, 0.0f);
 
   setTransform(reg, info.player, {-29.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, b2_pi);
+  entt::entity sniper = makeSniper(reg, Team::enemy);
+  setSniperPosition(reg, sniper, 22.0f * scale, 0.0f);
+  setTransform(reg, sniper, {22.0f * scale, 0.0f}, b2_pi);
   
   entt::entity rock = makeAsteroid(reg);
   setTransform(reg, rock, {0.0f, 0.0f}, 1.0f);
