@@ -480,7 +480,7 @@ private:
 bool sameDirection(b2Vec2 a, b2Vec2 b) {
   a.Normalize();
   b.Normalize();
-  return b2Dot(a, b) > 0.9f;
+  return b2Dot(a, b) > 0.2f;
 }
 
 using Clock = std::chrono::system_clock;
@@ -510,8 +510,10 @@ void behaveNavigate(entt::registry &reg) {
   };
   
   entt::each(reg, [&](Physics phys, MotionCommand &motion, MotionParams params, NavigateBehaviour &behave) {
+    const b2Vec2 shipPos = phys.body->GetPosition();
+    
     if (behave.path.empty()) {
-      const b2Vec2 fromPos = tilePos(phys.body->GetPosition());
+      const b2Vec2 fromPos = tilePos(shipPos);
       const b2Vec2 toPos = tilePos({behave.x, behave.y});
       if (fromPos == toPos) {
         behave.path.push_back(floorPos({behave.x, behave.y}));
@@ -526,19 +528,20 @@ void behaveNavigate(entt::registry &reg) {
     }
     
     if (behave.path.size() > 1) {
-      if (b2DistanceSquared(phys.body->GetPosition(), behave.path.front()) < 4.0f) {
+      if (b2DistanceSquared(shipPos, behave.path[0]) < 4.0f) {
+        behave.path.erase(behave.path.begin());
+      } else if (b2DistanceSquared(shipPos, behave.path[1]) < 36.0f) {
         behave.path.erase(behave.path.begin());
       }
     }
     
-    const b2Vec2 shipPos = phys.body->GetPosition();
     b2Vec2 desiredVel = 2.0f * (behave.path[0] - shipPos);
     if (behave.path.size() > 1) {
       desiredVel = behave.path[0] + behave.path[1] - 2.0f * shipPos;
       
       const b2Vec2 flooredPos = floorPos(shipPos);
       if (sameDirection(behave.path[1] - behave.path[0], behave.path[0] - flooredPos)) {
-        desiredVel = scaleToLength(desiredVel, params.speed);
+        desiredVel = scaleToLength(desiredVel, params.speed * 1.1f);
       }
     } else {
       if (!std::exchange(done, true)) {
