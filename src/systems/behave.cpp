@@ -301,7 +301,7 @@ template <typename Vec>
 struct Node {
   Vec pos;
   Vec prev;
-  int steps;
+  float steps;
   float cost;
 };
 
@@ -325,6 +325,8 @@ struct Policy {
 
   // what is the distance between these points?
   float distance(Vec, Vec) const;
+  // how many steps does it take to move in this direction?
+  float steps(Vec) const;
   // is it possible to walk to this point by walking in this direction?
   bool walkable(Vec, Vec) const;
   // get a range of Vecs pointing at the neighbors
@@ -360,19 +362,21 @@ void astar(Policy &policy, const typename Policy::Vec from, const typename Polic
     const Node top = queue.top();
     queue.pop();
     policy.next(top);
-    const int neighborSteps = top.steps + 1;
     
     for (const auto dir : policy.neighbors()) {
       const auto neighborPos = top.pos + dir;
       if (neighborPos == top.prev) continue;
       if (!policy.walkable(neighborPos, dir)) continue;
       
+      const float neighborSteps = top.steps + policy.steps(dir);
+      const float neighborCost = neighborSteps + policy.distance(neighborPos, from);
+      
       // http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1021r2.html
       const Node<typename Policy::Vec> neighbor = {
         neighborPos,
         top.pos,
         neighborSteps,
-        neighborSteps + policy.distance(neighborPos, from)
+        neighborCost
       };
       bool found = false;
       
@@ -403,6 +407,9 @@ public:
 
   static float distance(const Vec a, const Vec b) {
     return b2Distance(a, b);
+  }
+  static float steps(const Vec dir) {
+    return dir.Length();
   }
   bool wall(const Vec pos) const {
     if (pos.x < 0 || pos.y < 0) return true;
