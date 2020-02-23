@@ -58,8 +58,7 @@ MapInfo makeMap0(entt::registry &reg) {
   reg.assign<NavigateBehaviour>(
     info.player,
     29.0f * scale, 19.0f * scale,
-    -29.0f * scale, 0.0f,
-    0.0f, 0.0f,
+    std::vector<b2Vec2>(),
     makeDebugPoint(reg), makeDebugPoint(reg)
   );
   

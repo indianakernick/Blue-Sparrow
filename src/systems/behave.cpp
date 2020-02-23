@@ -380,9 +380,7 @@ void astar(Policy &policy, const typename Policy::Vec from, const typename Polic
         if (n->pos == neighborPos) {
           found = true;
           if (neighbor.steps < n->steps) {
-            // TODO: Removing a node this way is not technically correct
-            // Doing it properly is tricky
-            queue.c.erase(n);
+            // TODO: Removing n from the queue
             queue.push(neighbor);
           }
           break;
@@ -413,7 +411,7 @@ public:
   }
   bool walkable(const Vec to, const Vec dir) const {
     if (b2Abs(dir) == b2Vec2{1.0f, 1.0f}) {
-      if (wall({dir.x, 0.0f}) && wall({0.0f, dir.y})) return false;
+      if (wall({to.x - dir.x, to.y}) || wall({to.x, to.y - dir.y})) return false;
     }
     return !wall(to);
   }
@@ -451,25 +449,16 @@ public:
     nodes.clear();
   }
   
-  NextPos getNextPos() const {
-    size_t size = 0;
-    NextPos next;
+  template <typename Func>
+  void eachPosition(Func func) const {
     b2Vec2 prev = nodes.back().prev;
-    for (auto n = nodes.rbegin(); n != nodes.rend(); ++n) {
+    for (auto n = nodes.crbegin(); n != nodes.crend(); ++n) {
       const auto &node = *n;
       if (node.pos == prev) {
-        next[size] = node.pos;
-        ++size;
-        if (size == next.size()) return next;
+        func(node.pos);
         prev = node.prev;
       }
     }
-    if (size == 0) {
-      next.fill(nodes.back().pos);
-    } else {
-      std::fill(next.begin() + size, next.end(), next[size - 1]);
-    }
-    return next;
   }
 
 private:
@@ -506,35 +495,36 @@ void behaveNavigate(entt::registry &reg) {
   };
   
   entt::each(reg, [&](Physics phys, MotionCommand &motion, MotionParams params, NavigateBehaviour &behave) {
-    b2Vec2 next0Pos = b2Vec2{behave.next0X, behave.next0Y};
-    b2Vec2 next1Pos = b2Vec2{behave.next1X, behave.next1Y};
-    
-    if (b2DistanceSquared(phys.body->GetPosition(), next0Pos) < 3.0f) {
+    if (behave.path.empty()) {
       const b2Vec2 fromPos = tilePos(phys.body->GetPosition());
       const b2Vec2 toPos = tilePos({behave.x, behave.y});
-      policy.init();
-      astar(policy, fromPos, toPos);
-      const NextPos next = policy.getNextPos();
-      
-      next0Pos = worldPos(next[0]);
-      next1Pos = worldPos(next[1]);
-      behave.next0X = next0Pos.x;
-      behave.next0Y = next0Pos.y;
-      behave.next1X = next1Pos.x;
-      behave.next1Y = next1Pos.y;
+      if (fromPos == toPos) {
+        behave.path.push_back(floorPos({behave.x, behave.y}));
+      } else {
+        policy.init();
+        astar(policy, fromPos, toPos);
+        policy.eachPosition([&](const b2Vec2 pos) {
+          behave.path.push_back(worldPos(pos));
+        });
+      }
     }
     
-    reg.get<Physics>(behave.debug0).body->SetTransform(next0Pos, 0.0f);
-    reg.get<Physics>(behave.debug1).body->SetTransform(next1Pos, 0.0f);
-    
-    const b2Vec2 flooredPos = floorPos(phys.body->GetPosition());
-    b2Vec2 desiredVel;
-    
-    if (sameDirection(next1Pos - next0Pos, next0Pos - flooredPos)) {
-      desiredVel = scaleToLength(next0Pos - phys.body->GetPosition(), params.speed);
-    } else {
-      desiredVel = 2.0f * (next0Pos - phys.body->GetPosition());
+    if (behave.path.size() > 1) {
+      if (b2DistanceSquared(phys.body->GetPosition(), behave.path.front()) < 3.0f) {
+        behave.path.erase(behave.path.begin());
+      }
     }
+    
+    b2Vec2 desiredVel = 2.0f * (behave.path[0] - phys.body->GetPosition());
+    if (behave.path.size() > 1) {
+      const b2Vec2 flooredPos = floorPos(phys.body->GetPosition());
+      if (sameDirection(behave.path[1] - behave.path[0], behave.path[0] - flooredPos)) {
+        desiredVel = scaleToLength(behave.path[0] - phys.body->GetPosition(), params.speed);
+      }
+    }
+    
+    reg.get<Physics>(behave.debug0).body->SetTransform(behave.path[0], 0.0f);
+    reg.get<Physics>(behave.debug1).body->SetTransform(behave.path.size() > 1 ? behave.path[1] : behave.path[0], 0.0f);
     
     const b2Vec2 accel = desiredVel - phys.body->GetLinearVelocity();
     const b2Vec2 forwardDir = angleMag(phys.body->GetAngle(), 1.0f);

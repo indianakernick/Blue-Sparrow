@@ -10,6 +10,8 @@
 #define comps_behaviour_hpp
 
 #include "ai.hpp"
+#include <vector>
+#include <box2d/b2_math.h>
 #include <entt/entity/fwd.hpp>
 #include <entt/entity/entity.hpp>
 
@@ -40,8 +42,7 @@ struct SniperBehaviour {
 
 struct NavigateBehaviour {
   float x, y;
-  float next0X, next0Y;
-  float next1X, next1Y;
+  std::vector<b2Vec2> path;
   entt::entity debug0;
   entt::entity debug1;
 };
