@@ -53,9 +53,15 @@ MapInfo makeMap0(entt::registry &reg) {
   //setTransform(reg, makeBeacon(reg, BeaconState::enemy), {27.0f * scale, 0.0f}, 0.0f);
   //setTransform(reg, makeBeacon(reg, BeaconState::neutral), {0.0f, -13.0f * scale}, 0.0f);
   //setTransform(reg, makeBeacon(reg, BeaconState::neutral), {0.0f, 13.0f * scale}, 0.0f);
-
+  
   setTransform(reg, info.player, {-29.0f * scale, 0.0f}, 0.0f);
-  reg.assign<NavigateBehaviour>(info.player, 29.0f * scale, 19.0f * scale, -29.0f * scale, 0.0f);
+  reg.assign<NavigateBehaviour>(
+    info.player,
+    29.0f * scale, 19.0f * scale,
+    -29.0f * scale, 0.0f,
+    0.0f, 0.0f,
+    makeDebugPoint(reg), makeDebugPoint(reg)
+  );
   
   //entt::entity sniper = makeSniper(reg, Team::enemy);
   //setSniperPosition(reg, sniper, 22.0f * scale, 0.0f);

@@ -40,7 +40,10 @@ struct SniperBehaviour {
 
 struct NavigateBehaviour {
   float x, y;
-  float nearX, nearY;
+  float next0X, next0Y;
+  float next1X, next1Y;
+  entt::entity debug0;
+  entt::entity debug1;
 };
 
 #endif

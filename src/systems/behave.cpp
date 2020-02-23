@@ -343,7 +343,7 @@ struct Policy {
 
 template <typename Policy>
 void astar(Policy &policy, const typename Policy::Vec from, const typename Policy::Vec to) {
-  // TODO: this never returns when there is no route
+  // TODO: this function never returns when there is no route
   
   NodeQueue<typename Policy::Vec> queue;
   queue.push({to, to, 0, policy.distance(from, to)});
@@ -380,8 +380,9 @@ void astar(Policy &policy, const typename Policy::Vec from, const typename Polic
         if (n->pos == neighborPos) {
           found = true;
           if (neighbor.steps < n->steps) {
-            // TODO: Could remove n
-            // but that's a bit tricky
+            // TODO: Removing a node this way is not technically correct
+            // Doing it properly is tricky
+            queue.c.erase(n);
             queue.push(neighbor);
           }
           break;
@@ -395,78 +396,146 @@ void astar(Policy &policy, const typename Policy::Vec from, const typename Polic
   }
 }
 
-struct Policy {
+using NextPos = std::array<b2Vec2, 2>;
+
+class Policy {
+public:
   using Vec = b2Vec2;
   using Node = Node<Vec>;
 
   static float distance(const Vec a, const Vec b) {
     return b2Distance(a, b);
   }
-  bool walkable(const Vec to, Vec) const {
-    return !map.data[to.y * map.width + to.x];
+  bool wall(const Vec pos) const {
+    if (pos.x < 0 || pos.y < 0) return true;
+    if (pos.x >= map.width || pos.y >= map.height) return true;
+    return map.data[pos.y * map.width + pos.x];
+  }
+  bool walkable(const Vec to, const Vec dir) const {
+    if (b2Abs(dir) == b2Vec2{1.0f, 1.0f}) {
+      if (wall({dir.x, 0.0f}) && wall({0.0f, dir.y})) return false;
+    }
+    return !wall(to);
   }
   
   static inline const b2Vec2 neighborArray[] = {
     {0.0f, -1.0f},
-    //{1.0f, -1.0f},
+    {1.0f, -1.0f},
     {1.0f, 0.0f},
-    //{1.0f, 1.0f},
+    {1.0f, 1.0f},
     {0.0f, 1.0f},
-    //{-1.0f, 1.0f},
+    {-1.0f, 1.0f},
     {-1.0f, 0.0f},
-    //{-1.0f, -1.0f}
+    {-1.0f, -1.0f}
   };
   
   static const auto &neighbors() {
     return neighborArray;
   }
   
-  void next(const Node &) {}
+  void next(const Node &node) {
+    nodes.push_back(node);
+  }
   
   void fail() {
     assert(false);
   }
   void succeed(const Node &node) {
-    dest = node.prev;
+    nodes.push_back(node);
   }
   
-  MapData map;
-  b2Vec2 dest = {0.0f, 0.0f};
+  explicit Policy(const MapData &map)
+    : map{map} {}
+  
+  void init() {
+    nodes.clear();
+  }
+  
+  NextPos getNextPos() const {
+    size_t size = 0;
+    NextPos next;
+    b2Vec2 prev = nodes.back().prev;
+    for (auto n = nodes.rbegin(); n != nodes.rend(); ++n) {
+      const auto &node = *n;
+      if (node.pos == prev) {
+        next[size] = node.pos;
+        ++size;
+        if (size == next.size()) return next;
+        prev = node.prev;
+      }
+    }
+    if (size == 0) {
+      next.fill(nodes.back().pos);
+    } else {
+      std::fill(next.begin() + size, next.end(), next[size - 1]);
+    }
+    return next;
+  }
+
+private:
+  const MapData &map;
+  std::vector<Node> nodes;
 };
+
+bool sameDirection(b2Vec2 a, b2Vec2 b) {
+  a.Normalize();
+  b.Normalize();
+  return b2Dot(a, b) > 0.9f;
+}
 
 }
 
 void behaveNavigate(entt::registry &reg) {
-  Policy policy;
-  policy.map = reg.ctx<MapData>();
-  const float scale = policy.map.scale;
+  const MapData &map = reg.ctx<MapData>();
+  Policy policy{map};
+  const float scale = map.scale;
   const float invScale = 1.0f / scale;
-  const b2Vec2 center = {policy.map.width / 2.0f, policy.map.height / 2.0f};
+  const b2Vec2 center = {map.width / 2.0f, map.height / 2.0f};
   
   auto tilePos = [=](b2Vec2 pos) {
     pos = center + invScale * pos;
     return b2Vec2{std::floor(pos.x), std::floor(pos.y)};
   };
-  auto worldPos = [=](b2Vec2 pos) {
+  auto worldPos = [=](const b2Vec2 pos) {
     return scale * (pos - center + b2Vec2{0.5f, 0.5f});
+  };
+  auto floorPos = [=](b2Vec2 pos) {
+    pos *= scale;
+    pos = b2Vec2{std::floor(pos.x), std::floor(pos.y)};
+    return invScale * pos;
   };
   
   entt::each(reg, [&](Physics phys, MotionCommand &motion, MotionParams params, NavigateBehaviour &behave) {
-    // would looking further than the first time help?
+    b2Vec2 next0Pos = b2Vec2{behave.next0X, behave.next0Y};
+    b2Vec2 next1Pos = b2Vec2{behave.next1X, behave.next1Y};
     
-    b2Vec2 nearPos = b2Vec2{behave.nearX, behave.nearY};
-    
-    if (b2DistanceSquared(phys.body->GetPosition(), nearPos) < 3.0f) {
+    if (b2DistanceSquared(phys.body->GetPosition(), next0Pos) < 3.0f) {
       const b2Vec2 fromPos = tilePos(phys.body->GetPosition());
       const b2Vec2 toPos = tilePos({behave.x, behave.y});
+      policy.init();
       astar(policy, fromPos, toPos);
-      nearPos = worldPos(policy.dest);
-      behave.nearX = nearPos.x;
-      behave.nearY = nearPos.y;
+      const NextPos next = policy.getNextPos();
+      
+      next0Pos = worldPos(next[0]);
+      next1Pos = worldPos(next[1]);
+      behave.next0X = next0Pos.x;
+      behave.next0Y = next0Pos.y;
+      behave.next1X = next1Pos.x;
+      behave.next1Y = next1Pos.y;
     }
     
-    const b2Vec2 desiredVel = scaleToLength(nearPos - phys.body->GetPosition(), params.speed);
-    // const b2Vec2 desiredVel = nearPos - phys.body->GetPosition();
+    reg.get<Physics>(behave.debug0).body->SetTransform(next0Pos, 0.0f);
+    reg.get<Physics>(behave.debug1).body->SetTransform(next1Pos, 0.0f);
+    
+    const b2Vec2 flooredPos = floorPos(phys.body->GetPosition());
+    b2Vec2 desiredVel;
+    
+    if (sameDirection(next1Pos - next0Pos, next0Pos - flooredPos)) {
+      desiredVel = scaleToLength(next0Pos - phys.body->GetPosition(), params.speed);
+    } else {
+      desiredVel = 2.0f * (next0Pos - phys.body->GetPosition());
+    }
+    
     const b2Vec2 accel = desiredVel - phys.body->GetLinearVelocity();
     const b2Vec2 forwardDir = angleMag(phys.body->GetAngle(), 1.0f);
     const b2Vec2 rightDir = forwardDir.Skew();
