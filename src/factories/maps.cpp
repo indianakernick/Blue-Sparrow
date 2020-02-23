@@ -42,6 +42,8 @@ MapInfo makeMap0(entt::registry &reg) {
         const float wallX = (x + 0.5f) * scale - info.width / 2.0f;
         const float wallY = (y + 0.5f) * scale - info.height / 2.0f;
         setTransform(reg, makeWall(reg, wallW, wallH), {wallX, wallY}, 0.0f);
+      }
+      if (pixel[3] != 0) {
         *tile = true;
       }
       pixel += 4;
@@ -49,10 +51,10 @@ MapInfo makeMap0(entt::registry &reg) {
     }
   }
 
-  //setTransform(reg, makeBeacon(reg, BeaconState::ally), {-27.0f * scale, 0.0f}, 0.0f);
-  //setTransform(reg, makeBeacon(reg, BeaconState::enemy), {27.0f * scale, 0.0f}, 0.0f);
-  //setTransform(reg, makeBeacon(reg, BeaconState::neutral), {0.0f, -13.0f * scale}, 0.0f);
-  //setTransform(reg, makeBeacon(reg, BeaconState::neutral), {0.0f, 13.0f * scale}, 0.0f);
+  setTransform(reg, makeBeacon(reg, BeaconState::ally), {-27.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeBeacon(reg, BeaconState::enemy), {27.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeBeacon(reg, BeaconState::neutral), {0.0f, -13.0f * scale}, 0.0f);
+  setTransform(reg, makeBeacon(reg, BeaconState::neutral), {0.0f, 13.0f * scale}, 0.0f);
   
   setTransform(reg, info.player, {-29.0f * scale, 0.0f}, 0.0f);
   reg.assign<NavigateBehaviour>(
