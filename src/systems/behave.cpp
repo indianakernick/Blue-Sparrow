@@ -477,15 +477,18 @@ private:
   std::vector<Node> nodes;
 };
 
-bool sameDirection(b2Vec2 a, b2Vec2 b) {
-  a.Normalize();
-  b.Normalize();
-  return b2Dot(a, b) > 0.2f;
+float angleBetween(const b2Vec2 a, const b2Vec2 b) {
+  return std::acos(b2Dot(normalized(a), normalized(b)));
 }
 
 using Clock = std::chrono::system_clock;
 Clock::time_point start, end;
 bool done = false;
+
+float getSeconds(Clock::duration duration) {
+  const long millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+  return std::round(millis / 100.0f) / 10.f;
+}
 
 }
 
@@ -538,16 +541,14 @@ void behaveNavigate(entt::registry &reg) {
     b2Vec2 desiredVel = 2.0f * (behave.path[0] - shipPos);
     if (behave.path.size() > 1) {
       desiredVel = behave.path[0] + behave.path[1] - 2.0f * shipPos;
-      
-      const b2Vec2 flooredPos = floorPos(shipPos);
-      if (sameDirection(behave.path[1] - behave.path[0], behave.path[0] - flooredPos)) {
-        desiredVel = scaleToLength(desiredVel, params.speed * 1.1f);
+      const float angle = angleBetween(behave.path[1] - behave.path[0], behave.path[0] - shipPos);
+      if (angle < b2_pi / 3.0f) {
+        desiredVel = scaleToLength(desiredVel, 1.05f * params.speed);
       }
     } else {
       if (!std::exchange(done, true)) {
         end = Clock::now();
-        auto time = std::chrono::duration_cast<std::chrono::seconds>(end - start);
-        std::cout << "Travel time: " << time.count() << " seconds\n";
+        std::cout << "Travel time: " << getSeconds(end - start) << " seconds\n";
       }
     }
     
