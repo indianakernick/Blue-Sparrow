@@ -70,7 +70,7 @@ private:
   entt::registry &reg;
 };
 
-void destroyBody(entt::entity e, entt::registry &reg) {
+void destroyBody(entt::registry &reg, entt::entity e) {
   b2Body *body = reg.get<Physics>(e).body;
   if (body) body->GetWorld()->DestroyBody(body);
 }
