@@ -15,11 +15,16 @@
 #include <entt/entity/fwd.hpp>
 #include <entt/entity/entity.hpp>
 
+/// The target that this entity is observing/shooting/chasing
 struct Target {
+  entt::entity e = entt::null;
+};
+
+/// Search for the nearest visible enemy ship and set that as the target
+struct TargetEnemyShip {
   /// If true, always try to find the closest target even if a target has
   /// already been aquired
   bool eager = false;
-  entt::entity e = entt::null;
 };
 
 /// Maintain a fixed distance from the target

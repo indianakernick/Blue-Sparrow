@@ -58,10 +58,10 @@ entt::entity nearestShip(entt::registry &reg, b2Vec2 fromPos, Team fromTeam, con
 
 }
 
-void findTarget(entt::registry &reg) {
-  entt::each(reg, [&](Physics phys, Team team, ViewDistance dist, Target &target) {
+void findEnemyShipTarget(entt::registry &reg) {
+  entt::each(reg, [&](Physics phys, Team team, ViewDistance dist, TargetEnemyShip params, Target &target) {
     const b2Vec2 pos = phys.body->GetPosition();
-    if (target.eager || !reg.valid(target.e) || outOfRange(reg, target.e, pos, dist.max)) {
+    if (params.eager || !reg.valid(target.e) || outOfRange(reg, target.e, pos, dist.max)) {
       target.e = nearestShip(reg, pos, team, dist.max);
     }
   });

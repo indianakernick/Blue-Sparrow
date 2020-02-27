@@ -81,12 +81,14 @@ void setPlayer(entt::registry &reg, const entt::entity e) {
 
 void setOrbitBehave(entt::registry &reg, const entt::entity e) {
   reg.assign<OrbitBehaviour>(e, 30.0f, 20.0f, OrbitLevel::aim_ahead);
-  reg.assign<Target>(e, true);
+  reg.assign<Target>(e);
+  reg.assign<TargetEnemyShip>(e, true);
 }
 
 void setSniperBehave(entt::registry &reg, const entt::entity e) {
   reg.assign<SniperBehaviour>(e, 0.0f, 0.0f);
-  reg.assign<Target>(e, true);
+  reg.assign<Target>(e);
+  reg.assign<TargetEnemyShip>(e, true);
 }
 
 namespace {

@@ -18,7 +18,7 @@
 #include "apply_commands.hpp"
 
 void prePhysicsSystems(entt::registry &reg) {
-  findTarget(reg);
+  findEnemyShipTarget(reg);
   behaveOrbit(reg);
   behaveSeek(reg);
   behaveSniper(reg);
