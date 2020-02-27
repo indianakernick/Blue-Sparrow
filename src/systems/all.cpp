@@ -19,6 +19,7 @@
 
 void prePhysicsSystems(entt::registry &reg) {
   findEnemyShipTarget(reg);
+  findBeaconTarget(reg);
   behaveOrbit(reg);
   behaveSeek(reg);
   behaveSniper(reg);
