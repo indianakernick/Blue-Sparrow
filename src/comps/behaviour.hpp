@@ -43,8 +43,8 @@ struct SniperBehaviour {
 struct NavigateBehaviour {
   float x, y;
   std::vector<b2Vec2> path;
-  entt::entity debug0;
-  entt::entity debug1;
+  entt::entity debug0 = entt::null;
+  entt::entity debug1 = entt::null;
 };
 
 #endif

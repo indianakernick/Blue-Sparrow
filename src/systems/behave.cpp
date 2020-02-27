@@ -391,7 +391,7 @@ void astar(Policy &policy, const typename Policy::Vec from, const typename Polic
         if (n->pos == neighborPos) {
           found = true;
           if (neighbor.steps < n->steps) {
-            // TODO: Removing n from the queue
+            // TODO: Remove n from the queue
             queue.push(neighbor);
           }
           break;
@@ -560,8 +560,14 @@ void behaveNavigate(entt::registry &reg) {
       }
     }
     
-    reg.get<Physics>(behave.debug0).body->SetTransform(behave.path[0], 0.0f);
-    reg.get<Physics>(behave.debug1).body->SetTransform(behave.path.size() > 1 ? behave.path[1] : behave.path[0], 0.0f);
+    // TODO: Remove these
+    if (behave.debug0 != entt::null) {
+      reg.get<Physics>(behave.debug0).body->SetTransform(behave.path[0], 0.0f);
+    }
+    if (behave.debug1 != entt::null) {
+      const b2Vec2 point = behave.path.size() > 1 ? behave.path[1] : behave.path[0];
+      reg.get<Physics>(behave.debug1).body->SetTransform(point, 0.0f);
+    }
     
     const b2Vec2 accel = desiredVel - phys.body->GetLinearVelocity();
     const b2Vec2 forwardDir = angleMag(phys.body->GetAngle(), 1.0f);
