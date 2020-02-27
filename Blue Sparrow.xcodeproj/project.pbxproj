@@ -586,6 +586,7 @@
 					/usr/local/lib,
 					/usr/local/Cellar/sdl2_ttf/2.0.15/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-Wall",
@@ -629,6 +630,7 @@
 					/usr/local/lib,
 					/usr/local/Cellar/sdl2_ttf/2.0.15/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-Wall",

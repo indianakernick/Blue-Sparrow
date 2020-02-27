@@ -326,10 +326,12 @@ struct Policy {
   // should support comparison and addition
   using Vec = ...
 
-  // what is the distance between these points?
-  float distance(Vec, Vec) const;
   // how many steps does it take to move in this direction?
   float steps(Vec) const;
+  // what is the distance between these points?
+  float distance(Vec, Vec) const;
+  // what is the cost for turning from one direction to another?
+  float turn(Vec, Vec) const;
   // is it possible to walk to this point by walking in this direction?
   bool walkable(Vec, Vec) const;
   // get a range of Vecs pointing at the neighbors
@@ -372,7 +374,9 @@ void astar(Policy &policy, const typename Policy::Vec from, const typename Polic
       if (!policy.walkable(neighborPos, dir)) continue;
       
       const float neighborSteps = top.steps + policy.steps(dir);
-      const float neighborCost = neighborSteps + policy.distance(neighborPos, from);
+      const float neighborDist = policy.distance(neighborPos, from);
+      const float neighborTurn = policy.turn(top.pos - top.prev, neighborPos - top.pos);
+      const float neighborCost = neighborSteps + neighborDist + neighborTurn;
       
       // http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1021r2.html
       const Node<typename Policy::Vec> neighbor = {
@@ -408,12 +412,16 @@ public:
   using Vec = b2Vec2;
   using Node = Node<Vec>;
 
-  static float distance(const Vec a, const Vec b) {
-    return b2Distance(a, b);
-  }
   static float steps(const Vec dir) {
     return dir.Length();
   }
+  static float distance(const Vec a, const Vec b) {
+    return b2Distance(a, b);
+  }
+  static float turn(const Vec a, const Vec b) {
+    return std::acos(b2Dot(normalized(a), normalized(b))) * 0.05f;
+  }
+  
   bool wall(const Vec pos) const {
     if (pos.x < 0 || pos.y < 0) return true;
     if (pos.x >= map.width || pos.y >= map.height) return true;
