@@ -9,7 +9,7 @@
 #ifndef comps_params_hpp
 #define comps_params_hpp
 
-#include "ai.hpp"
+#include "levels.hpp"
 
 struct Upgrade {
   int cost;

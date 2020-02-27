@@ -49,7 +49,7 @@ entt::entity nearest(
   const float axisDist,
   Func valid
 ) {
-  // TODO: Use query AABB
+  // TODO: Use Box2D to query AABB
   entt::entity nearest = entt::null;
   float nearestDist = INFINITY;
   auto cam = reg.ctx<Camera>();

@@ -9,8 +9,8 @@
 #ifndef comps_behaviour_hpp
 #define comps_behaviour_hpp
 
-#include "ai.hpp"
 #include <vector>
+#include "levels.hpp"
 #include <box2d/b2_math.h>
 #include <entt/entity/fwd.hpp>
 #include <entt/entity/entity.hpp>

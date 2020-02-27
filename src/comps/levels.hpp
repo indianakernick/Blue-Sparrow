@@ -1,13 +1,13 @@
 //
-//  ai.hpp
+//  levels.hpp
 //  Blue Sparrow
 //
 //  Created by Indi Kernick on 11/2/20.
 //  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
-#ifndef comps_ai_hpp
-#define comps_ai_hpp
+#ifndef comps_levels_hpp
+#define comps_levels_hpp
 
 /// "Smartness" level for OrbitBehaviour
 enum class OrbitLevel {

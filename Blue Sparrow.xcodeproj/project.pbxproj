@@ -170,7 +170,7 @@
 		45C5CA5E23F0E020000B554D /* collisions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = collisions.hpp; sourceTree = "<group>"; };
 		45C5CA6323F107D8000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA6423F22455000B554D /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
-		45C5CA6923F25263000B554D /* ai.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ai.hpp; sourceTree = "<group>"; };
+		45C5CA6923F25263000B554D /* levels.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = levels.hpp; sourceTree = "<group>"; };
 		45DE83E823FF633B000B3F12 /* arena.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = arena.hpp; sourceTree = "<group>"; };
 		45DE83E923FF69FE000B3F12 /* arena.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arena.cpp; sourceTree = "<group>"; };
 		45DE83EA23FF69FE000B3F12 /* arena.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = arena.hpp; sourceTree = "<group>"; };
@@ -289,7 +289,7 @@
 				45C5CA3B23ED2636000B554D /* teams.hpp */,
 				45C5CA4023EE37FC000B554D /* behaviour.hpp */,
 				45C5CA5C23F0DC85000B554D /* ammo.hpp */,
-				45C5CA6923F25263000B554D /* ai.hpp */,
+				45C5CA6923F25263000B554D /* levels.hpp */,
 				45BC5E4423F37F3B00A07A57 /* drops.hpp */,
 				45DE83E823FF633B000B3F12 /* arena.hpp */,
 				45DE83EC23FF883D000B3F12 /* collisions.hpp */,
