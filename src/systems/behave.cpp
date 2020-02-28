@@ -110,9 +110,12 @@ b2Vec2 interseptPoint(
 void behaveOrbit(entt::registry &reg) {
   auto view = reg.view<Physics, Target, MotionCommand, BlasterCommand, OrbitBehaviour, BlasterParams>();
   view.each([&](auto phys, auto target, auto &motion, auto &blaster, auto behave, auto params) {
+    motion.left = motion.right = false;
+    
     if (target.e == entt::null) {
       blaster.fire = false;
-      motion.forward = motion.reverse = motion.ccw = motion.cw = false;
+      motion.forward = motion.reverse = false;
+      motion.ccw = motion.cw = false;
       return;
     } else {
       blaster.fire = true;
@@ -150,8 +153,11 @@ void behaveOrbit(entt::registry &reg) {
 
 void behaveSeek(entt::registry &reg) {
   entt::each(reg, [&](Physics phys, Target target, MotionCommand &motion, SeekBehaviour behave) {
+    motion.left = motion.right = false;
+    
     if (target.e == entt::null) {
-      motion.forward = motion.reverse = motion.ccw = motion.cw = false;
+      motion.forward = motion.reverse = false;
+      motion.ccw = motion.cw = false;
       return;
     }
     

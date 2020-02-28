@@ -11,6 +11,7 @@
 		450CDBD623F8F05600CF4CEE /* view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBD423F8F05600CF4CEE /* view.cpp */; };
 		450CDBD923F8F93200CF4CEE /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBD723F8F93200CF4CEE /* window.cpp */; };
 		450CDBFA23FA363C00CF4CEE /* font_cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBF823FA363C00CF4CEE /* font_cache.cpp */; };
+		4545A4A02408A47600F47A67 /* ai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4545A49E2408A47600F47A67 /* ai.cpp */; };
 		457DF44923EBD70E00405E2D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF44823EBD70E00405E2D /* main.cpp */; };
 		457DF47C23EBF1B200405E2D /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; };
 		457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF45523EBEA8D00405E2D /* libbox2d.a */; };
@@ -96,6 +97,9 @@
 		450CDBD823F8F93200CF4CEE /* window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = window.hpp; sourceTree = "<group>"; };
 		450CDBF823FA363C00CF4CEE /* font_cache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = font_cache.cpp; sourceTree = "<group>"; };
 		450CDBF923FA363C00CF4CEE /* font_cache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = font_cache.hpp; sourceTree = "<group>"; };
+		4545A49E2408A47600F47A67 /* ai.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ai.cpp; sourceTree = "<group>"; };
+		4545A49F2408A47600F47A67 /* ai.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ai.hpp; sourceTree = "<group>"; };
+		455EEED524075F1500B340BC /* ai.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ai.hpp; sourceTree = "<group>"; };
 		457DF44523EBD70E00405E2D /* Blue Sparrow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Blue Sparrow"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457DF44823EBD70E00405E2D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		457DF45523EBEA8D00405E2D /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../../../../../../../usr/local/lib/libbox2d.a; sourceTree = "<group>"; };
@@ -293,6 +297,7 @@
 				45BC5E4423F37F3B00A07A57 /* drops.hpp */,
 				45DE83E823FF633B000B3F12 /* arena.hpp */,
 				45DE83EC23FF883D000B3F12 /* collisions.hpp */,
+				455EEED524075F1500B340BC /* ai.hpp */,
 			);
 			path = comps;
 			sourceTree = "<group>";
@@ -324,6 +329,8 @@
 				45BC5E4C23F51D8000A07A57 /* all.hpp */,
 				45DE83E923FF69FE000B3F12 /* arena.cpp */,
 				45DE83EA23FF69FE000B3F12 /* arena.hpp */,
+				4545A49E2408A47600F47A67 /* ai.cpp */,
+				4545A49F2408A47600F47A67 /* ai.hpp */,
 			);
 			path = systems;
 			sourceTree = "<group>";
@@ -424,6 +431,7 @@
 				45C5CA5223EF8EE2000B554D /* stb_image.c in Sources */,
 				45C5CA4F23EF8E93000B554D /* load_texture.cpp in Sources */,
 				45B947FB2400A3E10079F1FC /* maps.cpp in Sources */,
+				4545A4A02408A47600F47A67 /* ai.cpp in Sources */,
 				45C5CA2723ECEA5E000B554D /* camera.cpp in Sources */,
 				457DF44923EBD70E00405E2D /* main.cpp in Sources */,
 				45C5CA4923EE3E91000B554D /* behave.cpp in Sources */,

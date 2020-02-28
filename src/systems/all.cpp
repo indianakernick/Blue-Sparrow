@@ -8,6 +8,7 @@
 
 #include "all.hpp"
 
+#include "ai.hpp"
 #include "camera.hpp"
 #include "render.hpp"
 #include "expire.hpp"
@@ -18,16 +19,21 @@
 #include "apply_commands.hpp"
 
 void prePhysicsSystems(entt::registry &reg) {
+  thinkBeaconCapture(reg);
+  
   findEnemyShipTarget(reg);
   findBeaconTarget(reg);
+  
   behaveOrbit(reg);
   behaveSeek(reg);
   behaveSniper(reg);
   behaveMouse(reg);
   behaveNavigate(reg);
+  
   applyMotionCommands(reg);
   applyBlasterCommands(reg);
   applyMissileCommands(reg);
+  
   expireTemporary(reg);
 }
 
@@ -40,6 +46,7 @@ void postPhysicsSystems(entt::registry &reg) {
 void cameraSystems(entt::registry &reg, const SDL_Rect viewport) {
   updateCameraViewport(reg, viewport);
   moveCamera(reg);
+  
   writeSpriteRect(reg);
   writeHullBarRect(reg);
   writeBeaconBarRect(reg);
