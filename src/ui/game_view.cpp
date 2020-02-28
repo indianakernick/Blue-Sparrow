@@ -44,7 +44,7 @@ GameView::GameView(entt::registry &reg)
 
 void GameView::init(SDL_Renderer *ren, FontCache &) {
   foreground = makeTexture(ren);
-  background = loadTexture(ren, res("stars.png"));
+  background = loadTexture(ren, res("stars_dark.png"));
   
   {
     Drawing drawing;

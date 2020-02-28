@@ -12,6 +12,7 @@
 		450CDBD923F8F93200CF4CEE /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBD723F8F93200CF4CEE /* window.cpp */; };
 		450CDBFA23FA363C00CF4CEE /* font_cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450CDBF823FA363C00CF4CEE /* font_cache.cpp */; };
 		4545A4A02408A47600F47A67 /* ai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4545A49E2408A47600F47A67 /* ai.cpp */; };
+		4545A4A22408C8BF00F47A67 /* stars_dark.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4545A4A12408C8AA00F47A67 /* stars_dark.png */; };
 		457DF44923EBD70E00405E2D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 457DF44823EBD70E00405E2D /* main.cpp */; };
 		457DF47C23EBF1B200405E2D /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF47B23EBF1B200405E2D /* libSDL2-2.0.0.dylib */; };
 		457DF47D23EBF1C600405E2D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 457DF45523EBEA8D00405E2D /* libbox2d.a */; };
@@ -80,6 +81,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				4545A4A22408C8BF00F47A67 /* stars_dark.png in CopyFiles */,
 				45B948002400C5EB0079F1FC /* battle_arena_map_0.png in CopyFiles */,
 				45BC5E5B23F62E3400A07A57 /* FreeSans.ttf in CopyFiles */,
 				45C5CA6523F22487000B554D /* stars.png in CopyFiles */,
@@ -99,6 +101,7 @@
 		450CDBF923FA363C00CF4CEE /* font_cache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = font_cache.hpp; sourceTree = "<group>"; };
 		4545A49E2408A47600F47A67 /* ai.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ai.cpp; sourceTree = "<group>"; };
 		4545A49F2408A47600F47A67 /* ai.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ai.hpp; sourceTree = "<group>"; };
+		4545A4A12408C8AA00F47A67 /* stars_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars_dark.png; sourceTree = "<group>"; };
 		455EEED524075F1500B340BC /* ai.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ai.hpp; sourceTree = "<group>"; };
 		457DF44523EBD70E00405E2D /* Blue Sparrow */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Blue Sparrow"; sourceTree = BUILT_PRODUCTS_DIR; };
 		457DF44823EBD70E00405E2D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -358,6 +361,7 @@
 			isa = PBXGroup;
 			children = (
 				45C5CA6423F22455000B554D /* stars.png */,
+				4545A4A12408C8AA00F47A67 /* stars_dark.png */,
 				45BC5E5A23F62E1600A07A57 /* FreeSans.ttf */,
 				45B947FF2400C5DD0079F1FC /* battle_arena_map_0.png */,
 			);
