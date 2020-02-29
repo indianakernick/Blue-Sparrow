@@ -133,7 +133,15 @@ bool getInfo(entt::registry &reg, UpgradeInfo &info, const Upgrade (&)[Size]) {
 }
 
 bool upgradeMotion(entt::registry &reg) {
-  return upgrade(reg, motionUpgrades, motionParams);
+  if (upgrade(reg, motionUpgrades, motionParams)) {
+    auto view = reg.view<VelocityLimit, MotionParams, MotionUpgrade, Coins>();
+    for (entt::entity e : view) {
+      view.get<VelocityLimit>(e).vel = view.get<MotionParams>(e).speed;
+    }
+    return true;
+  } else {
+    return false;
+  }
 }
 
 bool motionUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
@@ -194,7 +202,18 @@ void setUpgradableMissile(entt::registry &reg, const entt::entity e, const int l
 }
 
 bool upgradeHull(entt::registry &reg) {
-  return upgrade(reg, hullUpgrades, hullParams);
+  if (upgrade(reg, hullUpgrades, hullParams)) {
+    auto view = reg.view<Hull, HullParams, HullUpgrade, Coins>();
+    for (entt::entity e : view) {
+      const int oldHull = hullParams[view.get<HullUpgrade>(e).level - 2].durability;
+      const int newHull = view.get<HullParams>(e).durability;
+      int &hull = view.get<Hull>(e).h;
+      hull = (hull * newHull + oldHull / 2) / oldHull;
+    }
+    return true;
+  } else {
+    return false;
+  }
 }
 
 bool hullUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
