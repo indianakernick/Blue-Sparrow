@@ -419,7 +419,11 @@ public:
   using Node = Node<Vec>;
 
   static float steps(const Vec dir) {
-    return dir.Length();
+    // TODO: Path finding is slow
+    // Multiplying this by 4 improves the paths
+    // However, this also turns A* into Dijkstra's algorithm which degrades
+    // performance dramatically
+    return dir.Length() * 4.0f;
   }
   static float distance(const Vec a, const Vec b) {
     return b2Distance(a, b);
@@ -536,10 +540,13 @@ void behaveNavigate(entt::registry &reg) {
         behave.path.push_back(floorPos({behave.x, behave.y}));
       } else {
         policy.init();
+        Clock::time_point astarStart = Clock::now();
         astar(policy, fromPos, toPos);
+        Clock::time_point astarEnd = Clock::now();
         policy.eachPosition([&](const b2Vec2 pos) {
           behave.path.push_back(worldPos(pos));
         });
+        std::cout << "A* " << std::chrono::duration_cast<std::chrono::milliseconds>(astarEnd - astarStart).count() << "ms\n";
       }
       start = Clock::now();
     }
