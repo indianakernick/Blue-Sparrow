@@ -10,6 +10,7 @@
 
 #include "physics.hpp"
 #include "upgrades.hpp"
+#include "../comps/ai.hpp"
 #include "../comps/ammo.hpp"
 #include "../comps/drops.hpp"
 #include "../comps/input.hpp"
@@ -42,7 +43,7 @@ entt::entity makeScout(entt::registry &reg, const Team team) {
   setHull(reg, e, 0);
   setShip(reg, e, team);
   setSmallShipPhysics(reg, e, team);
-  setOrbitBehave(reg, e);
+  setBeaconCaptureAI(reg, e);
   setScoutSprite(reg, e, team);
   setMotion(reg, e, 0);
   setBlaster(reg, e, 0);
@@ -79,10 +80,9 @@ void setPlayer(entt::registry &reg, const entt::entity e) {
   reg.assign<Coins>(e, 0);
 }
 
-void setOrbitBehave(entt::registry &reg, const entt::entity e) {
-  reg.assign<OrbitBehaviour>(e, 30.0f, 20.0f, OrbitLevel::aim_ahead);
+void setBeaconCaptureAI(entt::registry &reg, const entt::entity e) {
+  reg.assign<BeaconCaptureAI>(e);
   reg.assign<Target>(e);
-  reg.assign<TargetEnemyShip>(e, true);
 }
 
 void setSniperBehave(entt::registry &reg, const entt::entity e) {

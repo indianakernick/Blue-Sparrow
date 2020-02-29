@@ -58,14 +58,16 @@ MapInfo makeMap0(entt::registry &reg) {
   setTransform(reg, makeBeacon(reg, BeaconState::neutral), {0.0f, 13.0f * scale}, 0.0f);
   
   setTransform(reg, info.player, {-29.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeScout(reg, Team::ally), {-29.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeScout(reg, Team::ally), {-29.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeScout(reg, Team::ally), {-29.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeScout(reg, Team::ally), {-29.0f * scale, 0.0f}, 0.0f);
   
-  entt::entity scout = makeScout(reg, Team::ally);
-  setTransform(reg, scout, {-29.0f * scale, 0.0f}, 0.0f);
-  reg.remove<TargetEnemyShip>(scout);
-  reg.remove<OrbitBehaviour>(scout);
-  reg.assign<BeaconCaptureAI>(scout);
-  //reg.assign<TargetBeacon>(scout);
-  //reg.get<OrbitBehaviour>(scout).dist = 15.0f;
+  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
   
   /*reg.remove<OrbitBehaviour>(scout);
   reg.assign<NavigateBehaviour>(

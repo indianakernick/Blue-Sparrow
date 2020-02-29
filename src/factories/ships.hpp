@@ -19,7 +19,7 @@ entt::entity makeSniper(entt::registry &, Team);
 void setShip(entt::registry &, entt::entity, Team);
 
 void setPlayer(entt::registry &, entt::entity);
-void setOrbitBehave(entt::registry &, entt::entity);
+void setBeaconCaptureAI(entt::registry &, entt::entity);
 void setSniperBehave(entt::registry &, entt::entity);
 
 void setScoutSprite(entt::registry &, entt::entity, Team);
