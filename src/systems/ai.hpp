@@ -12,5 +12,6 @@
 #include <entt/entity/fwd.hpp>
 
 void thinkBeaconCapture(entt::registry &);
+void thinkSniper(entt::registry &);
 
 #endif

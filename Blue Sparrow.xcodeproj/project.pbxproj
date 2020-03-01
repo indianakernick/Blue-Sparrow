@@ -328,12 +328,12 @@
 				45C5CA5E23F0E020000B554D /* collisions.hpp */,
 				45BC5E4523F3833200A07A57 /* destruction.cpp */,
 				45BC5E4623F3833200A07A57 /* destruction.hpp */,
-				45BC5E4B23F51D8000A07A57 /* all.cpp */,
-				45BC5E4C23F51D8000A07A57 /* all.hpp */,
 				45DE83E923FF69FE000B3F12 /* arena.cpp */,
 				45DE83EA23FF69FE000B3F12 /* arena.hpp */,
 				4545A49E2408A47600F47A67 /* ai.cpp */,
 				4545A49F2408A47600F47A67 /* ai.hpp */,
+				45BC5E4B23F51D8000A07A57 /* all.cpp */,
+				45BC5E4C23F51D8000A07A57 /* all.hpp */,
 			);
 			path = systems;
 			sourceTree = "<group>";

@@ -12,13 +12,16 @@
 /// If present, the keyboard will control MotionCommand
 struct KeyInput {};
 
-/// If present, the mouse will control MotionCommand
+/// If present, the mouse will control MotionCommand.
+/// The ship will rotate to point to the mouse position and aim is adjusted if
+/// AimAssist is present.
 struct MouseInput {
   int x = 0;
   int y = 0;
 };
 
-/// If present, the blaster bolts are nudged toward the nearest target
+/// If present, the ship will be rotated towards the enemy ship directly under
+/// the mouse.
 struct AimAssist {};
 
 /// Influences forces and torques applied to the physics body.

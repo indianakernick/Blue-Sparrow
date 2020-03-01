@@ -11,19 +11,16 @@
 
 #include <entt/entity/fwd.hpp>
 
-/// Maintain a fixed distance from the target and shoot
+// See behaviour desciptions in comps/behaviour.hpp
+// See mouse and aim assist descriptions in comps/input.hpp
+
 void behaveOrbit(entt::registry &);
-/// Collide with the target
 void behaveSeek(entt::registry &);
-/// Remain stationary and aim carefully
 void behaveSniper(entt::registry &);
-/// Rotate to mouse position and adjust aim if AimAssist is present
+void behaveStationary(entt::registry &);
 void behaveMouse(entt::registry &);
-/// Move to some location on the map
 void behaveNavigate(entt::registry &);
-/// Do nothing
 void behaveIdle(entt::registry &);
-/// Don't shoot
 void behavePacifist(entt::registry &);
 
 #endif

@@ -10,8 +10,6 @@
 
 #include <random>
 #include <box2d/b2_body.h>
-#include <box2d/b2_world.h>
-#include <box2d/b2_fixture.h>
 #include <SDL2/SDL_timer.h>
 #include "../utils/each.hpp"
 #include "../comps/ammo.hpp"
@@ -24,6 +22,7 @@
 #include "../comps/behaviour.hpp"
 #include "../factories/weapons.hpp"
 #include <entt/entity/registry.hpp>
+#include "../systems/find_target.hpp"
 
 void applyMotionCommands(entt::registry &reg) {
   entt::each(reg, [](Physics phys, MotionParams params, MotionCommand command) {
@@ -99,6 +98,7 @@ void applyMissileCommands(entt::registry &reg) {
     missileBody->SetTransform(shipPos, shipAngle);
     missileBody->SetLinearVelocity(missileVel);
     phys.body->ApplyLinearImpulseToCenter(-missileBody->GetMass() * missileVel, true);
+    reg.get<Target>(missile).e = findNearestEnemyShip(reg, missile);
     MotionParams motionParams;
     motionParams.forwardForce = params.forwardForce;
     motionParams.reverseForce = 0.0f;

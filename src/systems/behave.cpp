@@ -204,13 +204,11 @@ void behaveSeek(entt::registry &reg) {
 }
 
 void behaveSniper(entt::registry &reg) {
-  auto view = reg.view<Physics, Target, MotionCommand, BlasterCommand, SniperBehaviour, BlasterParams>();
-  view.each([&](auto phys, auto target, auto &motion, auto &blaster, auto behave, auto params) {
+  auto view = reg.view<Physics, Target, MotionCommand, BlasterCommand, BlasterParams, SniperBehaviour>();
+  view.less([&](auto phys, auto target, auto &motion, auto &blaster, auto params) {
     if (target.e == entt::null) {
       blaster.fire = false;
-      motion.forward = motion.reverse = false;
       motion.ccw = motion.cw = false;
-      motion.left = motion.right = false;
       return;
     } else {
       blaster.fire = true;
@@ -223,17 +221,22 @@ void behaveSniper(entt::registry &reg) {
     const b2Vec2 shipVel = phys.body->GetLinearVelocity();
     const float shipAngle = phys.body->GetAngle();
     
-    const b2Vec2 desiredVel = behave.target - shipPos;
-    const b2Vec2 accel = desiredVel - shipVel;
-    const b2Vec2 forwardDir = angleMag(shipAngle, 1.0f);
-    const b2Vec2 rightDir = forwardDir.Skew();
-    forwardByAccel(motion, b2Dot(accel, forwardDir), 0.2f);
-    rightByAccel(motion, b2Dot(accel, rightDir), 0.2f);
-    
     const b2Vec2 aimPos = interseptPoint(targetPos, targetVel - shipVel, shipPos, params.speed);
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
     cwByAngle(motion, normalizeAngle(aimAngle - shipAngle), 0.1f);
+  });
+}
+
+void behaveStationary(entt::registry &reg) {
+  entt::each(reg, [](Physics phys, MotionCommand &motion, StationaryBehaviour behave) {
+    const b2Vec2 desiredVel = behave.pos - phys.body->GetPosition();
+    const b2Vec2 accel = desiredVel - phys.body->GetLinearVelocity();
+    const b2Vec2 forwardDir = angleMag(phys.body->GetAngle(), 1.0f);
+    const b2Vec2 rightDir = forwardDir.Skew();
+    
+    forwardByAccel(motion, b2Dot(accel, forwardDir), 0.2f);
+    rightByAccel(motion, b2Dot(accel, rightDir), 0.2f);
   });
 }
 

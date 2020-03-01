@@ -9,6 +9,7 @@
 #include "ai.hpp"
 
 #include <box2d/b2_body.h>
+#include "find_target.hpp"
 #include "../comps/ai.hpp"
 #include "../utils/each.hpp"
 #include "../comps/arena.hpp"
@@ -17,8 +18,6 @@
 #include "../comps/behaviour.hpp"
 
 namespace {
-
-// TODO: Similar logic in find_target
 
 bool suitableBeacon(const BeaconState state, const Team team) {
   switch (state) {
@@ -114,8 +113,7 @@ void thinkBeaconCapture(entt::registry &reg) {
           reg.assign<OrbitBehaviour>(e, 10.0f, speed, OrbitLevel::aim_pos);
           reg.remove<NavigateBehaviour>(e);
           reg.remove<PacifistBehaviour>(e);
-        }
-        if (!suitableTargetBeacon(reg, e)) {
+        } else if (!suitableTargetBeacon(reg, e)) {
           ai.state = BeaconCaptureAI::State::idle;
           reg.remove<NavigateBehaviour>(e);
           reg.assign<IdleBehaviour>(e);
@@ -131,5 +129,11 @@ void thinkBeaconCapture(entt::registry &reg) {
         }
         break;
     }
+  });
+}
+
+void thinkSniper(entt::registry &reg) {
+  entt::each(reg, [&](entt::entity e, Target &target, SniperAI) {
+    target.e = findNearestEnemyShip(reg, e);
   });
 }

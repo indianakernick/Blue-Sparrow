@@ -88,9 +88,10 @@ void setBeaconCaptureAI(entt::registry &reg, const entt::entity e) {
 }
 
 void setSniperBehave(entt::registry &reg, const entt::entity e) {
-  reg.assign<SniperBehaviour>(e, b2Vec2{0.0f, 0.0f});
+  reg.assign<SniperAI>(e);
+  reg.assign<SniperBehaviour>(e);
+  reg.assign<StationaryBehaviour>(e, b2Vec2{0.0f, 0.0f});
   reg.assign<Target>(e);
-  reg.assign<TargetEnemyShip>(e, true);
 }
 
 namespace {
@@ -143,5 +144,5 @@ void setSniperPosition(
   const float x,
   const float y
 ) {
-  reg.get<SniperBehaviour>(e).target = {x, y};
+  reg.get<StationaryBehaviour>(e).pos = {x, y};
 }

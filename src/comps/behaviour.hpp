@@ -20,16 +20,6 @@ struct Target {
   entt::entity e = entt::null;
 };
 
-/// Search for the nearest visible enemy ship
-struct TargetEnemyShip {
-  /// If true, always try to find the closest target even if a target has
-  /// already been aquired
-  bool eager = false;
-};
-
-/// Search for the nearest neutral or enemy beacon
-struct TargetBeacon {};
-
 /// Maintain a fixed distance from the target
 struct OrbitBehaviour {
   float dist;
@@ -44,8 +34,11 @@ struct SeekBehaviour {
 };
 
 /// Remain at a given location and aim carefully
-struct SniperBehaviour {
-  b2Vec2 target;
+struct SniperBehaviour {};
+
+/// Remain stationary at a location
+struct StationaryBehaviour {
+  b2Vec2 pos;
 };
 
 /// Path-find to a location in the arena

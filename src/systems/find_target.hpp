@@ -11,10 +11,7 @@
 
 #include <entt/entity/fwd.hpp>
 
-/// Search for the nearest opposing ship and set that as the Target
-void findEnemyShipTarget(entt::registry &);
-
-/// Search for the nearest opposing or neutral beacon and set that as the Target
-void findBeaconTarget(entt::registry &);
+/// Search for the nearest opposing ship
+entt::entity findNearestEnemyShip(entt::registry &, entt::entity);
 
 #endif
