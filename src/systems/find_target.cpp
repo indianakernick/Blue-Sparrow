@@ -19,6 +19,29 @@
 
 namespace {
 
+class ObstructionCallback final : public b2RayCastCallback {
+public:
+  explicit ObstructionCallback(const b2Body *target)
+    : target{target} {}
+
+  float ReportFixture(b2Fixture *fixture, const b2Vec2 &, const b2Vec2 &, float) override {
+    if (fixture->GetBody() == target) {
+      return 1.0f;
+    } else {
+      obstruction = true;
+      return 0.0f;
+    }
+  }
+  
+  bool obstructed() const {
+    return obstruction;
+  }
+
+private:
+  const b2Body *target;
+  bool obstruction = false;
+};
+
 class ShipQueryCallback final : public b2QueryCallback {
 public:
   ShipQueryCallback(entt::registry &reg, const b2Vec2 center, const Team team)
@@ -31,6 +54,10 @@ public:
     
     const entt::entity entity = fromUserData(body->GetUserData());
     if (!enemyShip(entity)) return true;
+    
+    ObstructionCallback callback{body};
+    reg.ctx<b2World>().RayCast(&callback, center, body->GetPosition());
+    if (callback.obstructed()) return true;
     
     shortestDist = dist;
     nearestEntity = entity;
