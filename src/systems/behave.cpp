@@ -198,7 +198,7 @@ void behaveSeek(entt::registry &reg) {
     const float angleChange = normalizeAngle(aimAngle - phys.body->GetAngle());
     cwByAngle(motion, angleChange);
     
-    motion.forward = (b2Abs(angleChange) < b2_pi / 4.0f);
+    motion.forward = (b2Abs(angleChange) < b2_pi / 8.0f);
     motion.reverse = false;
   });
 }

@@ -13,5 +13,6 @@
 
 void thinkBeaconCapture(entt::registry &);
 void thinkSniper(entt::registry &);
+void thinkMissile(entt::registry &);
 
 #endif

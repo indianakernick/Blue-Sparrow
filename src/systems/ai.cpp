@@ -137,3 +137,11 @@ void thinkSniper(entt::registry &reg) {
     target.e = findNearestEnemyShip(reg, e);
   });
 }
+
+void thinkMissile(entt::registry &reg) {
+  entt::each(reg, [&](entt::entity e, Target &target, MissileAI) {
+    if (target.e == entt::null) {
+      target.e = findNearestEnemyShip(reg, e);
+    }
+  });
+}

@@ -9,6 +9,7 @@
 #include "weapons.hpp"
 
 #include "physics.hpp"
+#include "../comps/ai.hpp"
 #include <SDL2/SDL_timer.h>
 #include "../comps/input.hpp"
 #include "../comps/timers.hpp"
@@ -21,7 +22,7 @@ entt::entity makeBolt(entt::registry &reg, const Team team) {
   setSmallBoltPhysics(reg, e, team);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{255, 0, 0});
-  reg.assign<ExpireTimer>(e, SDL_GetTicks() + 50000);
+  reg.assign<ExpireTimer>(e, SDL_GetTicks() + 5000);
   reg.assign<Team>(e, team);
   reg.assign<Type>(e, Type::bullet);
   return e;
@@ -30,9 +31,10 @@ entt::entity makeBolt(entt::registry &reg, const Team team) {
 entt::entity makeMissile(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
   setSmallMissilePhysics(reg, e, team);
+  reg.assign<MissileAI>(e);
   reg.assign<SpriteRect>(e);
   reg.assign<Sprite>(e, Sprite{191, 191, 191});
-  reg.assign<ExpireTimer>(e, SDL_GetTicks() + 10000);
+  reg.assign<ExpireTimer>(e, SDL_GetTicks() + 15000);
   reg.assign<Target>(e);
   reg.assign<MotionCommand>(e);
   reg.assign<Team>(e, team);

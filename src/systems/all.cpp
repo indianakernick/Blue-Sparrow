@@ -21,6 +21,7 @@
 void prePhysicsSystems(entt::registry &reg) {
   thinkBeaconCapture(reg);
   thinkSniper(reg);
+  thinkMissile(reg);
   
   behaveOrbit(reg);
   behaveSeek(reg);

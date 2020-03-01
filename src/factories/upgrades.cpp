@@ -65,14 +65,14 @@ const BlasterUpgrade blasterUpgrades[] = {
 const MissileParams missileParams[] = {
   {
     .rof = 0.25f,
-    .speed = 25.0f,
+    .speed = 20.0f,
     .forwardForce = 25.0f,
     .turnTorque = 0.0f,
     .damage = 20,
     .level = SeekLevel::no_aim
   }, {
     .rof = 0.5f,
-    .speed = 25.0f,
+    .speed = 20.0f,
     .forwardForce = 25.0f,
     .turnTorque = 3.0f,
     .damage = 20,

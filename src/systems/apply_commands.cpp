@@ -19,10 +19,10 @@
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../utils/physics.hpp"
+#include "../comps/graphics.hpp"
 #include "../comps/behaviour.hpp"
 #include "../factories/weapons.hpp"
 #include <entt/entity/registry.hpp>
-#include "../systems/find_target.hpp"
 
 void applyMotionCommands(entt::registry &reg) {
   entt::each(reg, [](Physics phys, MotionParams params, MotionCommand command) {
@@ -79,7 +79,7 @@ void applyBlasterCommands(entt::registry &reg) {
 }
 
 void applyMissileCommands(entt::registry &reg) {
-  entt::each(reg, [&](Physics phys, MissileParams params, MissileCommand command, MissileAmmo &ammo, MissileTimer &timer, Team team) {
+  entt::each(reg, [&](Physics phys, MissileParams params, MissileCommand command, MissileAmmo &ammo, MissileTimer &timer, Team team, ViewDistance dist) {
     if (!command.fire) return;
     if (ammo.n <= 0) return;
     
@@ -91,22 +91,23 @@ void applyMissileCommands(entt::registry &reg) {
     const b2Vec2 shipPos = phys.body->GetPosition();
     const float shipAngle = phys.body->GetAngle();
     const b2Vec2 shipVel = phys.body->GetLinearVelocity();
-    const b2Vec2 missileVel = angleMag(shipAngle, params.speed * 0.5f) + shipVel;
+    const b2Vec2 missileVel = angleMag(shipAngle, params.speed * 0.25f) + shipVel;
     
     entt::entity missile = makeMissile(reg, team);
     b2Body *missileBody = reg.get<Physics>(missile).body;
     missileBody->SetTransform(shipPos, shipAngle);
     missileBody->SetLinearVelocity(missileVel);
     phys.body->ApplyLinearImpulseToCenter(-missileBody->GetMass() * missileVel, true);
-    reg.get<Target>(missile).e = findNearestEnemyShip(reg, missile);
     MotionParams motionParams;
     motionParams.forwardForce = params.forwardForce;
     motionParams.reverseForce = 0.0f;
     motionParams.lateralForce = 0.0f;
     motionParams.turnTorque = params.turnTorque;
     reg.assign<MotionParams>(missile, motionParams);
-    reg.assign<SeekBehaviour>(missile, params.speed, params.level);
-    reg.assign<VelocityLimit>(missile, params.speed * 0.75f);
+    // TODO: Set velocity limit like this everywhere
+    reg.assign<SeekBehaviour>(missile, params.speed * 1.25f, params.level);
+    reg.assign<VelocityLimit>(missile, params.speed);
     reg.assign<Damage>(missile, params.damage);
+    reg.assign<ViewDistance>(missile, dist);
   });
 }

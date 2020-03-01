@@ -56,4 +56,6 @@ struct BeaconCaptureAI {
 
 struct SniperAI {};
 
+struct MissileAI {};
+
 #endif
