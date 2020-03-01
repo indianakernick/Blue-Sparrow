@@ -45,15 +45,22 @@ struct SeekBehaviour {
 
 /// Remain at a given location and aim carefully
 struct SniperBehaviour {
-  float x, y;
+  b2Vec2 target;
 };
 
+/// Path-find to a location in the arena
 struct NavigateBehaviour {
-  float x, y;
+  b2Vec2 target;
   std::vector<b2Vec2> path;
   std::uint32_t timeout = 0;
   entt::entity debug0 = entt::null;
   entt::entity debug1 = entt::null;
 };
+
+/// Do nothing
+struct IdleBehaviour {};
+
+/// Don't shoot
+struct PacifistBehaviour {};
 
 #endif

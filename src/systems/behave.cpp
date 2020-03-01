@@ -223,7 +223,7 @@ void behaveSniper(entt::registry &reg) {
     const b2Vec2 shipVel = phys.body->GetLinearVelocity();
     const float shipAngle = phys.body->GetAngle();
     
-    const b2Vec2 desiredVel = b2Vec2{behave.x, behave.y} - shipPos;
+    const b2Vec2 desiredVel = behave.target - shipPos;
     const b2Vec2 accel = desiredVel - shipVel;
     const b2Vec2 forwardDir = angleMag(shipAngle, 1.0f);
     const b2Vec2 rightDir = forwardDir.Skew();
@@ -542,9 +542,9 @@ void behaveNavigate(entt::registry &reg) {
     
     if (behave.path.empty()) {
       const b2Vec2 fromPos = tilePos(shipPos);
-      const b2Vec2 toPos = tilePos({behave.x, behave.y});
+      const b2Vec2 toPos = tilePos(behave.target);
       if (fromPos == toPos) {
-        behave.path.push_back(floorPos({behave.x, behave.y}));
+        behave.path.push_back(floorPos(behave.target));
       } else {
         policy.init();
         Clock::time_point astarStart = Clock::now();
@@ -599,5 +599,19 @@ void behaveNavigate(entt::registry &reg) {
     forwardByAccel(motion, b2Dot(accel, forwardDir));
     rightByAccel(motion, b2Dot(accel, rightDir));
     cwByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
+  });
+}
+
+void behaveIdle(entt::registry &reg) {
+  entt::each(reg, [&](MotionCommand &motion, IdleBehaviour) {
+    motion.forward = motion.reverse = false;
+    motion.ccw = motion.cw = false;
+    motion.left = motion.right = false;
+  });
+}
+
+void behavePacifist(entt::registry &reg) {
+  entt::each(reg, [&](BlasterCommand &blaster, PacifistBehaviour) {
+    blaster.fire = false;
   });
 }

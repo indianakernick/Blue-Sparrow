@@ -21,5 +21,9 @@ void behaveSniper(entt::registry &);
 void behaveMouse(entt::registry &);
 /// Move to some location on the map
 void behaveNavigate(entt::registry &);
+/// Do nothing
+void behaveIdle(entt::registry &);
+/// Don't shoot
+void behavePacifist(entt::registry &);
 
 #endif

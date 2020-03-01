@@ -29,6 +29,8 @@ void prePhysicsSystems(entt::registry &reg) {
   behaveSniper(reg);
   behaveMouse(reg);
   behaveNavigate(reg);
+  behaveIdle(reg);
+  behavePacifist(reg);
   
   applyMotionCommands(reg);
   applyBlasterCommands(reg);

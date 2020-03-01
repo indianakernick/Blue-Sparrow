@@ -31,6 +31,12 @@ bool suitableBeacon(const BeaconState state, const Team team) {
   }
 }
 
+bool suitableTargetBeacon(entt::registry &reg, const entt::entity e) {
+  const BeaconState state = reg.get<Beacon>(reg.get<Target>(e).e).state;
+  const Team team = reg.get<Team>(e);
+  return suitableBeacon(state, team);
+}
+
 class BeaconOrder {
 public:
   BeaconOrder(const Team team)
@@ -94,24 +100,33 @@ void thinkBeaconCapture(entt::registry &reg) {
         if (beacon != entt::null) {
           ai.state = BeaconCaptureAI::State::navigate;
           const b2Vec2 pos = reg.get<Physics>(beacon).body->GetPosition();
-          reg.assign<NavigateBehaviour>(e, pos.x, pos.y);
+          reg.assign<NavigateBehaviour>(e, pos);
+          reg.remove<IdleBehaviour>(e);
+          reg.get<Target>(e).e = beacon;
         }
         break;
       }
+      
       case BeaconCaptureAI::State::navigate:
         if (reg.get<NavigateBehaviour>(e).path.size() == 1) {
           ai.state = BeaconCaptureAI::State::shoot_beacon;
           const float speed = reg.get<VelocityLimit>(e).vel;
           reg.assign<OrbitBehaviour>(e, 10.0f, speed, OrbitLevel::aim_pos);
-          reg.assign<TargetBeacon>(e);
           reg.remove<NavigateBehaviour>(e);
+          reg.remove<PacifistBehaviour>(e);
         }
-        // TODO: Stop navigating if the target is nolonger a suitable beacon
-        break;
-      case BeaconCaptureAI::State::shoot_beacon:
-        if (reg.get<Target>(e).e == entt::null) {
+        if (!suitableTargetBeacon(reg, e)) {
           ai.state = BeaconCaptureAI::State::idle;
-          reg.remove<TargetBeacon>(e);
+          reg.remove<NavigateBehaviour>(e);
+          reg.assign<IdleBehaviour>(e);
+        }
+        break;
+        
+      case BeaconCaptureAI::State::shoot_beacon:
+        if (!suitableTargetBeacon(reg, e)) {
+          ai.state = BeaconCaptureAI::State::idle;
+          reg.assign<IdleBehaviour>(e);
+          reg.assign<PacifistBehaviour>(e);
           reg.remove<OrbitBehaviour>(e);
         }
         break;

@@ -82,11 +82,13 @@ void setPlayer(entt::registry &reg, const entt::entity e) {
 
 void setBeaconCaptureAI(entt::registry &reg, const entt::entity e) {
   reg.assign<BeaconCaptureAI>(e);
+  reg.assign<IdleBehaviour>(e);
+  reg.assign<PacifistBehaviour>(e);
   reg.assign<Target>(e);
 }
 
 void setSniperBehave(entt::registry &reg, const entt::entity e) {
-  reg.assign<SniperBehaviour>(e, 0.0f, 0.0f);
+  reg.assign<SniperBehaviour>(e, b2Vec2{0.0f, 0.0f});
   reg.assign<Target>(e);
   reg.assign<TargetEnemyShip>(e, true);
 }
@@ -141,7 +143,5 @@ void setSniperPosition(
   const float x,
   const float y
 ) {
-  auto &behave = reg.get<SniperBehaviour>(e);
-  behave.x = x;
-  behave.y = y;
+  reg.get<SniperBehaviour>(e).target = {x, y};
 }
