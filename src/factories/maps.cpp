@@ -52,10 +52,10 @@ MapInfo makeMap0(entt::registry &reg) {
     }
   }
 
-  setTransform(reg, makeBeacon(reg, BeaconState::ally), {-27.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeBeacon(reg, BeaconState::enemy), {27.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeBeacon(reg, BeaconState::neutral), {0.0f, -13.0f * scale}, 0.0f);
-  setTransform(reg, makeBeacon(reg, BeaconState::neutral), {0.0f, 13.0f * scale}, 0.0f);
+  setTransform(reg, makeBeacon(reg, BeaconState::ally, 0), {-27.0f * scale, 0.0f}, 0.0f);
+  setTransform(reg, makeBeacon(reg, BeaconState::neutral, 1), {0.0f, -13.0f * scale}, 0.0f);
+  setTransform(reg, makeBeacon(reg, BeaconState::neutral, 2), {0.0f, 13.0f * scale}, 0.0f);
+  setTransform(reg, makeBeacon(reg, BeaconState::enemy, 3), {27.0f * scale, 0.0f}, 0.0f);
   
   setTransform(reg, info.player, {-29.0f * scale, 0.0f}, 0.0f);
   setTransform(reg, makeScout(reg, Team::ally), {-29.0f * scale, 0.0f}, 0.0f);

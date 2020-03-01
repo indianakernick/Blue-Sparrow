@@ -57,7 +57,7 @@ entt::entity makeScrap(entt::registry &reg) {
   return e;
 }
 
-entt::entity makeBeacon(entt::registry &reg, const BeaconState state) {
+entt::entity makeBeacon(entt::registry &reg, const BeaconState state, const int order) {
   entt::entity e = reg.create();
   setBeaconPhysics(reg, e);
   
@@ -67,6 +67,7 @@ entt::entity makeBeacon(entt::registry &reg, const BeaconState state) {
   beacon.enemy = 0;
   beacon.neutral = 0;
   beacon.state = state;
+  beacon.order = order;
   
   switch (state) {
     case BeaconState::ally:

@@ -31,15 +31,54 @@ bool suitableBeacon(const BeaconState state, const Team team) {
   }
 }
 
+class BeaconOrder {
+public:
+  BeaconOrder(const Team team)
+    : team{team}, foundOrder{initialOrder(team)} {}
+
+  bool closer(const int order) {
+    if (better(order)) {
+      foundOrder = order;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+private:
+  Team team;
+  int foundOrder;
+  
+  static int initialOrder(const Team team) {
+    switch (team) {
+      case Team::ally:
+        return std::numeric_limits<int>::max();
+      case Team::enemy:
+        return -1;
+    }
+  }
+  
+  bool better(const int order) const {
+    switch (team) {
+      case Team::ally:
+        return order < foundOrder;
+      case Team::enemy:
+        return order > foundOrder;
+    }
+  }
+};
+
 entt::entity findBeacon(entt::registry &reg, const Team team) {
   entt::entity found = entt::null;
+  BeaconOrder order{team};
   entt::each(reg, [&](entt::entity e, Beacon beacon) {
+    // TODO: Be smarter about choosing beacons
+    // Prioritise beacons based on a number of factors
+    // like distance, order, damage, neutral vs enemy
     if (suitableBeacon(beacon.state, team)) {
-      // TODO: Don't just use the first beacon found
-      // Be smart about it
-      // Maybe prefer neutral beacons over enemy ones
-      found = e;
-      return;
+      if (order.closer(beacon.order)) {
+        found = e;
+      }
     }
   });
   return found;
@@ -67,6 +106,7 @@ void thinkBeaconCapture(entt::registry &reg) {
           reg.assign<TargetBeacon>(e);
           reg.remove<NavigateBehaviour>(e);
         }
+        // TODO: Stop navigating if the target is nolonger a suitable beacon
         break;
       case BeaconCaptureAI::State::shoot_beacon:
         if (reg.get<Target>(e).e == entt::null) {

@@ -24,6 +24,7 @@ struct Beacon {
   int enemy;
   int neutral;
   BeaconState state;
+  int order;
 };
 
 struct MapData {

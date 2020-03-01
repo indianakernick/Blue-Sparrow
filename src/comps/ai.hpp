@@ -14,6 +14,9 @@
 // I'm not sure yet if this will be an issue and it sounds difficult to implement
 // so I'll leave it for now.
 
+// might need to rethink the way targeting works
+// AIs choose a target and behaviours choose a target
+
 /*
 
 behaviour for aiming
