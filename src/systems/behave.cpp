@@ -10,6 +10,7 @@
 
 #include <queue>
 #include <box2d/b2_body.h>
+#include <SDL2/SDL_timer.h>
 #include <box2d/b2_world.h>
 #include "../utils/each.hpp"
 #include "../comps/arena.hpp"
@@ -423,7 +424,7 @@ public:
     // Multiplying this by 4 improves the paths
     // However, this also turns A* into Dijkstra's algorithm which degrades
     // performance dramatically
-    return dir.Length() * 4.0f;
+    return dir.Length();
   }
   static float distance(const Vec a, const Vec b) {
     return b2Distance(a, b);
@@ -533,6 +534,12 @@ void behaveNavigate(entt::registry &reg) {
   entt::each(reg, [&](Physics phys, MotionCommand &motion, MotionParams params, NavigateBehaviour &behave) {
     const b2Vec2 shipPos = phys.body->GetPosition();
     
+    if (SDL_TICKS_PASSED(SDL_GetTicks(), behave.timeout)) {
+      behave.path.clear();
+      behave.timeout = SDL_GetTicks() + 1500;
+      std::cout << "Retry\n";
+    }
+    
     if (behave.path.empty()) {
       const b2Vec2 fromPos = tilePos(shipPos);
       const b2Vec2 toPos = tilePos({behave.x, behave.y});
@@ -554,8 +561,10 @@ void behaveNavigate(entt::registry &reg) {
     if (behave.path.size() > 1) {
       if (b2DistanceSquared(shipPos, behave.path[0]) < 4.0f) {
         behave.path.erase(behave.path.begin());
+        behave.timeout = SDL_GetTicks() + 1500;
       } else if (b2DistanceSquared(shipPos, behave.path[1]) < 36.0f) {
         behave.path.erase(behave.path.begin());
+        behave.timeout = SDL_GetTicks() + 1500;
       }
     }
     
