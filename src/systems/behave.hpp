@@ -14,6 +14,15 @@
 // See behaviour desciptions in comps/behaviour.hpp
 // See mouse and aim assist descriptions in comps/input.hpp
 
+// TODO: Try to simplify behaviours
+// Use less components in each of the systems
+// Try to split the behaviours into multiple behaviours if possible
+// Ideally, moving/aiming/shooting would be in separate systems
+
+// Navigate should have a flag for looking where it's going and aiming
+// AI should look where it's going if there are no targets nearby
+// AI should add an aiming behaviour if there are targets nearby
+
 void behaveOrbit(entt::registry &);
 void behaveSeek(entt::registry &);
 void behaveSniper(entt::registry &);

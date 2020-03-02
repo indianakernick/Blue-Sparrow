@@ -91,6 +91,10 @@ entt::entity findBeacon(entt::registry &reg, const Team team) {
 
 }
 
+// TODO: Make state transitions less tedious
+// Remembering which components need to be removed and added is tricky
+// Is that just how state machines are?
+
 void thinkBeaconCapture(entt::registry &reg) {
   entt::each(reg, [&](entt::entity e, BeaconCaptureAI &ai) {
     switch (ai.state) {
@@ -131,6 +135,11 @@ void thinkBeaconCapture(entt::registry &reg) {
     }
   });
 }
+
+// TODO: Limit the rate that the target changes
+// Must keep a target for a minimum amount of time before changing
+// when there are lots of targets nearby, the ship can change between them too
+// fast to aim properly
 
 void thinkSniper(entt::registry &reg) {
   entt::each(reg, [&](entt::entity e, Target &target, SniperAI) {
