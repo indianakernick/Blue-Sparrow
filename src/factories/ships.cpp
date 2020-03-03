@@ -21,7 +21,7 @@
 #include "../comps/behaviour.hpp"
 #include <entt/entity/registry.hpp>
 
-entt::entity makePlayer(entt::registry &reg) {
+entt::entity makePlayer(entt::registry &reg, const bool god) {
   entt::entity e = reg.create();
   setUpgradableHull(reg, e, 0);
   setShip(reg, e, Team::ally);
@@ -32,6 +32,13 @@ entt::entity makePlayer(entt::registry &reg) {
   setUpgradableBlaster(reg, e, 0);
   setUpgradableMissile(reg, e, 0);
   reg.assign<ViewDistance>(e, 30.0f);
+  
+  if (god) {
+    reg.get<MissileAmmo>(e).n = 1000;
+    reg.get<Coins>(e).c = 1000;
+    reg.get<Hull>(e).h = reg.get<HullParams>(e).durability = 10000;
+  }
+  
   return e;
 }
 

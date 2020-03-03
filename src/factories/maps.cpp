@@ -20,7 +20,7 @@
 MapInfo makeMap0(entt::registry &reg) {
   constexpr int scale = 5;
 
-  const MapInfo info = {makePlayer(reg), 300.0f, 200.0f};
+  const MapInfo info = {makePlayer(reg, true), 300.0f, 200.0f};
   Image image = loadImage(res("battle_arena_map_0.png"));
   assert(image.width * scale == info.width);
   assert(image.height * scale == info.height);

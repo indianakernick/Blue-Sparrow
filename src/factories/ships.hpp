@@ -12,7 +12,7 @@
 #include "../comps/teams.hpp"
 #include <entt/entity/fwd.hpp>
 
-entt::entity makePlayer(entt::registry &);
+entt::entity makePlayer(entt::registry &, bool = false);
 entt::entity makeScout(entt::registry &, Team);
 entt::entity makeSniper(entt::registry &, Team);
 
