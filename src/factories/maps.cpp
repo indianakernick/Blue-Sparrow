@@ -69,17 +69,21 @@ MapInfo makeMap0(entt::registry &reg) {
   setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
   setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
   
-  /*reg.remove<OrbitBehaviour>(scout);
+  /*entt::entity scout = makeScout(reg, Team::ally);
+  setTransform(reg, scout, {-29.0f * scale, 0.0f}, 0.0f);*/
+  
+  /*reg.remove<BeaconCaptureAI>(scout);
   reg.assign<NavigateBehaviour>(
     scout,
-    29.0f * scale, 19.0f * scale,
+    //29.0f * scale, 19.0f * scale,
+    29.0f * scale, 0.0f,
     std::vector<b2Vec2>(),
     makeDebugPoint(reg), makeDebugPoint(reg)
   );*/
   
-  //entt::entity sniper = makeSniper(reg, Team::enemy);
-  //setSniperPosition(reg, sniper, 22.0f * scale, 0.0f);
-  //setTransform(reg, sniper, {22.0f * scale, 0.0f}, b2_pi);
+  entt::entity sniper = makeSniper(reg, Team::enemy);
+  setSniperPosition(reg, sniper, 6.0f * scale, 0.0f);
+  setTransform(reg, sniper, {6.0f * scale, 0.0f}, b2_pi);
   
   //entt::entity rock = makeAsteroid(reg);
   //setTransform(reg, rock, {0.0f, 0.0f}, 1.0f);

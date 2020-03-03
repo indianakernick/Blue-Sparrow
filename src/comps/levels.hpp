@@ -9,11 +9,12 @@
 #ifndef comps_levels_hpp
 #define comps_levels_hpp
 
-/// "Smartness" level for OrbitBehaviour
-enum class OrbitLevel {
+// "Smartness" level for AimBehaviour
+enum class AimLevel {
   /// Aim at the position of the target
   aim_pos,
-  /// Aim ahead of the target
+  /// Aim at the intercept position of the target and a blaster bolt (assuming
+  /// that the target moves at a constant velocity).
   aim_ahead
 };
 

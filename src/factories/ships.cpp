@@ -89,8 +89,14 @@ void setBeaconCaptureAI(entt::registry &reg, const entt::entity e) {
 
 void setSniperBehave(entt::registry &reg, const entt::entity e) {
   reg.assign<SniperAI>(e);
-  reg.assign<SniperBehaviour>(e);
-  reg.assign<StationaryBehaviour>(e, b2Vec2{0.0f, 0.0f});
+  AimBehaviour aim;
+  aim.level = AimLevel::aim_ahead;
+  aim.rotateThreshold = 0.1f;
+  aim.fireThreshold = b2_pi / 16.0f;
+  reg.assign<AimBehaviour>(e, aim);
+  StationaryBehaviour still;
+  still.moveThreshold = 0.2f;
+  reg.assign<StationaryBehaviour>(e, still);
   reg.assign<Target>(e);
 }
 

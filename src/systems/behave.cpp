@@ -109,17 +109,13 @@ b2Vec2 interseptPoint(
 // TODO: I wonder if I could use the genetic algorithm to train the ultimate bot!
 
 void behaveOrbit(entt::registry &reg) {
-  auto view = reg.view<Physics, Target, MotionCommand, BlasterCommand, OrbitBehaviour, BlasterParams>();
-  view.each([&](auto phys, auto target, auto &motion, auto &blaster, auto behave, auto params) {
+  entt::each(reg, [&](Physics phys, Target target, MotionCommand &motion, OrbitBehaviour behave) {
     motion.left = motion.right = false;
     
     if (target.e == entt::null) {
-      blaster.fire = false;
       motion.forward = motion.reverse = false;
       motion.ccw = motion.cw = false;
       return;
-    } else {
-      blaster.fire = true;
     }
     
     b2Body *targetBody = reg.get<Physics>(target.e).body;
@@ -135,20 +131,41 @@ void behaveOrbit(entt::registry &reg) {
     const b2Vec2 desiredVel = scaleToLength(desiredPos - shipPos, behave.speed);
     const b2Vec2 accel = desiredVel - shipVel;
     forwardByAccel(motion, b2Dot(accel, toTarget));
+  });
+}
+
+void behaveAim(entt::registry &reg) {
+  entt::each(reg, [&](
+    Physics phys, Target target, MotionCommand &motion,
+    BlasterCommand &blaster, BlasterParams params, AimBehaviour behave
+  ) {
+    if (target.e == entt::null) {
+      blaster.fire = false;
+      motion.ccw = motion.cw = false;
+      return;
+    }
+    
+    b2Body *targetBody = reg.get<Physics>(target.e).body;
+    const b2Vec2 targetPos = targetBody->GetPosition();
+    const b2Vec2 targetVel = targetBody->GetLinearVelocity();
+    const b2Vec2 shipPos = phys.body->GetPosition();
+    const b2Vec2 shipVel = phys.body->GetLinearVelocity();
     
     b2Vec2 aimPos;
     switch (behave.level) {
-      case OrbitLevel::aim_pos:
+      case AimLevel::aim_pos:
         aimPos = targetPos;
         break;
-      case OrbitLevel::aim_ahead:
+      case AimLevel::aim_ahead:
         aimPos = interseptPoint(targetPos, targetVel - shipVel, shipPos, params.speed);
         break;
     }
     
     const b2Vec2 toAim = aimPos - shipPos;
     const float aimAngle = std::atan2(toAim.y, toAim.x);
-    cwByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
+    const float angleChange = normalizeAngle(aimAngle - phys.body->GetAngle());
+    cwByAngle(motion, angleChange, behave.rotateThreshold);
+    blaster.fire = b2Abs(angleChange) < behave.fireThreshold;
   });
 }
 
@@ -198,33 +215,8 @@ void behaveSeek(entt::registry &reg) {
     const float angleChange = normalizeAngle(aimAngle - phys.body->GetAngle());
     cwByAngle(motion, angleChange);
     
-    motion.forward = (b2Abs(angleChange) < b2_pi / 8.0f);
+    motion.forward = b2Abs(angleChange) < behave.fireThreshold;
     motion.reverse = false;
-  });
-}
-
-void behaveSniper(entt::registry &reg) {
-  auto view = reg.view<Physics, Target, MotionCommand, BlasterCommand, BlasterParams, SniperBehaviour>();
-  view.less([&](auto phys, auto target, auto &motion, auto &blaster, auto params) {
-    if (target.e == entt::null) {
-      blaster.fire = false;
-      motion.ccw = motion.cw = false;
-      return;
-    } else {
-      blaster.fire = true;
-    }
-    
-    b2Body *targetBody = reg.get<Physics>(target.e).body;
-    const b2Vec2 targetPos = targetBody->GetPosition();
-    const b2Vec2 targetVel = targetBody->GetLinearVelocity();
-    const b2Vec2 shipPos = phys.body->GetPosition();
-    const b2Vec2 shipVel = phys.body->GetLinearVelocity();
-    const float shipAngle = phys.body->GetAngle();
-    
-    const b2Vec2 aimPos = interseptPoint(targetPos, targetVel - shipVel, shipPos, params.speed);
-    const b2Vec2 toAim = aimPos - shipPos;
-    const float aimAngle = std::atan2(toAim.y, toAim.x);
-    cwByAngle(motion, normalizeAngle(aimAngle - shipAngle), 0.1f);
   });
 }
 
@@ -235,8 +227,8 @@ void behaveStationary(entt::registry &reg) {
     const b2Vec2 forwardDir = angleMag(phys.body->GetAngle(), 1.0f);
     const b2Vec2 rightDir = forwardDir.Skew();
     
-    forwardByAccel(motion, b2Dot(accel, forwardDir), behave.threshold);
-    rightByAccel(motion, b2Dot(accel, rightDir), behave.threshold);
+    forwardByAccel(motion, b2Dot(accel, forwardDir), behave.moveThreshold);
+    rightByAccel(motion, b2Dot(accel, rightDir), behave.moveThreshold);
   });
 }
 

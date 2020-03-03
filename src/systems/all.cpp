@@ -24,8 +24,8 @@ void prePhysicsSystems(entt::registry &reg) {
   thinkMissile(reg);
   
   behaveOrbit(reg);
+  behaveAim(reg);
   behaveSeek(reg);
-  behaveSniper(reg);
   behaveStationary(reg);
   behaveMouse(reg);
   behaveNavigate(reg);

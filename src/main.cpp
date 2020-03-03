@@ -15,6 +15,8 @@ int main() {
 
 // Code
 //   Should we abandon entt::each?
+//   A "God mode" that I can easily enable and disable for testing
+//     Lots of coins/missiles/durability
 
 // Objects
 //   Turrets

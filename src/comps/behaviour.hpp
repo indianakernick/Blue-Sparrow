@@ -24,22 +24,30 @@ struct Target {
 struct OrbitBehaviour {
   float dist;
   float speed;
-  OrbitLevel level;
+};
+
+/// Aim at target
+struct AimBehaviour {
+  AimLevel level; // aim_vel_ahead for sniper
+  /// The minimum angle desired to fire rotate the ship
+  float rotateThreshold = 0.5; // 0.1f for sniper
+  /// The maximum angle difference to fire the blasters
+  float fireThreshold = b2_pi / 8.0f;
 };
 
 /// Collide with the target
 struct SeekBehaviour {
   float speed;
   SeekLevel level;
+  /// The maximum angle difference to fire the forward thuster
+  float fireThreshold = b2_pi / 8.0f;
 };
-
-/// Remain at a given location and aim carefully
-struct SniperBehaviour {};
 
 /// Remain stationary at a location
 struct StationaryBehaviour {
-  b2Vec2 pos;
-  float threshold = 0.5f; // 0.2f for sniper
+  b2Vec2 pos = {0.0f, 0.0f};
+  /// The minimum linear acceleration desired to fire the thrusters
+  float moveThreshold = 0.5f; // 0.2f for sniper
 };
 
 /// Path-find to a location in the arena

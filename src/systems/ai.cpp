@@ -114,7 +114,8 @@ void thinkBeaconCapture(entt::registry &reg) {
         if (reg.get<NavigateBehaviour>(e).path.size() == 1) {
           ai.state = BeaconCaptureAI::State::shoot_beacon;
           const float speed = reg.get<VelocityLimit>(e).vel;
-          reg.assign<OrbitBehaviour>(e, 10.0f, speed, OrbitLevel::aim_pos);
+          reg.assign<OrbitBehaviour>(e, 10.0f, speed);
+          reg.assign<AimBehaviour>(e, AimLevel::aim_pos);
           reg.remove<NavigateBehaviour>(e);
           reg.remove<PacifistBehaviour>(e);
         } else if (!suitableTargetBeacon(reg, e)) {
@@ -130,6 +131,7 @@ void thinkBeaconCapture(entt::registry &reg) {
           reg.assign<IdleBehaviour>(e);
           reg.assign<PacifistBehaviour>(e);
           reg.remove<OrbitBehaviour>(e);
+          reg.remove<AimBehaviour>(e);
         }
         break;
     }

@@ -23,9 +23,13 @@
 // AI should look where it's going if there are no targets nearby
 // AI should add an aiming behaviour if there are targets nearby
 
+// We seem to check if the target is null in most behaviours
+// Can we avoid this?
+// Maybe the AI should change behaviour if there are not targets
+
 void behaveOrbit(entt::registry &);
+void behaveAim(entt::registry &);
 void behaveSeek(entt::registry &);
-void behaveSniper(entt::registry &);
 void behaveStationary(entt::registry &);
 void behaveMouse(entt::registry &);
 void behaveNavigate(entt::registry &);
