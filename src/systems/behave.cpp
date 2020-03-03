@@ -597,11 +597,14 @@ void behaveNavigate(entt::registry &reg) {
     const b2Vec2 accel = desiredVel - phys.body->GetLinearVelocity();
     const b2Vec2 forwardDir = angleMag(phys.body->GetAngle(), 1.0f);
     const b2Vec2 rightDir = forwardDir.Skew();
-    const float aimAngle = std::atan2(desiredVel.y, desiredVel.x);
     
     forwardByAccel(motion, b2Dot(accel, forwardDir));
     rightByAccel(motion, b2Dot(accel, rightDir));
-    cwByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
+    
+    if (behave.look) {
+      const float aimAngle = std::atan2(desiredVel.y, desiredVel.x);
+      cwByAngle(motion, normalizeAngle(aimAngle - phys.body->GetAngle()));
+    }
   });
 }
 

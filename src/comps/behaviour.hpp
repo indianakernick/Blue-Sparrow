@@ -46,11 +46,13 @@ struct NavigateBehaviour {
   b2Vec2 target;
   std::vector<b2Vec2> path;
   std::uint32_t timeout = 0;
+  bool look = true;
+  
   entt::entity debug0 = entt::null;
   entt::entity debug1 = entt::null;
 };
 
-/// Do nothing
+/// Don't move
 struct IdleBehaviour {};
 
 /// Don't shoot
