@@ -39,6 +39,7 @@ struct SniperBehaviour {};
 /// Remain stationary at a location
 struct StationaryBehaviour {
   b2Vec2 pos;
+  float threshold = 0.5f; // 0.2f for sniper
 };
 
 /// Path-find to a location in the arena

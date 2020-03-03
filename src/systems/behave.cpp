@@ -235,8 +235,8 @@ void behaveStationary(entt::registry &reg) {
     const b2Vec2 forwardDir = angleMag(phys.body->GetAngle(), 1.0f);
     const b2Vec2 rightDir = forwardDir.Skew();
     
-    forwardByAccel(motion, b2Dot(accel, forwardDir), 0.2f);
-    rightByAccel(motion, b2Dot(accel, rightDir), 0.2f);
+    forwardByAccel(motion, b2Dot(accel, forwardDir), behave.threshold);
+    rightByAccel(motion, b2Dot(accel, rightDir), behave.threshold);
   });
 }
 
