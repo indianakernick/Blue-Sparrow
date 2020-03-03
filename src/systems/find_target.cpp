@@ -44,8 +44,12 @@ private:
 
 class ShipQueryCallback final : public b2QueryCallback {
 public:
-  ShipQueryCallback(entt::registry &reg, const b2Vec2 center, const Team team)
-    : reg{reg}, center{center}, team{team} {}
+  ShipQueryCallback(
+    entt::registry &reg,
+    const b2Vec2 center,
+    const Team team,
+    const bool unobstructed
+  ) : reg{reg}, center{center}, team{team}, unobstructed{unobstructed} {}
 
   bool ReportFixture(b2Fixture *fixture) override {
     const b2Body *body = fixture->GetBody();
@@ -55,9 +59,11 @@ public:
     const entt::entity entity = fromUserData(body->GetUserData());
     if (!enemyShip(entity)) return true;
     
-    ObstructionCallback callback{body};
-    reg.ctx<b2World>().RayCast(&callback, center, body->GetPosition());
-    if (callback.obstructed()) return true;
+    if (unobstructed) {
+      ObstructionCallback callback{body};
+      reg.ctx<b2World>().RayCast(&callback, center, body->GetPosition());
+      if (callback.obstructed()) return true;
+    }
     
     shortestDist = dist;
     nearestEntity = entity;
@@ -75,6 +81,7 @@ private:
   Team team;
   float shortestDist = INFINITY;
   entt::entity nearestEntity = entt::null;
+  bool unobstructed;
   
   bool enemyShip(const entt::entity entity) const {
     if (!reg.valid(entity)) return false;
@@ -107,9 +114,13 @@ b2AABB viewingRect(entt::registry &reg, const entt::entity e) {
 
 }
 
-entt::entity findNearestEnemyShip(entt::registry &reg, const entt::entity e) {
+entt::entity findNearestEnemyShip(
+  entt::registry &reg,
+  const entt::entity e,
+  const bool unobstructed
+) {
   const b2Vec2 pos = reg.get<Physics>(e).body->GetPosition();
-  ShipQueryCallback callback{reg, pos, reg.get<Team>(e)};
+  ShipQueryCallback callback{reg, pos, reg.get<Team>(e), unobstructed};
   b2AABB aabb = viewingRect(reg, e);
   aabb.lowerBound += pos;
   aabb.upperBound += pos;

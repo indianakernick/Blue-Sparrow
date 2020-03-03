@@ -89,8 +89,6 @@ void setPlayer(entt::registry &reg, const entt::entity e) {
 
 void setBeaconCaptureAI(entt::registry &reg, const entt::entity e) {
   reg.assign<BeaconCaptureAI>(e);
-  reg.assign<IdleBehaviour>(e);
-  reg.assign<PacifistBehaviour>(e);
   reg.assign<Target>(e);
 }
 

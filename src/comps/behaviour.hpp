@@ -28,9 +28,9 @@ struct OrbitBehaviour {
 
 /// Aim at target
 struct AimBehaviour {
-  AimLevel level; // aim_vel_ahead for sniper
+  AimLevel level;
   /// The minimum angle desired to fire rotate the ship
-  float rotateThreshold = 0.5; // 0.1f for sniper
+  float rotateThreshold = 0.5;
   /// The maximum angle difference to fire the blasters
   float fireThreshold = b2_pi / 8.0f;
 };
@@ -47,7 +47,7 @@ struct SeekBehaviour {
 struct StationaryBehaviour {
   b2Vec2 pos = {0.0f, 0.0f};
   /// The minimum linear acceleration desired to fire the thrusters
-  float moveThreshold = 0.5f; // 0.2f for sniper
+  float moveThreshold = 0.5f;
 };
 
 /// Path-find to a location in the arena

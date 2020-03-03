@@ -12,6 +12,6 @@
 #include <entt/entity/fwd.hpp>
 
 /// Search for the nearest opposing ship
-entt::entity findNearestEnemyShip(entt::registry &, entt::entity);
+entt::entity findNearestEnemyShip(entt::registry &, entt::entity, bool);
 
 #endif

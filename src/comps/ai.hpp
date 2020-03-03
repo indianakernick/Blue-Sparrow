@@ -9,6 +9,8 @@
 #ifndef comps_ai_hpp
 #define comps_ai_hpp
 
+#include <entt/entity/entity.hpp>
+
 // I think AIs should be able to communicate.
 // I don't want every instance of the same AI to try to do the same thing.
 // I'm not sure yet if this will be an issue and it sounds difficult to implement
@@ -48,10 +50,12 @@ shoot enemies
 
 struct BeaconCaptureAI {
   enum class State {
+    init,
     idle,
     navigate,
     shoot_beacon
-  } state = State::idle;
+  } state = State::init;
+  entt::entity beacon = entt::null;
 };
 
 struct SniperAI {};
