@@ -19,6 +19,7 @@
 #include "../systems/all.hpp"
 #include "../comps/graphics.hpp"
 #include "../systems/camera.hpp"
+#include "../systems/render.hpp"
 #include "../factories/maps.hpp"
 #include "../systems/physics.hpp"
 #include "../systems/handle_input.hpp"
@@ -42,26 +43,14 @@ GameView::GameView(entt::registry &reg)
   setHeight({100, 1, 1});
 }
 
-// TODO: GameView initializes a texture used by MapView
-// TODO: Should Drawing become a pair of renderer and texture that's passed
-// to the system?
-
 void GameView::init(SDL_Renderer *ren, FontCache &cache) {
+  foreground = makeTexture(ren);
+  background = loadTexture(ren, res("stars_dark.png"));
+  
   initializePhysics(reg);
   MapInfo info = makeMap0(reg);
   initializeCamera(camera, info.width, info.height);
-  
-  foreground = makeTexture(ren);
-  background = loadTexture(ren, res("stars_dark.png"));
-  map = loadTexture(ren, std::move(info.image));
-  
-  {
-    Drawing &draw = reg.set<Drawing>();
-    draw.ren = ren;
-    draw.fgTex = foreground.get();
-    draw.bgTex = background.get();
-    draw.mapTex = map.get();
-  }
+  reg.set<MapImage>(std::move(info.image));
   
   View::init(ren, cache);
 }
@@ -100,6 +89,8 @@ void GameView::update(const float delta) {
 
 void GameView::render(SDL_Renderer *ren, FontCache &cache) {
   cameraSystems(reg, camera, viewport());
-  renderSystems(reg);
+  renderBackground(reg, {ren, background.get()});
+  renderSprite(reg, {ren, foreground.get()});
+  renderBar(reg, {ren, nullptr});
   View::render(ren, cache);
 }

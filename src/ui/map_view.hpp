@@ -10,6 +10,7 @@
 #define ui_map_view_hpp
 
 #include "view.hpp"
+#include "sdl_delete.hpp"
 #include <entt/entity/fwd.hpp>
 #include "../comps/graphics.hpp"
 
@@ -22,6 +23,7 @@ public:
 
 private:
   entt::registry &reg;
+  SDL::Texture minimap;
   Camera camera;
 };
 

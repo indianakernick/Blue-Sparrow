@@ -12,25 +12,30 @@
 #include "../systems/camera.hpp"
 #include "../systems/render.hpp"
 #include <entt/entity/registry.hpp>
+#include "../utils/load_texture.hpp"
 
 MapView::MapView(entt::registry &reg)
   : reg{reg} {}
 
-void MapView::init(SDL_Renderer *, FontCache &) {
+void MapView::init(SDL_Renderer *ren, FontCache &) {
   constexpr int scale = 4;
   const auto &map = reg.ctx<MapWalls>();
+  
   setWidth({map.width * scale, 0, 0});
   setHeight({map.height * scale, 0, 0});
+  
   camera.x = (map.width * map.scale) / -2.0f;
   camera.y = (map.height * map.scale) / -2.0f;
   camera.zoom = static_cast<float>(scale) / map.scale;
   camera.width = camera.height = 0.0f;
   camera.arenaWidth = camera.arenaHeight = 0.0f;
   camera.minZoom = 0.0f;
+  
+  minimap = loadTexture(ren, reg.ctx<MapImage>().i);
 }
 
-void MapView::render(SDL_Renderer *, FontCache &) {
+void MapView::render(SDL_Renderer *ren, FontCache &) {
   // TODO: Just get the SpriteRect of player and beacons
   writeSpriteRect(reg, camera);
-  renderMap(reg);
+  renderMap(reg, {ren, minimap.get()});
 }

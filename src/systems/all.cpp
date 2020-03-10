@@ -10,7 +10,6 @@
 
 #include "ai.hpp"
 #include "camera.hpp"
-#include "render.hpp"
 #include "expire.hpp"
 #include "behave.hpp"
 #include "physics.hpp"
@@ -52,10 +51,4 @@ void cameraSystems(entt::registry &reg, Camera &cam, const SDL_Rect viewport) {
   writeSpriteRect(reg, cam);
   writeHullBarRect(reg, cam);
   writeBeaconBarRect(reg, cam);
-}
-
-void renderSystems(entt::registry &reg) {
-  renderBackground(reg);
-  renderSprite(reg);
-  renderBar(reg);
 }

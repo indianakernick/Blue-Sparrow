@@ -13,6 +13,6 @@
 #include "load_image.hpp"
 
 SDL::Texture loadTexture(SDL_Renderer *, const char *);
-SDL::Texture loadTexture(SDL_Renderer *, Image);
+SDL::Texture loadTexture(SDL_Renderer *, const Image &);
 
 #endif

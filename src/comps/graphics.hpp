@@ -9,6 +9,8 @@
 #ifndef comps_graphics_hpp
 #define comps_graphics_hpp
 
+#include "../utils/load_image.hpp"
+
 struct SDL_Renderer;
 struct SDL_Texture;
 
@@ -54,12 +56,15 @@ struct Camera {
   float minZoom;     // pixels per meter
 };
 
-/// A context component describing the rendering context
-struct Drawing {
+/// The rendering context
+struct DrawCtx {
   SDL_Renderer *ren;
-  SDL_Texture *fgTex;
-  SDL_Texture *bgTex;
-  SDL_Texture *mapTex;
+  SDL_Texture *tex;
+};
+
+/// An image of the map. Used for rendering the minimap
+struct MapImage {
+  Image i;
 };
 
 #endif

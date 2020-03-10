@@ -10,17 +10,18 @@
 #define systems_render_hpp
 
 #include <entt/entity/fwd.hpp>
+#include "../comps/graphics.hpp"
 
 /// Render the background texture
-void renderBackground(entt::registry &);
+void renderBackground(entt::registry &, DrawCtx);
 
 /// Read SpriteRect and Sprite to render the texture
-void renderSprite(entt::registry &);
+void renderSprite(entt::registry &, DrawCtx);
 
 /// Read BarRect to render the hull bar
-void renderBar(entt::registry &);
+void renderBar(entt::registry &, DrawCtx);
 
 /// Render the map
-void renderMap(entt::registry &);
+void renderMap(entt::registry &, DrawCtx);
 
 #endif

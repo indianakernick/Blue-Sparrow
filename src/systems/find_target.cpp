@@ -94,6 +94,7 @@ private:
 };
 
 b2AABB viewingRect(entt::registry &reg, const entt::entity e) {
+  // TODO: Can we avoid using the Camera context variable?
   auto cam = reg.ctx<Camera>();
   const float ratio = static_cast<float>(cam.width) / cam.height;
   const float dist = reg.get<ViewDistance>(e).max;

@@ -265,6 +265,7 @@ private:
 
 void behaveMouse(entt::registry &reg) {
   entt::each(reg, [&](entt::entity e, Physics phys, MotionCommand &motion, MouseInput mouse, BlasterParams params) {
+    // TODO: Can we avoid using the Camera context variable?
     const auto &cam = reg.ctx<Camera>();
     const b2Vec2 shipPos = phys.body->GetPosition();
     float aimX = mouse.x / cam.zoom + cam.x;

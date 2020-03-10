@@ -15,7 +15,7 @@ SDL::Texture loadTexture(SDL_Renderer *renderer, const char *path) {
   return loadTexture(renderer, loadImage(path));
 }
 
-SDL::Texture loadTexture(SDL_Renderer *renderer, Image image) {
+SDL::Texture loadTexture(SDL_Renderer *renderer, const Image &image) {
   SDL::Texture tex{SDL_CHECK(SDL_CreateTexture(
     renderer,
     SDL_PIXELFORMAT_ABGR8888,
