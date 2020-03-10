@@ -13,6 +13,8 @@
 #include "sdl_delete.hpp"
 #include <entt/entity/fwd.hpp>
 
+struct Camera;
+
 class GameView final : public View {
 public:
   explicit GameView(entt::registry &);
@@ -26,6 +28,8 @@ private:
   entt::registry &reg;
   SDL::Texture foreground;
   SDL::Texture background;
+  SDL::Texture map;
+  Camera &camera;
 };
 
 #endif

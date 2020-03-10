@@ -37,26 +37,33 @@ SDL::Texture makeTexture(SDL_Renderer *renderer) {
 }
 
 GameView::GameView(entt::registry &reg)
-  : reg{reg} {
+  : reg{reg}, camera{reg.set<Camera>()} {
   setWidth({100, 1, 1});
   setHeight({100, 1, 1});
 }
 
-void GameView::init(SDL_Renderer *ren, FontCache &) {
-  foreground = makeTexture(ren);
-  background = loadTexture(ren, res("stars_dark.png"));
-  
-  {
-    Drawing drawing;
-    drawing.ren = ren;
-    drawing.fgTex = foreground.get();
-    drawing.bgTex = background.get();
-    reg.set<Drawing>(drawing);
-  }
-  
+// TODO: GameView initializes a texture used by MapView
+// TODO: Should Drawing become a pair of renderer and texture that's passed
+// to the system?
+
+void GameView::init(SDL_Renderer *ren, FontCache &cache) {
   initializePhysics(reg);
   MapInfo info = makeMap0(reg);
-  initializeCamera(reg, info.width, info.height);
+  initializeCamera(camera, info.width, info.height);
+  
+  foreground = makeTexture(ren);
+  background = loadTexture(ren, res("stars_dark.png"));
+  map = loadTexture(ren, std::move(info.image));
+  
+  {
+    Drawing &draw = reg.set<Drawing>();
+    draw.ren = ren;
+    draw.fgTex = foreground.get();
+    draw.bgTex = background.get();
+    draw.mapTex = map.get();
+  }
+  
+  View::init(ren, cache);
 }
 
 bool GameView::event(const SDL_Event &e) {
@@ -91,7 +98,8 @@ void GameView::update(const float delta) {
   postPhysicsSystems(reg);
 }
 
-void GameView::render(SDL_Renderer *, FontCache &) {
-  cameraSystems(reg, viewport());
+void GameView::render(SDL_Renderer *ren, FontCache &cache) {
+  cameraSystems(reg, camera, viewport());
   renderSystems(reg);
+  View::render(ren, cache);
 }

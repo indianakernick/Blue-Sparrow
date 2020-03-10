@@ -10,6 +10,7 @@
 
 #include <SDL2/SDL.h>
 #include "window.hpp"
+#include "map_view.hpp"
 #include "game_view.hpp"
 #include "font_cache.hpp"
 #include "stats_view.hpp"
@@ -31,8 +32,6 @@ SDL::Window initWindow(const int width, const int height) {
 }
 
 SDL::Renderer initRenderer(SDL_Window *window) {
-  // THIS DOESN'T DO ANYTHING !!!!!!!!!!!!!!!
-  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
   // Workaround for crash when exiting fullscreen
   // Also a workaround for a possibly related issue with multiple viewports
   SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
@@ -97,13 +96,17 @@ void Application::run() {
   panel->addChild(std::make_unique<StatsView>(reg));
   panel->addChild(std::make_unique<UpgradeView>(reg));
   
+  auto game = std::make_unique<GameView>(reg);
+  game->setLayout({LayoutDir::right, MainAlign::end, CrossAlign::end});
+  game->addChild(std::make_unique<MapView>(reg));
+  
   Window root{window.get()};
   root.setLayout({LayoutDir::right});
   root.addChild(std::move(panel));
-  root.addChild(std::make_unique<GameView>(reg));
+  root.addChild(std::move(game));
   
-  root.setInitialViewport();
   root.init(renderer.get(), cache);
+  root.setInitialViewport();
 
   // TODO: The window could move to a different monitor with a different refresh
   // rate and mess everything up.

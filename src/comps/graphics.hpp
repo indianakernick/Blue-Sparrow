@@ -59,6 +59,7 @@ struct Drawing {
   SDL_Renderer *ren;
   SDL_Texture *fgTex;
   SDL_Texture *bgTex;
+  SDL_Texture *mapTex;
 };
 
 #endif

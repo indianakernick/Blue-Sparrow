@@ -10,13 +10,14 @@
 #define factories_maps_hpp
 
 #include <entt/entity/fwd.hpp>
+#include "../utils/load_image.hpp"
 
 // TODO: Perhaps separate the map from the game mode
 // A function for place walls and a function for placing beacons
 
 struct MapInfo {
-  entt::entity player;
   float width, height;
+  Image image;
 };
 
 MapInfo makeMap0(entt::registry &);

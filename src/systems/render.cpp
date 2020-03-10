@@ -12,6 +12,7 @@
 #include <SDL2/SDL_render.h>
 #include "../utils/each.hpp"
 #include "../comps/input.hpp"
+#include "../comps/arena.hpp"
 #include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -151,5 +152,38 @@ void renderBar(entt::registry &reg) {
     SDL_CHECK(SDL_RenderFillRect(draw.ren, &anti));
     SDL_CHECK(SDL_SetRenderDrawColor(draw.ren, 255, 255, 255, 255));
     SDL_CHECK(SDL_RenderDrawRect(draw.ren, &outline));
+  });
+}
+
+void renderMap(entt::registry &reg) {
+  auto draw = reg.ctx<Drawing>();
+  
+  SDL_CHECK(SDL_SetRenderDrawBlendMode(draw.ren, SDL_BLENDMODE_BLEND));
+  SDL_CHECK(SDL_SetRenderDrawColor(draw.ren, 63, 63, 63, 63));
+  SDL_CHECK(SDL_RenderFillRect(draw.ren, nullptr));
+  
+  SDL_CHECK(SDL_SetTextureBlendMode(draw.mapTex, SDL_BLENDMODE_BLEND));
+  SDL_CHECK(SDL_SetTextureColorMod(draw.mapTex, 255, 255, 255));
+  SDL_CHECK(SDL_SetTextureAlphaMod(draw.mapTex, 127));
+  SDL_CHECK(SDL_RenderCopy(draw.ren, draw.mapTex, nullptr, nullptr));
+  
+  SDL_CHECK(SDL_SetRenderDrawBlendMode(draw.ren, SDL_BLENDMODE_NONE));
+  
+  entt::each(reg, [&](const SpriteRect rect, CameraFocus) {
+    const float size = 4.0f;
+    const SDL_FRect dstrect = {
+      rect.x + (rect.width - size) / 2.0f,
+      rect.y + (rect.height - size) / 2.0f,
+      size,
+      size
+    };
+    SDL_CHECK(SDL_SetRenderDrawColor(draw.ren, 255, 255, 255, 255));
+    SDL_CHECK(SDL_RenderFillRectF(draw.ren, &dstrect));
+  });
+  
+  entt::each(reg, [&](const SpriteRect rect, const Sprite sprite, Beacon) {
+    const SDL_FRect dstrect = {rect.x, rect.y, rect.width, rect.height};
+    SDL_CHECK(SDL_SetRenderDrawColor(draw.ren, sprite.r, sprite.g, sprite.b, 255));
+    SDL_CHECK(SDL_RenderFillRectF(draw.ren, &dstrect));
   });
 }

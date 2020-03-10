@@ -20,4 +20,7 @@ void renderSprite(entt::registry &);
 /// Read BarRect to render the hull bar
 void renderBar(entt::registry &);
 
+/// Render the map
+void renderMap(entt::registry &);
+
 #endif

@@ -10,7 +10,9 @@
 #define utils_load_texture_hpp
 
 #include "sdl_delete.hpp"
+#include "load_image.hpp"
 
 SDL::Texture loadTexture(SDL_Renderer *, const char *);
+SDL::Texture loadTexture(SDL_Renderer *, Image);
 
 #endif

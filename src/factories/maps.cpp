@@ -17,57 +17,99 @@
 #include <entt/entity/registry.hpp>
 #include "../utils/resource_path.hpp"
 
-MapInfo makeMap0(entt::registry &reg) {
-  constexpr int scale = 5;
+namespace {
 
-  const MapInfo info = {makePlayer(reg, true), 300.0f, 200.0f};
-  Image image = loadImage(res("battle_arena_map_0.png"));
-  assert(image.width * scale == info.width);
-  assert(image.height * scale == info.height);
-
-  makeArena(reg, info.width, info.height);
-  
-  auto &map = reg.set<MapData>();
-  map.width = image.width;
-  map.height = image.height;
+void setMapSize(MapWalls &map, const MapInfo &info, const float scale) {
+  map.width = info.image.width;
+  map.height = info.image.height;
   map.data.resize(map.width * map.height);
   map.scale = scale;
-  
-  const unsigned char *pixel = image.data.get();
+}
+
+void initializeWalls(entt::registry &reg, MapWalls &map, const MapInfo &info) {
+  const unsigned char *pixel = info.image.data.get();
   auto tile = map.data.begin();
-  for (int y = 0; y != image.height; ++y) {
-    for (int x = 0; x != image.width; ++x) {
-      if (pixel[0] == 128 && pixel[1] == 128 && pixel[2] == 128 && pixel[3] == 255) {
-        const float wallW = scale;
-        const float wallH = scale;
-        const float wallX = (x + 0.5f) * scale - info.width / 2.0f;
-        const float wallY = (y + 0.5f) * scale - info.height / 2.0f;
-        setTransform(reg, makeWall(reg, wallW, wallH), {wallX, wallY}, 0.0f);
-      }
+  for (int y = 0; y != info.image.height; ++y) {
+    for (int x = 0; x != info.image.width; ++x) {
       if (pixel[3] != 0) {
+        const float wallW = map.scale;
+        const float wallH = map.scale;
+        const float wallX = (x + 0.5f) * map.scale - info.width / 2.0f;
+        const float wallY = (y + 0.5f) * map.scale - info.height / 2.0f;
+        setTransform(reg, makeWall(reg, wallW, wallH), {wallX, wallY}, 0.0f);
         *tile = true;
       }
       pixel += 4;
       ++tile;
     }
   }
+}
 
-  setTransform(reg, makeBeacon(reg, BeaconState::ally, 0), {-27.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeBeacon(reg, BeaconState::neutral, 1), {0.0f, -13.0f * scale}, 0.0f);
-  setTransform(reg, makeBeacon(reg, BeaconState::neutral, 2), {0.0f, 13.0f * scale}, 0.0f);
-  setTransform(reg, makeBeacon(reg, BeaconState::enemy, 3), {27.0f * scale, 0.0f}, 0.0f);
+template <std::size_t Size>
+void initializeBeacons(
+  entt::registry &reg,
+  MapWalls &map,
+  const MapInfo &info,
+  const b2Vec2 (&beacons)[Size]
+) {
+  for (std::size_t b = 0; b != Size; ++b) {
+    BeaconState state;
+    if (b == 0) {
+      state = BeaconState::ally;
+    } else if (b == Size - 1) {
+      state = BeaconState::enemy;
+    } else {
+      state = BeaconState::neutral;
+    }
+    const entt::entity beacon = makeBeacon(reg, state, static_cast<int>(b));
+    setTransform(reg, beacon, map.scale * beacons[b], 0.0f);
+    
+    b2Vec2 pos = beacons[b];
+    pos += b2Vec2{info.image.width / 2.0f, info.image.height / 2.0f};
+    const std::size_t index = pos.y * info.image.width + pos.x;
+    map.data[index] = true;
+    map.data[index - 1] = true;
+    map.data[index - info.image.width] = true;
+    map.data[index - info.image.width - 1] = true;
+  }
+}
+
+}
+
+MapInfo makeMap0(entt::registry &reg) {
+  constexpr int scale = 5;
+
+  MapInfo info = {
+    300.0f, 200.0f,
+    loadImage(res("battle_arena_map_0.png"))
+  };
+  assert(info.image.width * scale == info.width);
+  assert(info.image.height * scale == info.height);
   
-  setTransform(reg, info.player, {-29.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeScout(reg, Team::ally), {-29.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeScout(reg, Team::ally), {-29.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeScout(reg, Team::ally), {-29.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeScout(reg, Team::ally), {-29.0f * scale, 0.0f}, 0.0f);
+  const b2Vec2 beacons[] = {
+    {-27.0f, 0.0f}, {0.0f, -13.0f}, {0.0f, 13.0f}, {27.0f, 0.0f}
+  };
+  const b2Vec2 allySpawn = {scale * -29.0f, 0.0f};
+  const b2Vec2 enemySpawn = {scale * 29.0f, 0.0f};
   
-  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
-  setTransform(reg, makeScout(reg, Team::enemy), {29.0f * scale, 0.0f}, 0.0f);
+  auto &map = reg.set<MapWalls>();
+  setMapSize(map, info, scale);
+  initializeWalls(reg, map, info);
+  initializeBeacons(reg, map, info, beacons);
+  
+  makeArena(reg, info.width, info.height);
+  
+  setTransform(reg, makePlayer(reg, true), allySpawn, 0.0f);
+  setTransform(reg, makeScout(reg, Team::ally), allySpawn, 0.0f);
+  setTransform(reg, makeScout(reg, Team::ally), allySpawn, 0.0f);
+  setTransform(reg, makeScout(reg, Team::ally), allySpawn, 0.0f);
+  setTransform(reg, makeScout(reg, Team::ally), allySpawn, 0.0f);
+  
+  setTransform(reg, makeScout(reg, Team::enemy), enemySpawn, 0.0f);
+  setTransform(reg, makeScout(reg, Team::enemy), enemySpawn, 0.0f);
+  setTransform(reg, makeScout(reg, Team::enemy), enemySpawn, 0.0f);
+  setTransform(reg, makeScout(reg, Team::enemy), enemySpawn, 0.0f);
+  setTransform(reg, makeScout(reg, Team::enemy), enemySpawn, 0.0f);
   
   /*entt::entity scout = makeScout(reg, Team::ally);
   setTransform(reg, scout, {-29.0f * scale, 0.0f}, 0.0f);*/

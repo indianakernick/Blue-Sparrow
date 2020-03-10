@@ -39,7 +39,7 @@ struct AimBehaviour {
 struct SeekBehaviour {
   float speed;
   SeekLevel level;
-  /// The maximum angle difference to fire the forward thuster
+  /// The maximum angle difference to fire the forward thruster
   float fireThreshold = b2_pi / 8.0f;
 };
 

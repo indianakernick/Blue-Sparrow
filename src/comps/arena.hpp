@@ -27,7 +27,9 @@ struct Beacon {
   int order;
 };
 
-struct MapData {
+/// An image of the walls and beacons of the map.
+/// Used for pathfinding
+struct MapWalls {
   std::vector<bool> data;
   int width, height;
   int scale;

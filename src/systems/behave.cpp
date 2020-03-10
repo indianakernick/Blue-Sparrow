@@ -467,7 +467,7 @@ public:
     nodes.push_back(node);
   }
   
-  explicit Policy(const MapData &map)
+  explicit Policy(const MapWalls &map)
     : map{map} {}
   
   void init() {
@@ -487,7 +487,7 @@ public:
   }
 
 private:
-  const MapData &map;
+  const MapWalls &map;
   std::vector<Node> nodes;
 };
 
@@ -507,7 +507,7 @@ float getSeconds(Clock::duration duration) {
 }
 
 void behaveNavigate(entt::registry &reg) {
-  const MapData &map = reg.ctx<MapData>();
+  const MapWalls &map = reg.ctx<MapWalls>();
   Policy policy{map};
   const float scale = map.scale;
   const float invScale = 1.0f / scale;

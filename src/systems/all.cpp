@@ -45,13 +45,13 @@ void postPhysicsSystems(entt::registry &reg) {
   handlePostCollisions(reg);
 }
 
-void cameraSystems(entt::registry &reg, const SDL_Rect viewport) {
-  updateCameraViewport(reg, viewport);
-  moveCamera(reg);
+void cameraSystems(entt::registry &reg, Camera &cam, const SDL_Rect viewport) {
+  updateCameraViewport(cam, viewport);
+  moveCamera(reg, cam);
   
-  writeSpriteRect(reg);
-  writeHullBarRect(reg);
-  writeBeaconBarRect(reg);
+  writeSpriteRect(reg, cam);
+  writeHullBarRect(reg, cam);
+  writeBeaconBarRect(reg, cam);
 }
 
 void renderSystems(entt::registry &reg) {

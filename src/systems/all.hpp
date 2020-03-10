@@ -12,10 +12,11 @@
 #include <entt/entity/fwd.hpp>
 
 struct SDL_Rect;
+struct Camera;
 
 void prePhysicsSystems(entt::registry &);
 void postPhysicsSystems(entt::registry &);
-void cameraSystems(entt::registry &, SDL_Rect);
+void cameraSystems(entt::registry &, Camera &, SDL_Rect);
 void renderSystems(entt::registry &);
 
 #endif

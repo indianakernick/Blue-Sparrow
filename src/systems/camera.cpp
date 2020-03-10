@@ -18,8 +18,7 @@
 #include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
 
-void writeSpriteRect(entt::registry &reg) {
-  auto cam = reg.ctx<Camera>();
+void writeSpriteRect(entt::registry &reg, const Camera &cam) {
   entt::each(reg, [=](Physics phys, SpriteRect &rect) {
     const b2Vec2 pos = phys.body->GetPosition();
     const float angle = phys.body->GetAngle();
@@ -31,8 +30,7 @@ void writeSpriteRect(entt::registry &reg) {
   });
 }
 
-void writeHullBarRect(entt::registry &reg) {
-  auto cam = reg.ctx<Camera>();
+void writeHullBarRect(entt::registry &reg, const Camera &cam) {
   entt::each(reg, [&](Physics phys, Hull hull, HullParams params, BarRect &rect) {
     const float yOffset = (phys.width + phys.height) / 4.0f;
     const b2Vec2 pos = phys.body->GetPosition();
@@ -44,8 +42,7 @@ void writeHullBarRect(entt::registry &reg) {
   });
 }
 
-void writeBeaconBarRect(entt::registry &reg) {
-  auto cam = reg.ctx<Camera>();
+void writeBeaconBarRect(entt::registry &reg, const Camera &cam) {
   entt::each(reg, [&](Physics phys, Beacon beacon, BarRect &rect, Sprite &sprite) {
     const float yOffset = phys.height * 2.0f / 3.0f;
     const b2Vec2 pos = phys.body->GetPosition();
@@ -72,8 +69,7 @@ void writeBeaconBarRect(entt::registry &reg) {
   });
 }
 
-void moveCamera(entt::registry &reg) {
-  auto &cam = reg.ctx<Camera>();
+void moveCamera(entt::registry &reg, Camera &cam) {
   entt::each(reg, [&](Physics phys, ViewDistance dist, CameraFocus) {
     cam.zoom = std::max({
       cam.width / 2.0f / dist.max,
@@ -94,18 +90,15 @@ void moveCamera(entt::registry &reg) {
   });
 }
 
-void initializeCamera(entt::registry &reg, const float width, const float height) {
-  Camera cam;
+void initializeCamera(Camera &cam, const float width, const float height) {
   cam.x = 0.0f;
   cam.y = 0.0f;
   cam.arenaWidth = width;
   cam.arenaHeight = height;
   cam.zoom = 0.0f;
-  reg.set<Camera>(cam);
 }
 
-void updateCameraViewport(entt::registry &reg, const SDL_Rect viewport) {
-  auto &cam = reg.ctx<Camera>();
+void updateCameraViewport(Camera &cam, const SDL_Rect viewport) {
   cam.width = viewport.w;
   cam.height = viewport.h;
   cam.minZoom = std::max(viewport.w / cam.arenaWidth, viewport.h / cam.arenaHeight);

@@ -50,6 +50,7 @@
 		45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5D23F0E020000B554D /* collisions.cpp */; };
 		45C5CA6523F22487000B554D /* stars.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45C5CA6423F22455000B554D /* stars.png */; };
 		45DE83EB23FF69FE000B3F12 /* arena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45DE83E923FF69FE000B3F12 /* arena.cpp */; };
+		45F6E5F5241738B7004C5B6D /* map_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F6E5F3241738B7004C5B6D /* map_view.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -182,6 +183,8 @@
 		45DE83E923FF69FE000B3F12 /* arena.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arena.cpp; sourceTree = "<group>"; };
 		45DE83EA23FF69FE000B3F12 /* arena.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = arena.hpp; sourceTree = "<group>"; };
 		45DE83EC23FF883D000B3F12 /* collisions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = collisions.hpp; sourceTree = "<group>"; };
+		45F6E5F3241738B7004C5B6D /* map_view.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = map_view.cpp; sourceTree = "<group>"; };
+		45F6E5F4241738B7004C5B6D /* map_view.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = map_view.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,6 +282,8 @@
 				45BC5E6523F664B700A07A57 /* stats_view.hpp */,
 				450CDBCE23F8B5B400CF4CEE /* upgrade_view.cpp */,
 				450CDBCF23F8B5B400CF4CEE /* upgrade_view.hpp */,
+				45F6E5F3241738B7004C5B6D /* map_view.cpp */,
+				45F6E5F4241738B7004C5B6D /* map_view.hpp */,
 				450CDBF823FA363C00CF4CEE /* font_cache.cpp */,
 				450CDBF923FA363C00CF4CEE /* font_cache.hpp */,
 			);
@@ -448,6 +453,7 @@
 				45C5CA4623EE3B7A000B554D /* find_target.cpp in Sources */,
 				45C5CA4323EE385D000B554D /* physics.cpp in Sources */,
 				45C5CA5B23EF9A0C000B554D /* arena.cpp in Sources */,
+				45F6E5F5241738B7004C5B6D /* map_view.cpp in Sources */,
 				45C5CA3F23EE35F4000B554D /* ships.cpp in Sources */,
 				45C5CA3A23ED16AF000B554D /* physics.cpp in Sources */,
 				45BC5E4A23F4DBBF00A07A57 /* upgrades.cpp in Sources */,

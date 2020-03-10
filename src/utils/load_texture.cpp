@@ -9,11 +9,13 @@
 #include "load_texture.hpp"
 
 #include "sdl_check.hpp"
-#include "load_image.hpp"
 #include <SDL2/SDL_render.h>
 
 SDL::Texture loadTexture(SDL_Renderer *renderer, const char *path) {
-  Image image = loadImage(path);
+  return loadTexture(renderer, loadImage(path));
+}
+
+SDL::Texture loadTexture(SDL_Renderer *renderer, Image image) {
   SDL::Texture tex{SDL_CHECK(SDL_CreateTexture(
     renderer,
     SDL_PIXELFORMAT_ABGR8888,
