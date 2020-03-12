@@ -74,10 +74,23 @@ void initializeBeacons(
   }
 }
 
+void initializeAllies(entt::registry &reg, const b2Vec2 pos, const int size) {
+  setTransform(reg, makePlayer(reg, true), pos, 0.0f);
+  for (int s = 1; s < size; ++s) {
+    setTransform(reg, makeScout(reg, Team::ally), pos, 0.0f);
+  }
+}
+
+void initializeEnemies(entt::registry &reg, const b2Vec2 pos, const int size) {
+  for (int s = 0; s < size; ++s) {
+    setTransform(reg, makeScout(reg, Team::enemy), pos, 0.0f);
+  }
+}
+
 }
 
 MapInfo makeMap0(entt::registry &reg) {
-  constexpr int scale = 5;
+  const int scale = 5;
 
   MapInfo info = {
     300.0f, 200.0f,
@@ -91,25 +104,15 @@ MapInfo makeMap0(entt::registry &reg) {
   };
   const b2Vec2 allySpawn = {scale * -29.0f, 0.0f};
   const b2Vec2 enemySpawn = {scale * 29.0f, 0.0f};
+  const int teamSize = 5;
   
   auto &map = reg.set<MapWalls>();
   setMapSize(map, info, scale);
   initializeWalls(reg, map, info);
   initializeBeacons(reg, map, info, beacons);
-  
+  initializeAllies(reg, allySpawn, teamSize);
+  initializeEnemies(reg, enemySpawn, teamSize);
   makeArena(reg, info.width, info.height);
-  
-  setTransform(reg, makePlayer(reg, true), allySpawn, 0.0f);
-  setTransform(reg, makeScout(reg, Team::ally), allySpawn, 0.0f);
-  setTransform(reg, makeScout(reg, Team::ally), allySpawn, 0.0f);
-  setTransform(reg, makeScout(reg, Team::ally), allySpawn, 0.0f);
-  setTransform(reg, makeScout(reg, Team::ally), allySpawn, 0.0f);
-  
-  setTransform(reg, makeScout(reg, Team::enemy), enemySpawn, 0.0f);
-  setTransform(reg, makeScout(reg, Team::enemy), enemySpawn, 0.0f);
-  setTransform(reg, makeScout(reg, Team::enemy), enemySpawn, 0.0f);
-  setTransform(reg, makeScout(reg, Team::enemy), enemySpawn, 0.0f);
-  setTransform(reg, makeScout(reg, Team::enemy), enemySpawn, 0.0f);
   
   /*entt::entity scout = makeScout(reg, Team::ally);
   setTransform(reg, scout, {-29.0f * scale, 0.0f}, 0.0f);*/
