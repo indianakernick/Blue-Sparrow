@@ -104,8 +104,8 @@ void thinkBeaconCapture(entt::registry &reg) {
     switch (ai.state) {
       case BeaconCaptureAI::State::init:
         ai.state = BeaconCaptureAI::State::idle;
-        reg.assign<IdleBehaviour>(e);
-        reg.assign<PacifistBehaviour>(e);
+        reg.emplace<IdleBehaviour>(e);
+        reg.emplace<PacifistBehaviour>(e);
         break;
     
       case BeaconCaptureAI::State::idle: {
@@ -113,7 +113,7 @@ void thinkBeaconCapture(entt::registry &reg) {
         if (beacon != entt::null) {
           ai.state = BeaconCaptureAI::State::navigate;
           const b2Vec2 pos = reg.get<Physics>(beacon).body->GetPosition();
-          reg.assign<NavigateBehaviour>(e, pos);
+          reg.emplace<NavigateBehaviour>(e, pos);
           reg.remove<IdleBehaviour>(e);
           ai.beacon = beacon;
         }
@@ -124,8 +124,8 @@ void thinkBeaconCapture(entt::registry &reg) {
         if (reg.get<NavigateBehaviour>(e).path.size() == 1) {
           ai.state = BeaconCaptureAI::State::shoot_beacon;
           const float speed = reg.get<VelocityLimit>(e).vel;
-          reg.assign<OrbitBehaviour>(e, 10.0f, speed);
-          reg.assign_or_replace<AimBehaviour>(e, AimBehaviour{AimLevel::aim_pos});
+          reg.emplace<OrbitBehaviour>(e, 10.0f, speed);
+          reg.emplace_or_replace<AimBehaviour>(e, AimLevel::aim_pos);
           reg.remove_if_exists<PacifistBehaviour>(e);
           reg.remove<NavigateBehaviour>(e);
           reg.get<Target>(e).e = ai.beacon;
@@ -133,21 +133,19 @@ void thinkBeaconCapture(entt::registry &reg) {
           ai.state = BeaconCaptureAI::State::idle;
           reg.remove<NavigateBehaviour>(e);
           reg.remove_if_exists<AimBehaviour>(e);
-          reg.assign_or_replace<PacifistBehaviour>(e);
-          reg.assign<IdleBehaviour>(e);
+          reg.emplace_or_replace<PacifistBehaviour>(e);
+          reg.emplace<IdleBehaviour>(e);
           reg.get<Target>(e).e = entt::null;
         } else {
           entt::entity &target = reg.get<Target>(e).e;
           target = findNearestEnemyShip(reg, e, true);
           if (target == entt::null) {
             reg.remove_if_exists<AimBehaviour>(e);
-            reg.assign_or_replace<PacifistBehaviour>(e);
+            reg.emplace_or_replace<PacifistBehaviour>(e);
             reg.get<NavigateBehaviour>(e).look = true;
           } else {
-            // TODO: Update this when updating EnTT
-            // https://github.com/skypjack/entt/commit/17d96427ea4e7120c98f2eb6b36a5ed9c9e1e650
             reg.remove_if_exists<PacifistBehaviour>(e);
-            reg.assign_or_replace<AimBehaviour>(e, AimBehaviour{AimLevel::aim_ahead});
+            reg.emplace_or_replace<AimBehaviour>(e, AimLevel::aim_ahead);
             reg.get<NavigateBehaviour>(e).look = false;
           }
         }
@@ -157,10 +155,10 @@ void thinkBeaconCapture(entt::registry &reg) {
         // should do findNearestEnemyShip(reg, e, false);
         if (!suitableTargetBeacon(reg, e)) {
           ai.state = BeaconCaptureAI::State::idle;
-          reg.assign<IdleBehaviour>(e);
+          reg.emplace<IdleBehaviour>(e);
           reg.remove<OrbitBehaviour>(e);
           reg.remove_if_exists<AimBehaviour>(e);
-          reg.assign<PacifistBehaviour>(e);
+          reg.emplace<PacifistBehaviour>(e);
         }
         break;
     }

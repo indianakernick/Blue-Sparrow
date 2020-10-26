@@ -52,7 +52,7 @@ void setArenaPhysics(
     body->CreateFixture(&fixDef);
   }
   
-  reg.assign<Physics>(e, body, width, height);
+  reg.emplace<Physics>(e, body, width, height);
 }
 
 void setSmallShipPhysics(entt::registry &reg, const entt::entity e, const Team team) {
@@ -77,7 +77,7 @@ void setSmallShipPhysics(entt::registry &reg, const entt::entity e, const Team t
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
-  reg.assign<Physics>(e, body, halfWidth * 2.0f, halfHeight * 2.0f);
+  reg.emplace<Physics>(e, body, halfWidth * 2.0f, halfHeight * 2.0f);
 }
 
 void setSmallBoltPhysics(entt::registry &reg, const entt::entity e, const Team team) {
@@ -101,7 +101,7 @@ void setSmallBoltPhysics(entt::registry &reg, const entt::entity e, const Team t
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
-  reg.assign<Physics>(e, body, halfWidth * 2.0f, halfHeight * 2.0f);
+  reg.emplace<Physics>(e, body, halfWidth * 2.0f, halfHeight * 2.0f);
 }
 
 void setSmallMissilePhysics(entt::registry &reg, const entt::entity e, const Team team) {
@@ -125,7 +125,7 @@ void setSmallMissilePhysics(entt::registry &reg, const entt::entity e, const Tea
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
-  reg.assign<Physics>(e, body, halfWidth * 2.0f, halfHeight * 2.0f);
+  reg.emplace<Physics>(e, body, halfWidth * 2.0f, halfHeight * 2.0f);
 }
 
 void setAsteroidPhysics(entt::registry &reg, const entt::entity e) {
@@ -147,7 +147,7 @@ void setAsteroidPhysics(entt::registry &reg, const entt::entity e) {
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
-  reg.assign<Physics>(e, body, halfWidth * 2.0f, halfHeight * 2.0f);
+  reg.emplace<Physics>(e, body, halfWidth * 2.0f, halfHeight * 2.0f);
 }
 
 void setDropPhysics(entt::registry &reg, const entt::entity e) {
@@ -167,7 +167,7 @@ void setDropPhysics(entt::registry &reg, const entt::entity e) {
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
-  reg.assign<Physics>(e, body, halfSize * 2.0f, halfSize * 2.0f);
+  reg.emplace<Physics>(e, body, halfSize * 2.0f, halfSize * 2.0f);
 }
 
 void setBeaconPhysics(entt::registry &reg, const entt::entity e) {
@@ -187,7 +187,7 @@ void setBeaconPhysics(entt::registry &reg, const entt::entity e) {
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
-  reg.assign<Physics>(e, body, halfSize * 2.0f, halfSize * 2.0f);
+  reg.emplace<Physics>(e, body, halfSize * 2.0f, halfSize * 2.0f);
 }
 
 void setWallPhysics(
@@ -209,7 +209,7 @@ void setWallPhysics(
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
-  reg.assign<Physics>(e, body, width, height);
+  reg.emplace<Physics>(e, body, width, height);
 }
 
 void setDebugPointPhysics(entt::registry &reg, const entt::entity e) {
@@ -227,5 +227,5 @@ void setDebugPointPhysics(entt::registry &reg, const entt::entity e) {
   
   b2Body *body = reg.ctx<b2World>().CreateBody(&bodyDef);
   body->CreateFixture(&fixDef);
-  reg.assign<Physics>(e, body, halfSize * 2.0f, halfSize * 2.0f);
+  reg.emplace<Physics>(e, body, halfSize * 2.0f, halfSize * 2.0f);
 }

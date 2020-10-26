@@ -118,7 +118,7 @@ MapInfo makeMap0(entt::registry &reg) {
   setTransform(reg, scout, {-29.0f * scale, 0.0f}, 0.0f);*/
   
   /*reg.remove<BeaconCaptureAI>(scout);
-  reg.assign<NavigateBehaviour>(
+  reg.emplace<NavigateBehaviour>(
     scout,
     //29.0f * scale, 19.0f * scale,
     29.0f * scale, 0.0f,

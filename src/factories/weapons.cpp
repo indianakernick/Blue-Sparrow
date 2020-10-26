@@ -20,24 +20,24 @@
 entt::entity makeBolt(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
   setSmallBoltPhysics(reg, e, team);
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{255, 0, 0});
-  reg.assign<ExpireTimer>(e, SDL_GetTicks() + 5000);
-  reg.assign<Team>(e, team);
-  reg.assign<Type>(e, Type::bullet);
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e, Sprite{255, 0, 0});
+  reg.emplace<ExpireTimer>(e, SDL_GetTicks() + 5000);
+  reg.emplace<Team>(e, team);
+  reg.emplace<Type>(e, Type::bullet);
   return e;
 }
 
 entt::entity makeMissile(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
   setSmallMissilePhysics(reg, e, team);
-  reg.assign<MissileAI>(e);
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{191, 191, 191});
-  reg.assign<ExpireTimer>(e, SDL_GetTicks() + 15000);
-  reg.assign<Target>(e);
-  reg.assign<MotionCommand>(e);
-  reg.assign<Team>(e, team);
-  reg.assign<Type>(e, Type::bullet);
+  reg.emplace<MissileAI>(e);
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e, Sprite{191, 191, 191});
+  reg.emplace<ExpireTimer>(e, SDL_GetTicks() + 15000);
+  reg.emplace<Target>(e);
+  reg.emplace<MotionCommand>(e);
+  reg.emplace<Team>(e, team);
+  reg.emplace<Type>(e, Type::bullet);
   return e;
 }

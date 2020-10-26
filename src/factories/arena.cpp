@@ -17,43 +17,43 @@
 entt::entity makeArena(entt::registry &reg, const float width, const float height) {
   entt::entity e = reg.create();
   setArenaPhysics(reg, e, width, height);
-  reg.assign<SpriteRect>(e);
-  reg.assign<BackgroundSprite>(e);
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<BackgroundSprite>(e);
   return e;
 }
 
 entt::entity makeAsteroid(entt::registry &reg) {
   entt::entity e = reg.create();
   setAsteroidPhysics(reg, e);
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{129, 76, 38});
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e, Sprite{129, 76, 38});
   return e;
 }
 
 entt::entity makeCoin(entt::registry &reg) {
   entt::entity e = reg.create();
   setDropPhysics(reg, e);
-  reg.assign<Coin>(e);
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{255, 255, 0});
+  reg.emplace<Coin>(e);
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e, Sprite{255, 255, 0});
   return e;
 }
 
 entt::entity makeAmmo(entt::registry &reg) {
   entt::entity e = reg.create();
   setDropPhysics(reg, e);
-  reg.assign<Ammo>(e);
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{191, 191, 191});
+  reg.emplace<Ammo>(e);
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e, Sprite{191, 191, 191});
   return e;
 }
 
 entt::entity makeScrap(entt::registry &reg) {
   entt::entity e = reg.create();
   setDropPhysics(reg, e);
-  reg.assign<Scrap>(e);
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{63, 63, 63});
+  reg.emplace<Scrap>(e);
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e, Sprite{63, 63, 63});
   return e;
 }
 
@@ -81,25 +81,25 @@ entt::entity makeBeacon(entt::registry &reg, const BeaconState state, const int 
       break;
   }
   
-  reg.assign<Beacon>(e, beacon);
-  reg.assign<BarRect>(e);
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e);
+  reg.emplace<Beacon>(e, beacon);
+  reg.emplace<BarRect>(e);
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e);
   return e;
 }
 
 entt::entity makeWall(entt::registry &reg, const float width, const float height) {
   entt::entity e = reg.create();
   setWallPhysics(reg, e, width, height);
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{191, 191, 191});
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e, Sprite{191, 191, 191});
   return e;
 }
 
 entt::entity makeDebugPoint(entt::registry &reg) {
   entt::entity e = reg.create();
   setDebugPointPhysics(reg, e);
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, Sprite{255, 0, 255});
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e, Sprite{255, 0, 255});
   return e;
 }

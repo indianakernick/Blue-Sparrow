@@ -9,6 +9,7 @@
 #include "behave.hpp"
 
 #include <queue>
+#include <cmath>
 #include <box2d/b2_body.h>
 #include <SDL2/SDL_timer.h>
 #include <box2d/b2_world.h>

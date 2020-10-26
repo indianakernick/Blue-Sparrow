@@ -150,14 +150,14 @@ bool motionUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
 
 void setMotion(entt::registry &reg, const entt::entity e, const int level) {
   assert(level < int{std::size(motionParams)});
-  reg.assign<MotionParams>(e, motionParams[level]);
-  reg.assign<VelocityLimit>(e, motionParams[level].speed);
-  reg.assign<MotionCommand>(e);
+  reg.emplace<MotionParams>(e, motionParams[level]);
+  reg.emplace<VelocityLimit>(e, motionParams[level].speed);
+  reg.emplace<MotionCommand>(e);
 }
 
 void setUpgradableMotion(entt::registry &reg, const entt::entity e, const int level) {
   setMotion(reg, e, level);
-  reg.assign<MotionUpgrade>(e, motionUpgrades[level]);
+  reg.emplace<MotionUpgrade>(e, motionUpgrades[level]);
 }
 
 bool upgradeBlaster(entt::registry &reg) {
@@ -170,14 +170,14 @@ bool blasterUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
 
 void setBlaster(entt::registry &reg, const entt::entity e, const int level) {
   assert(level < int{std::size(blasterParams)});
-  reg.assign<BlasterParams>(e, blasterParams[level]);
-  reg.assign<BlasterTimer>(e, std::uint32_t{});
-  reg.assign<BlasterCommand>(e);
+  reg.emplace<BlasterParams>(e, blasterParams[level]);
+  reg.emplace<BlasterTimer>(e, std::uint32_t{});
+  reg.emplace<BlasterCommand>(e);
 }
 
 void setUpgradableBlaster(entt::registry &reg, const entt::entity e, const int level) {
   setBlaster(reg, e, level);
-  reg.assign<BlasterUpgrade>(e, blasterUpgrades[level]);
+  reg.emplace<BlasterUpgrade>(e, blasterUpgrades[level]);
 }
 
 bool upgradeMissile(entt::registry &reg) {
@@ -190,15 +190,15 @@ bool missileUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
 
 void setMissile(entt::registry &reg, const entt::entity e, const int level) {
   assert(level < int{std::size(missileParams)});
-  reg.assign<MissileParams>(e, missileParams[level]);
-  reg.assign<MissileCommand>(e);
-  reg.assign<MissileTimer>(e, std::uint32_t{});
-  reg.assign<MissileAmmo>(e, 0);
+  reg.emplace<MissileParams>(e, missileParams[level]);
+  reg.emplace<MissileCommand>(e);
+  reg.emplace<MissileTimer>(e, std::uint32_t{});
+  reg.emplace<MissileAmmo>(e, 0);
 }
 
 void setUpgradableMissile(entt::registry &reg, const entt::entity e, const int level) {
   setMissile(reg, e, level);
-  reg.assign<MissileUpgrade>(e, missileUpgrades[level]);
+  reg.emplace<MissileUpgrade>(e, missileUpgrades[level]);
 }
 
 bool upgradeHull(entt::registry &reg) {
@@ -222,12 +222,12 @@ bool hullUpgradeInfo(entt::registry &reg, UpgradeInfo &info) {
 
 void setHull(entt::registry &reg, const entt::entity e, const int level) {
   assert(level < int{std::size(hullParams)});
-  reg.assign<Hull>(e, hullParams[level].durability);
-  reg.assign<HullParams>(e, hullParams[level]);
-  reg.assign<BarRect>(e);
+  reg.emplace<Hull>(e, hullParams[level].durability);
+  reg.emplace<HullParams>(e, hullParams[level]);
+  reg.emplace<BarRect>(e);
 }
 
 void setUpgradableHull(entt::registry &reg, const entt::entity e, const int level) {
   setHull(reg, e, level);
-  reg.assign<HullUpgrade>(e, hullUpgrades[level]);
+  reg.emplace<HullUpgrade>(e, hullUpgrades[level]);
 }

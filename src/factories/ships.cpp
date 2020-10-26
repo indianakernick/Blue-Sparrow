@@ -31,7 +31,7 @@ entt::entity makePlayer(entt::registry &reg, const bool god) {
   setUpgradableMotion(reg, e, 0);
   setUpgradableBlaster(reg, e, 0);
   setUpgradableMissile(reg, e, 0);
-  reg.assign<ViewDistance>(e, 30.0f);
+  reg.emplace<ViewDistance>(e, 30.0f);
   
   if (god) {
     reg.get<MissileAmmo>(e).n = 1000;
@@ -45,7 +45,7 @@ entt::entity makePlayer(entt::registry &reg, const bool god) {
 entt::entity makeScout(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
   if (team == Team::enemy) {
-    reg.assign<Drops>(e, 4, 5, 0, 1, 3, 5);
+    reg.emplace<Drops>(e, 4, 5, 0, 1, 3, 5);
   }
   setHull(reg, e, 0);
   setShip(reg, e, team);
@@ -54,14 +54,14 @@ entt::entity makeScout(entt::registry &reg, const Team team) {
   setScoutSprite(reg, e, team);
   setMotion(reg, e, 0);
   setBlaster(reg, e, 0);
-  reg.assign<ViewDistance>(e, 30.0f);
+  reg.emplace<ViewDistance>(e, 30.0f);
   return e;
 }
 
 entt::entity makeSniper(entt::registry &reg, const Team team) {
   entt::entity e = reg.create();
   if (team == Team::enemy) {
-    reg.assign<Drops>(e, 10, 14, 0, 2, 4, 6);
+    reg.emplace<Drops>(e, 10, 14, 0, 2, 4, 6);
   }
   setHull(reg, e, 0);
   setShip(reg, e, team);
@@ -70,39 +70,39 @@ entt::entity makeSniper(entt::registry &reg, const Team team) {
   setSniperBehave(reg, e);
   setSniperMotion(reg, e);
   setSniperBlaster(reg, e);
-  reg.assign<ViewDistance>(e, 50.0f);
+  reg.emplace<ViewDistance>(e, 50.0f);
   return e;
 }
 
 void setShip(entt::registry &reg, const entt::entity e, const Team team) {
-  reg.assign<Team>(e, team);
-  reg.assign<Type>(e, Type::ship);
+  reg.emplace<Team>(e, team);
+  reg.emplace<Type>(e, Type::ship);
 }
 
 void setPlayer(entt::registry &reg, const entt::entity e) {
-  reg.assign<CameraFocus>(e);
-  reg.assign<KeyInput>(e);
-  reg.assign<MouseInput>(e);
-  reg.assign<AimAssist>(e);
-  reg.assign<Coins>(e, 0);
+  reg.emplace<CameraFocus>(e);
+  reg.emplace<KeyInput>(e);
+  reg.emplace<MouseInput>(e);
+  reg.emplace<AimAssist>(e);
+  reg.emplace<Coins>(e, 0);
 }
 
 void setBeaconCaptureAI(entt::registry &reg, const entt::entity e) {
-  reg.assign<BeaconCaptureAI>(e);
-  reg.assign<Target>(e);
+  reg.emplace<BeaconCaptureAI>(e);
+  reg.emplace<Target>(e);
 }
 
 void setSniperBehave(entt::registry &reg, const entt::entity e) {
-  reg.assign<SniperAI>(e);
+  reg.emplace<SniperAI>(e);
   AimBehaviour aim;
   aim.level = AimLevel::aim_ahead;
   aim.rotateThreshold = 0.1f;
   aim.fireThreshold = b2_pi / 16.0f;
-  reg.assign<AimBehaviour>(e, aim);
+  reg.emplace<AimBehaviour>(e, aim);
   StationaryBehaviour still;
   still.moveThreshold = 0.2f;
-  reg.assign<StationaryBehaviour>(e, still);
-  reg.assign<Target>(e);
+  reg.emplace<StationaryBehaviour>(e, still);
+  reg.emplace<Target>(e);
 }
 
 namespace {
@@ -117,13 +117,13 @@ Sprite teamSprite(const Team team) {
 }
 
 void setScoutSprite(entt::registry &reg, const entt::entity e, const Team team) {
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, teamSprite(team));
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e, teamSprite(team));
 }
 
 void setSniperSprite(entt::registry &reg, const entt::entity e, const Team team) {
-  reg.assign<SpriteRect>(e);
-  reg.assign<Sprite>(e, teamSprite(team));
+  reg.emplace<SpriteRect>(e);
+  reg.emplace<Sprite>(e, teamSprite(team));
 }
 
 void setSniperMotion(entt::registry &reg, const entt::entity e) {
@@ -133,9 +133,9 @@ void setSniperMotion(entt::registry &reg, const entt::entity e) {
   motionParams.lateralForce = 150.0f;
   motionParams.turnTorque = 100.0f;
   motionParams.speed = 15.0f;
-  reg.assign<MotionParams>(e, motionParams);
-  reg.assign<MotionCommand>(e);
-  reg.assign<VelocityLimit>(e, 15.0f);
+  reg.emplace<MotionParams>(e, motionParams);
+  reg.emplace<MotionCommand>(e);
+  reg.emplace<VelocityLimit>(e, 15.0f);
 }
 
 void setSniperBlaster(entt::registry &reg, const entt::entity e) {
@@ -144,9 +144,9 @@ void setSniperBlaster(entt::registry &reg, const entt::entity e) {
   blasterParams.speed = 160.0f;
   blasterParams.damage = 30;
   blasterParams.spread = 0.0f;
-  reg.assign<BlasterParams>(e, blasterParams);
-  reg.assign<BlasterCommand>(e);
-  reg.assign<BlasterTimer>(e, std::uint32_t{});
+  reg.emplace<BlasterParams>(e, blasterParams);
+  reg.emplace<BlasterCommand>(e);
+  reg.emplace<BlasterTimer>(e, std::uint32_t{});
 }
 
 void setSniperPosition(

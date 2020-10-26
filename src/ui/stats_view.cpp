@@ -31,7 +31,7 @@ bool StatsView::event(const SDL_Event &) {
 
 void StatsView::render(SDL_Renderer *, FontCache &cache) {
   auto view = reg.view<Hull, HullParams, Coins, MissileAmmo, CameraFocus>();
-  view.less([&](auto hull, auto params, auto coins, auto ammo) {
+  view.each([&](auto hull, auto params, auto coins, auto ammo, auto) {
     cache.draw(font, 0.0f, 0.0f, "Hull: %d/%d", hull.h, params.durability);
     cache.draw(font, 0.0f, 18.0f, "Coins: %d", coins.c);
     cache.draw(font, 0.0f, 36.0f, "Missiles: %d", ammo.n);

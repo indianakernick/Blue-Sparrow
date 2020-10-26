@@ -74,7 +74,7 @@ void applyBlasterCommands(entt::registry &reg) {
     boltBody->SetTransform(shipPos, shipAngle);
     boltBody->SetLinearVelocity(boltVel);
     phys.body->ApplyLinearImpulseToCenter(-boltBody->GetMass() * boltVel, true);
-    reg.assign<Damage>(bolt, params.damage);
+    reg.emplace<Damage>(bolt, params.damage);
   });
 }
 
@@ -103,11 +103,11 @@ void applyMissileCommands(entt::registry &reg) {
     motionParams.reverseForce = 0.0f;
     motionParams.lateralForce = 0.0f;
     motionParams.turnTorque = params.turnTorque;
-    reg.assign<MotionParams>(missile, motionParams);
+    reg.emplace<MotionParams>(missile, motionParams);
     // TODO: Set velocity limit like this everywhere
-    reg.assign<SeekBehaviour>(missile, params.speed * 1.25f, params.level);
-    reg.assign<VelocityLimit>(missile, params.speed);
-    reg.assign<Damage>(missile, params.damage);
-    reg.assign<ViewDistance>(missile, dist);
+    reg.emplace<SeekBehaviour>(missile, params.speed * 1.25f, params.level);
+    reg.emplace<VelocityLimit>(missile, params.speed);
+    reg.emplace<Damage>(missile, params.damage);
+    reg.emplace<ViewDistance>(missile, dist);
   });
 }
