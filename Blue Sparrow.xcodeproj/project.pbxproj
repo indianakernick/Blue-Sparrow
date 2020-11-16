@@ -49,6 +49,7 @@
 		45C5CA5B23EF9A0C000B554D /* arena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5923EF9A0C000B554D /* arena.cpp */; };
 		45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5CA5D23F0E020000B554D /* collisions.cpp */; };
 		45C5CA6523F22487000B554D /* stars.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 45C5CA6423F22455000B554D /* stars.png */; };
+		45C5DF0E256238C9003F8217 /* scope_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45C5DF0C256238C9003F8217 /* scope_time.cpp */; };
 		45DE83EB23FF69FE000B3F12 /* arena.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45DE83E923FF69FE000B3F12 /* arena.cpp */; };
 		45F6E5F5241738B7004C5B6D /* map_view.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45F6E5F3241738B7004C5B6D /* map_view.cpp */; };
 /* End PBXBuildFile section */
@@ -179,6 +180,8 @@
 		45C5CA6323F107D8000B554D /* physics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physics.hpp; sourceTree = "<group>"; };
 		45C5CA6423F22455000B554D /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
 		45C5CA6923F25263000B554D /* levels.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = levels.hpp; sourceTree = "<group>"; };
+		45C5DF0C256238C9003F8217 /* scope_time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scope_time.cpp; sourceTree = "<group>"; };
+		45C5DF0D256238C9003F8217 /* scope_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = scope_time.hpp; sourceTree = "<group>"; };
 		45DE83E823FF633B000B3F12 /* arena.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = arena.hpp; sourceTree = "<group>"; };
 		45DE83E923FF69FE000B3F12 /* arena.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arena.cpp; sourceTree = "<group>"; };
 		45DE83EA23FF69FE000B3F12 /* arena.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = arena.hpp; sourceTree = "<group>"; };
@@ -248,6 +251,8 @@
 		457DF48023EBF40000405E2D /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				45C5DF0C256238C9003F8217 /* scope_time.cpp */,
+				45C5DF0D256238C9003F8217 /* scope_time.hpp */,
 				45C5CA5123EF8EE2000B554D /* stb_image.c */,
 				45C5CA5023EF8ED5000B554D /* stb_image.h */,
 				457DF48123EBF43300405E2D /* sdl_check.hpp */,
@@ -461,6 +466,7 @@
 				45BC5E6623F664B700A07A57 /* stats_view.cpp in Sources */,
 				45C5CA5F23F0E021000B554D /* collisions.cpp in Sources */,
 				450CDBD623F8F05600CF4CEE /* view.cpp in Sources */,
+				45C5DF0E256238C9003F8217 /* scope_time.cpp in Sources */,
 				45DE83EB23FF69FE000B3F12 /* arena.cpp in Sources */,
 				45BC5E5023F5302900A07A57 /* frame_cap.cpp in Sources */,
 				45BC5E6923F6754100A07A57 /* resource_path.cpp in Sources */,
@@ -593,6 +599,7 @@
 					"$(inherited)",
 					STBI_ONLY_PNG,
 					ENTT_NO_ETO,
+					ENABLE_SCOPE_TIME,
 				);
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
@@ -638,6 +645,7 @@
 					NDEBUG,
 					STBI_ONLY_PNG,
 					ENTT_NO_ETO,
+					ENABLE_SCOPE_TIME,
 				);
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,

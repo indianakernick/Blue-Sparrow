@@ -7,10 +7,12 @@
 //
 
 #include "ui/application.hpp"
+#include "utils/scope_time.hpp"
 
 int main() {
   Application app;
   app.run();
+  SCOPE_TIME_PRINT();
 }
 
 // Code

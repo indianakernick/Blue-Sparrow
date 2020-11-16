@@ -8,7 +8,6 @@
 
 #include "behave.hpp"
 
-#include <queue>
 #include <cmath>
 #include <box2d/b2_body.h>
 #include <SDL2/SDL_timer.h>
@@ -23,6 +22,7 @@
 #include "../utils/physics.hpp"
 #include "../comps/graphics.hpp"
 #include "../comps/behaviour.hpp"
+#include "../utils/scope_time.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
@@ -323,6 +323,8 @@ public:
   }
 
   void find(const b2Vec2 from, const b2Vec2 to) {
+    SCOPE_TIME("PathFinder::find");
+  
     visited.clear();
     unvisited.clear();
     unvisited.push_back({to, to, 0.0f, 0.0f});
@@ -465,6 +467,8 @@ float getSeconds(Clock::duration duration) {
 #endif
 
 void behaveNavigate(entt::registry &reg) {
+  SCOPE_TIME("behaveNavigate");
+
   const MapWalls &map = reg.ctx<MapWalls>();
   PathFinder &finder = reg.ctx_or_set<PathFinder>(map);
   const float scale = map.scale;

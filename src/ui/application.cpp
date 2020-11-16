@@ -18,6 +18,7 @@
 #include "../utils/frame_cap.hpp"
 #include "../utils/sdl_check.hpp"
 #include "../utils/sdl_delete.hpp"
+#include "../utils/scope_time.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
@@ -116,21 +117,32 @@ void Application::run() {
   FrameCap frame{fps};
   
   while (true) {
+    SCOPE_TIME("Frame");
+    
     frame.begin();
     
-    SDL_Event e;
-    while (SDL_PollEvent(&e)) {
-      if (e.type == SDL_QUIT) return;
-      root.event(e);
+    {
+      SCOPE_TIME("Event");
+      SDL_Event e;
+      while (SDL_PollEvent(&e)) {
+        if (e.type == SDL_QUIT) return;
+        root.event(e);
+      }
     }
     
-    root.update(1.0f / fps);
+    {
+      SCOPE_TIME("Update");
+      root.update(1.0f / fps);
+    }
     
-    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), nullptr));
-    SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
-    SDL_CHECK(SDL_RenderClear(renderer.get()));
-    root.render(renderer.get(), cache);
-    SDL_RenderPresent(renderer.get());
+    {
+      SCOPE_TIME("Render");
+      SDL_CHECK(SDL_RenderSetViewport(renderer.get(), nullptr));
+      SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
+      SDL_CHECK(SDL_RenderClear(renderer.get()));
+      root.render(renderer.get(), cache);
+      SDL_RenderPresent(renderer.get());
+    }
     
     frame.end();
   }

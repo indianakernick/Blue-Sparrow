@@ -16,8 +16,11 @@
 #include "collisions.hpp"
 #include "find_target.hpp"
 #include "apply_commands.hpp"
+#include "../utils/scope_time.hpp"
 
 void prePhysicsSystems(entt::registry &reg) {
+  SCOPE_TIME("prePhysicsSystems");
+  
   thinkBeaconCapture(reg);
   thinkSniper(reg);
   thinkMissile(reg);
@@ -39,12 +42,16 @@ void prePhysicsSystems(entt::registry &reg) {
 }
 
 void postPhysicsSystems(entt::registry &reg) {
+  SCOPE_TIME("postPhysicsSystems");
+
   limitVelocity(reg);
   handleCollisions(reg);
   handlePostCollisions(reg);
 }
 
 void cameraSystems(entt::registry &reg, Camera &cam, const SDL_Rect viewport) {
+  SCOPE_TIME("cameraSystems");
+
   updateCameraViewport(cam, viewport);
   moveCamera(reg, cam);
   
