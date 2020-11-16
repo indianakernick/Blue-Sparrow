@@ -20,7 +20,7 @@ void writeSpriteRect(entt::registry &, const Camera &);
 /// Read the position and hull level of ships and update the BarRect
 void writeHullBarRect(entt::registry &, const Camera &);
 
-/// Read the position and health of beacons and update the BarREct
+/// Read the position and health of beacons and update the BarRect
 void writeBeaconBarRect(entt::registry &, const Camera &);
 
 /// Move the Camera to focus on the object with CameraFocus
