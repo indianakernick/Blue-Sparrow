@@ -14,8 +14,10 @@
 #include <entt/entity/registry.hpp>
 
 void expireTemporary(entt::registry &reg) {
+  // TODO: Could sort timers
+  const std::uint32_t now = SDL_GetTicks();
   entt::each(reg, [&](entt::entity e, ExpireTimer timer) {
-    if (SDL_TICKS_PASSED(SDL_GetTicks(), timer.done)) {
+    if (SDL_TICKS_PASSED(now, timer.done)) {
       reg.destroy(e);
     }
   });
