@@ -114,15 +114,19 @@ MapInfo makeMap0(entt::registry &reg) {
   initializeEnemies(reg, enemySpawn, teamSize);
   makeArena(reg, info.width, info.height);
   
-  /*entt::entity scout = makeScout(reg, Team::ally);
-  setTransform(reg, scout, {-29.0f * scale, 0.0f}, 0.0f);*/
+  /*setTransform(reg, makePlayer(reg, true), allySpawn, 0.0f);
   
-  /*reg.remove<BeaconCaptureAI>(scout);
+  entt::entity scout = makeScout(reg, Team::ally);
+  setTransform(reg, scout, {-29.0f * scale, 0.0f}, 0.0f);
+  
+  reg.remove<BeaconCaptureAI>(scout);
   reg.emplace<NavigateBehaviour>(
     scout,
-    //29.0f * scale, 19.0f * scale,
-    29.0f * scale, 0.0f,
+    //b2Vec2{29.0f * scale, 19.0f * scale},
+    //b2Vec2{29.0f * scale, 0.0f},
+    b2Vec2{0.0f, -13.0f * scale},
     std::vector<b2Vec2>(),
+    0u, true,
     makeDebugPoint(reg), makeDebugPoint(reg)
   );*/
   
@@ -130,9 +134,9 @@ MapInfo makeMap0(entt::registry &reg) {
   setSniperPosition(reg, sniper, 6.0f * scale, 0.0f);
   setTransform(reg, sniper, {6.0f * scale, 0.0f}, b2_pi);
   
-  //entt::entity rock = makeAsteroid(reg);
-  //setTransform(reg, rock, {0.0f, 0.0f}, 1.0f);
-  //setMotion(reg, rock, {1.0f, 1.3f}, 0.1f);
+  /*entt::entity rock = makeAsteroid(reg);
+  setTransform(reg, rock, {0.0f, 0.0f}, 1.0f);
+  setMotion(reg, rock, {1.0f, 1.3f}, 0.1f);*/
 
   return info;
 }

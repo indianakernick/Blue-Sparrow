@@ -299,150 +299,112 @@ void behaveMouse(entt::registry &reg) {
   });
 }
 
+#define DEBUG_NAVIGATE 0
+
+#if DEBUG_NAVIGATE
+
 #include <chrono>
 #include <iostream>
 
+#endif
+
 namespace {
 
-template <typename Vec>
-struct Node {
-  Vec pos;
-  Vec prev;
-  float steps;
-  float cost;
-};
-
-template <typename Vec>
-struct CompareNodes {
-  bool operator()(const Node<Vec> &lhs, const Node<Vec> &rhs) const noexcept {
-    return lhs.cost > rhs.cost;
-  }
-};
-
-template <typename Vec>
-struct NodeQueue : std::priority_queue<Node<Vec>, std::vector<Node<Vec>>, CompareNodes<Vec>> {
-  using NodeQueue::priority_queue::c;
-};
-
-/*
-struct Policy {
-  // a type that represents a 2D position
-  // should support comparison and addition
-  using Vec = ...
-
-  // how many steps does it take to move in this direction?
-  float steps(Vec) const;
-  // what is the distance between these points?
-  float distance(Vec, Vec) const;
-  // what is the cost for turning from one direction to another?
-  float turn(Vec, Vec) const;
-  // is it possible to walk to this point by walking in this direction?
-  bool walkable(Vec, Vec) const;
-  // get a range of Vecs pointing at the neighbors
-  range<Vec> neighbors() const;
-  
-  // this node is now being processed
-  // (makes it possible to get list of points that make up the path)
-  void next(const Node &);
-  
-  // no path was found
-  void fail();
-  // a path was found
-  void succeed(Node &);
-};
-*/
-
-template <typename Policy>
-void astar(Policy &policy, const typename Policy::Vec from, const typename Policy::Vec to) {
-  // TODO: this function never returns when there is no route
-  
-  NodeQueue<typename Policy::Vec> queue;
-  queue.push({to, to, 0, policy.distance(from, to)});
-  
-  while (true) {
-    if (queue.empty()) {
-      policy.fail();
-      return;
-    } else if (queue.top().pos == from) {
-      policy.succeed(queue.top());
-      return;
-    }
-    
-    const Node top = queue.top();
-    queue.pop();
-    policy.next(top);
-    
-    for (const auto dir : policy.neighbors()) {
-      const auto neighborPos = top.pos + dir;
-      if (neighborPos == top.prev) continue;
-      if (!policy.walkable(neighborPos, dir)) continue;
-      
-      const float neighborSteps = top.steps + policy.steps(dir);
-      const float neighborDist = policy.distance(neighborPos, from);
-      const float neighborTurn = policy.turn(top.pos - top.prev, neighborPos - top.pos);
-      const float neighborCost = neighborSteps + neighborDist + neighborTurn;
-      
-      // http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1021r2.html
-      const Node<typename Policy::Vec> neighbor = {
-        neighborPos,
-        top.pos,
-        neighborSteps,
-        neighborCost
-      };
-      bool found = false;
-      
-      for (auto n = queue.c.begin(); n != queue.c.end(); ++n) {
-        if (n->pos == neighborPos) {
-          found = true;
-          if (neighbor.steps < n->steps) {
-            // TODO: Remove n from the queue
-            queue.push(neighbor);
-          }
-          break;
-        }
-      }
-      
-      if (!found) {
-        queue.push(neighbor);
-      }
-    }
-  }
+float angleBetween(const b2Vec2 a, const b2Vec2 b) {
+  return std::acos(b2Dot(normalized(a), normalized(b)));
 }
 
-using NextPos = std::array<b2Vec2, 2>;
-
-class Policy {
+/// Implementation of A* search algorithm.
+class PathFinder {
 public:
-  using Vec = b2Vec2;
-  using Node = Node<Vec>;
+  explicit PathFinder(const MapWalls &map)
+    : map{map} {
+    steps.resize(map.width * map.height);
+  }
 
-  static float steps(const Vec dir) {
-    // TODO: Path finding is slow
-    // Multiplying this by 4 improves the paths
-    // However, this also turns A* into Dijkstra's algorithm which degrades
-    // performance dramatically
-    return dir.Length();
-  }
-  static float distance(const Vec a, const Vec b) {
-    return b2Distance(a, b);
-  }
-  static float turn(const Vec a, const Vec b) {
-    return std::acos(b2Dot(normalized(a), normalized(b))) * 0.05f;
-  }
-  
-  bool wall(const Vec pos) const {
-    if (pos.x < 0 || pos.y < 0) return true;
-    if (pos.x >= map.width || pos.y >= map.height) return true;
-    return map.data[pos.y * map.width + pos.x];
-  }
-  bool walkable(const Vec to, const Vec dir) const {
-    if (b2Abs(dir) == b2Vec2{1.0f, 1.0f}) {
-      if (wall({to.x - dir.x, to.y}) || wall({to.x, to.y - dir.y})) return false;
+  void find(const b2Vec2 from, const b2Vec2 to) {
+    visited.clear();
+    unvisited.clear();
+    unvisited.push_back({to, to, 0.0f, 0.0f});
+    std::fill(steps.begin(), steps.end(), std::numeric_limits<float>::infinity());
+    getSteps(to) = 0.0f;
+    
+    while (!unvisited.empty()) {
+      const Node top = unvisited.front();
+      visited.push_back(top);
+      if (top.pos == from) return;
+      std::pop_heap(unvisited.begin(), unvisited.end());
+      unvisited.pop_back();
+      
+      for (const b2Vec2 dir : neighbors) {
+        const b2Vec2 neighborPos = top.pos + dir;
+        if (neighborPos == top.prev) continue;
+        if (!isWalkable(neighborPos, dir)) continue;
+        
+        const float neighborSteps = top.steps + calcSteps(dir);
+        const float neighborDist = calcDistance(neighborPos, from);
+        const float neighborTurn = calcTurn(top.pos - top.prev, neighborPos - top.pos);
+        const float neighborCost = neighborSteps + neighborDist + neighborTurn;
+        
+        float &oldSteps = getSteps(neighborPos);
+        if (neighborSteps < oldSteps) {
+          if (oldSteps != std::numeric_limits<float>::infinity()) {
+            for (auto n = unvisited.begin(); n != unvisited.end(); ++n) {
+              if (n->pos == neighborPos) {
+                n->prev = top.pos;
+                n->steps = neighborSteps;
+                n->cost = neighborCost;
+                std::push_heap(unvisited.begin(), std::next(n));
+                goto Found;
+              }
+            }
+          }
+          
+          unvisited.push_back({neighborPos, top.pos, neighborSteps, neighborCost});
+          std::push_heap(unvisited.begin(), unvisited.end());
+          Found:
+          oldSteps = neighborSteps;
+        }
+      }
     }
-    return !wall(to);
+    
+    // No path found
+    assert(false);
   }
+
+  template <typename Func>
+  void eachPosition(Func func) const {
+    #if DEBUG_NAVIGATE
+    std::cout << "Path length: " << visited.back().steps << '\n';
+    #endif
+    
+    b2Vec2 prev = visited.back().prev;
+    for (auto n = visited.crbegin(); n != visited.crend(); ++n) {
+      if (n->pos == prev) {
+        func(n->pos);
+        prev = n->prev;
+      }
+    }
+  }
+
+private:
+  struct Node {
+    b2Vec2 pos;
+    b2Vec2 prev;
+    float steps;
+    float cost;
+    
+    bool operator<(const Node &other) const {
+      return cost > other.cost;
+    }
+  };
+
+  const MapWalls &map;
+  std::vector<Node> visited;
+  std::vector<Node> unvisited;
+  std::vector<float> steps;
   
-  static inline const b2Vec2 neighborArray[] = {
+  static inline const b2Vec2 neighbors[8] = {
     {0.0f, -1.0f},
     {1.0f, -1.0f},
     {1.0f, 0.0f},
@@ -453,49 +415,41 @@ public:
     {-1.0f, -1.0f}
   };
   
-  static const auto &neighbors() {
-    return neighborArray;
+  static float calcSteps(const b2Vec2 dir) {
+    return dir.Length();
   }
   
-  void next(const Node &node) {
-    nodes.push_back(node);
+  static float calcDistance(const b2Vec2 a, const b2Vec2 b) {
+    return b2Distance(a, b);
   }
   
-  void fail() {
-    assert(false);
-  }
-  void succeed(const Node &node) {
-    std::cout << "Path length: " << node.steps << '\n';
-    nodes.push_back(node);
+  static float calcTurn(const b2Vec2 prevDir, const b2Vec2 nextDir) {
+    return angleBetween(prevDir, nextDir) * 0.1f;
   }
   
-  explicit Policy(const MapWalls &map)
-    : map{map} {}
-  
-  void init() {
-    nodes.clear();
+  bool isWall(const b2Vec2 pos) const {
+    if (pos.x < 0 || pos.y < 0) return true;
+    if (pos.x >= map.width || pos.y >= map.height) return true;
+    return map.data[pos.y * map.width + pos.x];
   }
   
-  template <typename Func>
-  void eachPosition(Func func) const {
-    b2Vec2 prev = nodes.back().prev;
-    for (auto n = nodes.crbegin(); n != nodes.crend(); ++n) {
-      const auto &node = *n;
-      if (node.pos == prev) {
-        func(node.pos);
-        prev = node.prev;
-      }
+  bool isWalkable(const b2Vec2 to, const b2Vec2 dir) const {
+    if (b2Abs(dir) == b2Vec2{1.0f, 1.0f}) {
+      if (isWall({to.x - dir.x, to.y}) || isWall({to.x, to.y - dir.y})) return false;
     }
+    return !isWall(to);
   }
-
-private:
-  const MapWalls &map;
-  std::vector<Node> nodes;
+  
+  float &getSteps(const b2Vec2 pos) {
+    return steps[pos.y * map.width + pos.x];
+  }
 };
 
-float angleBetween(const b2Vec2 a, const b2Vec2 b) {
-  return std::acos(b2Dot(normalized(a), normalized(b)));
 }
+
+#if DEBUG_NAVIGATE
+
+namespace {
 
 using Clock = std::chrono::system_clock;
 Clock::time_point start, end;
@@ -508,9 +462,11 @@ float getSeconds(Clock::duration duration) {
 
 }
 
+#endif
+
 void behaveNavigate(entt::registry &reg) {
   const MapWalls &map = reg.ctx<MapWalls>();
-  Policy policy{map};
+  PathFinder &finder = reg.ctx_or_set<PathFinder>(map);
   const float scale = map.scale;
   const float invScale = 1.0f / scale;
   const b2Vec2 center = {map.width / 2.0f, map.height / 2.0f};
@@ -528,13 +484,17 @@ void behaveNavigate(entt::registry &reg) {
     return invScale * pos;
   };
   
+  const std::uint32_t now = SDL_GetTicks();
   entt::each(reg, [&](Physics phys, MotionCommand &motion, MotionParams params, NavigateBehaviour &behave) {
     const b2Vec2 shipPos = phys.body->GetPosition();
     
-    if (SDL_TICKS_PASSED(SDL_GetTicks(), behave.timeout)) {
+    if (SDL_TICKS_PASSED(now, behave.timeout)) {
       behave.path.clear();
-      behave.timeout = SDL_GetTicks() + 1500;
+      behave.timeout = now + 1500;
+      
+      #if DEBUG_NAVIGATE
       std::cout << "Retry\n";
+      #endif
     }
     
     if (behave.path.empty()) {
@@ -543,25 +503,34 @@ void behaveNavigate(entt::registry &reg) {
       if (fromPos == toPos) {
         behave.path.push_back(floorPos(behave.target));
       } else {
-        policy.init();
+        #if DEBUG_NAVIGATE
         Clock::time_point astarStart = Clock::now();
-        astar(policy, fromPos, toPos);
+        #endif
+        
+        finder.find(fromPos, toPos);
+        
+        #if DEBUG_NAVIGATE
         Clock::time_point astarEnd = Clock::now();
-        policy.eachPosition([&](const b2Vec2 pos) {
+        std::cout << "A* " << std::chrono::duration_cast<std::chrono::microseconds>(astarEnd - astarStart).count() << "us\n";
+        #endif
+        
+        finder.eachPosition([&](const b2Vec2 pos) {
           behave.path.push_back(worldPos(pos));
         });
-        std::cout << "A* " << std::chrono::duration_cast<std::chrono::milliseconds>(astarEnd - astarStart).count() << "ms\n";
       }
+      
+      #if DEBUG_NAVIGATE
       start = Clock::now();
+      #endif
     }
     
     if (behave.path.size() > 1) {
-      if (b2DistanceSquared(shipPos, behave.path[0]) < 4.0f) {
+      if (b2DistanceSquared(shipPos, behave.path[0]) < 2.0f * 2.0f) {
         behave.path.erase(behave.path.begin());
-        behave.timeout = SDL_GetTicks() + 1500;
-      } else if (b2DistanceSquared(shipPos, behave.path[1]) < 36.0f) {
+        behave.timeout = now + 1500;
+      } else if (b2DistanceSquared(shipPos, behave.path[1]) < 6.0f * 6.0f) {
         behave.path.erase(behave.path.begin());
-        behave.timeout = SDL_GetTicks() + 1500;
+        behave.timeout = now + 1500;
       }
     }
     
@@ -572,14 +541,18 @@ void behaveNavigate(entt::registry &reg) {
       if (angle < b2_pi / 3.0f) {
         desiredVel = scaleToLength(desiredVel, 1.05f * params.speed);
       }
-    } else {
+    }
+    
+    #if DEBUG_NAVIGATE
+    else {
       if (!std::exchange(done, true)) {
         end = Clock::now();
         std::cout << "Travel time: " << getSeconds(end - start) << " seconds\n";
       }
     }
+    #endif
     
-    // TODO: Remove these
+    #if DEBUG_NAVIGATE
     if (behave.debug0 != entt::null) {
       reg.get<Physics>(behave.debug0).body->SetTransform(behave.path[0], 0.0f);
     }
@@ -587,6 +560,7 @@ void behaveNavigate(entt::registry &reg) {
       const b2Vec2 point = behave.path.size() > 1 ? behave.path[1] : behave.path[0];
       reg.get<Physics>(behave.debug1).body->SetTransform(point, 0.0f);
     }
+    #endif
     
     const b2Vec2 accel = desiredVel - phys.body->GetLinearVelocity();
     const b2Vec2 forwardDir = angleMag(phys.body->GetAngle(), 1.0f);

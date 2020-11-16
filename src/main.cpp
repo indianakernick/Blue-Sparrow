@@ -15,6 +15,10 @@ int main() {
 
 // Code
 //   Should we abandon entt::each?
+//   Move constants into one place
+//     1500 milliseconds is one example
+//     there are a lot of them
+//   Profiling
 
 // Objects
 //   Turrets
@@ -72,3 +76,4 @@ int main() {
 // CMake
 //   https://cmake.org/cmake/help/v3.11/module/FetchContent.html
 //   https://discourse.libsdl.org/t/deploying-for-macos-how-are-we-supposed-to-do-it/23897
+//   https://github.com/urho3d/Urho3D/tree/master/CMake/Toolchains

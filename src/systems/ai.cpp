@@ -99,6 +99,8 @@ entt::entity findBeacon(entt::registry &reg, const Team team) {
 // TODO: Perhaps there should be a state for navigating with an enemy nearby
 // and navigating without and enemy nearby
 
+// https://www.gamedev.net/articles/programming/artificial-intelligence/the-total-beginners-guide-to-game-ai-r4942/
+
 void thinkBeaconCapture(entt::registry &reg) {
   entt::each(reg, [&](entt::entity e, BeaconCaptureAI &ai) {
     switch (ai.state) {
