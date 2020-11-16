@@ -52,7 +52,9 @@ public:
   ) : reg{reg}, center{center}, team{team}, unobstructed{unobstructed} {}
 
   bool ReportFixture(b2Fixture *fixture) override {
-    const b2Body *body = fixture->GetBody();
+    // TODO: Make this a const body.
+    // Needs to be non-const because GetUserData is missing a const overload
+    b2Body *body = fixture->GetBody();
     const float dist = b2DistanceSquared(center, body->GetPosition());
     if (dist > shortestDist) return true;
     
