@@ -15,27 +15,44 @@ int main() {
   SCOPE_TIME_PRINT();
 }
 
+// Multiplayer?
+
 // Code
 //   Should we abandon entt::each?
 //   Move constants into one place
 //     1500 milliseconds is one example
 //     there are a lot of them
-//   Profiling
 
 // Objects
 //   Turrets
 //     Should beacons shoot?
+//     Activation
+//       shooting (same as beacons)
+//       spending coins (gives coins a use beyond upgrading)
+//     Killing enemies gives the killer coins, ammo and hull
+//     Coins can be used to activate turrets
+//     When turrets destroy ships, the coins either go nowhere or are stored in the turret
+//     Turrets can be destroyed
+//     Maybe they give coins to the killer?
 
 // UI
-//   Might need a minimap
+//   Minimap
 //     Should include the status of the beacons
+//     Show allies
+//     Show enemies that are visible to player or allies
+//     Indicate whether beacons are being attacked
 //   Should the health bar of a beacon indicate ally/enemy/neutral?
+//   Left panel should be hidden and revealed to cover the game view
+//   Show missile target lock
 
 // Game mechanics
 //   Winning and losing
 //   Respawning
 //   Healing over time
 //   Maybe the ability to grab onto asteroids and move them around
+//   A signal to send to team mates
+//     e.g. "come help me" or "go destroy that thing" or "go defend that thing"
+//   Don't drop items on death. Give items to whoever dealt the final blow
 
 // AIs
 //   (for the different roles of a team)
@@ -72,8 +89,13 @@ int main() {
 // Weapons
 //   Drop mines that only effect the enemy
 //     Perhaps fancy mines could have tiny blasters on them
+//     Disappear after a while
 //   Pulsing laser
 //     Bouncing the laser off of mirrors could provide some interesting gameplay
+//   Area of effect weapons (e.g. bombs)
+//   Smart drones that can be spawned and shoot
+//   Dumb drones that spin around and shoot
+//   Missiles that shoot
 
 // CMake
 //   https://cmake.org/cmake/help/v3.11/module/FetchContent.html
