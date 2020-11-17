@@ -21,6 +21,12 @@ int main() {
 // control over the AI players? I mean something like age of empires. Would that
 // even work?
 
+// Perhaps where the game is going is simply not a good idea and not going to
+// work. I need to seriously consider the design before I go any futher. Even if
+// I never finish this game, it's not a waste of time. You would have learnt
+// from it. An obvious example is the path finding. You finally got A* to work
+// correctly and efficiently.
+
 // Code
 //   Should we abandon entt::each?
 //   Move constants into one place
@@ -56,7 +62,10 @@ int main() {
 //     e.g. "come help me" or "go destroy that thing" or "go defend that thing"
 
 // AIs
-//   (for the different roles of a team)
+//   Make AI feel more natural
+//     For example, the orbit behaviour is a dead giveaway that it's a bot
+//     Changing this will be really difficult
+//   Fulfill the different roles of a team
 //   Avoiding walls (missiles should do this)
 //   Dodging (missiles should do this)
 //   Defending
