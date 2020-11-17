@@ -135,11 +135,35 @@ void renderSprite(entt::registry &reg, const DrawCtx ctx) {
   SDL_CHECK(SDL_SetTextureColorMod(ctx.tex, 255, 255, 255));
 }
 
+namespace {
+
+// If something has 1/100 we don't round down to zero
+// Likewise if something has 99/100 we don't round up to full
+int scaleBar(float progress, int width) {
+  if (progress == 0.0f) {
+    return 0;
+  } else if (progress == 1.0f) {
+    return width;
+  }
+
+  const int scaled = progress * width + 0.5f;
+  if (scaled == 0) {
+    return 1;
+  } else if (scaled == width) {
+    return width - 1;
+  } else {
+    return scaled;
+  }
+}
+
+}
+
 void renderBar(entt::registry &reg, const DrawCtx ctx) {
   // TODO: Is this faster with three separate loops?
   entt::each(reg, [&](const BarRect rect) {
-    const int progWidth = rect.width * rect.progress + 0.5f;
+    const int progWidth = scaleBar(rect.progress, rect.width);
     const int antiWidth = rect.width - progWidth;
+    if (antiWidth == 0) return;
     const SDL_Rect value = {rect.x, rect.y, progWidth, rect.height};
     const SDL_Rect anti = {rect.x + progWidth, rect.y, antiWidth, rect.height};
     const SDL_Rect outline = {rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2};
