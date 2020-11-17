@@ -23,6 +23,7 @@
 #include "../comps/graphics.hpp"
 #include "../comps/behaviour.hpp"
 #include "../utils/scope_time.hpp"
+#include "../config/constants.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
@@ -494,7 +495,7 @@ void behaveNavigate(entt::registry &reg) {
     
     if (timePassed(now, behave.timeout)) {
       behave.path.clear();
-      behave.timeout = now + 1500;
+      behave.timeout = now + navigate_retry_time;
       
       #if DEBUG_NAVIGATE
       std::cout << "Retry\n";
@@ -529,12 +530,12 @@ void behaveNavigate(entt::registry &reg) {
     }
     
     if (behave.path.size() > 1) {
-      if (b2DistanceSquared(shipPos, behave.path[0]) < 2.0f * 2.0f) {
+      if (b2DistanceSquared(shipPos, behave.path[0]) < navigate_first_point_dist * navigate_first_point_dist) {
         behave.path.erase(behave.path.begin());
-        behave.timeout = now + 1500;
-      } else if (b2DistanceSquared(shipPos, behave.path[1]) < 6.0f * 6.0f) {
+        behave.timeout = now + navigate_retry_time;
+      } else if (b2DistanceSquared(shipPos, behave.path[1]) < navigate_second_point_dist * navigate_second_point_dist) {
         behave.path.erase(behave.path.begin());
-        behave.timeout = now + 1500;
+        behave.timeout = now + navigate_retry_time;
       }
     }
     

@@ -24,9 +24,7 @@ int main() {
 // Code
 //   Should we abandon entt::each?
 //   Move constants into one place
-//     1500 milliseconds is one example
 //     there are a lot of them
-//   Don't use SDL2/ directory
 
 // Objects
 //   Turrets

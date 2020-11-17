@@ -14,6 +14,7 @@
 #include "../comps/timers.hpp"
 #include "../comps/graphics.hpp"
 #include "../comps/behaviour.hpp"
+#include "../config/constants.hpp"
 #include <entt/entity/registry.hpp>
 
 entt::entity makeBolt(entt::registry &reg, const Team team) {
@@ -21,7 +22,7 @@ entt::entity makeBolt(entt::registry &reg, const Team team) {
   setSmallBoltPhysics(reg, e, team);
   reg.emplace<SpriteRect>(e);
   reg.emplace<Sprite>(e, Sprite{255, 0, 0});
-  reg.emplace<ExpireTimer>(e, reg.ctx<Now>().time + 5000);
+  reg.emplace<ExpireTimer>(e, reg.ctx<Now>().time + bolt_lifetime);
   reg.emplace<Team>(e, team);
   reg.emplace<Type>(e, Type::bullet);
   return e;
@@ -33,7 +34,7 @@ entt::entity makeMissile(entt::registry &reg, const Team team) {
   reg.emplace<MissileAI>(e);
   reg.emplace<SpriteRect>(e);
   reg.emplace<Sprite>(e, Sprite{191, 191, 191});
-  reg.emplace<ExpireTimer>(e, reg.ctx<Now>().time + 15000);
+  reg.emplace<ExpireTimer>(e, reg.ctx<Now>().time + missle_lifetime);
   reg.emplace<Target>(e);
   reg.emplace<MotionCommand>(e);
   reg.emplace<Team>(e, team);

@@ -182,6 +182,7 @@
 		45C5CA6923F25263000B554D /* levels.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = levels.hpp; sourceTree = "<group>"; };
 		45C5DF0C256238C9003F8217 /* scope_time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scope_time.cpp; sourceTree = "<group>"; };
 		45C5DF0D256238C9003F8217 /* scope_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = scope_time.hpp; sourceTree = "<group>"; };
+		45C5DF102563557D003F8217 /* constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = constants.hpp; sourceTree = "<group>"; };
 		45DE83E823FF633B000B3F12 /* arena.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = arena.hpp; sourceTree = "<group>"; };
 		45DE83E923FF69FE000B3F12 /* arena.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arena.cpp; sourceTree = "<group>"; };
 		45DE83EA23FF69FE000B3F12 /* arena.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = arena.hpp; sourceTree = "<group>"; };
@@ -227,6 +228,7 @@
 		457DF44723EBD70E00405E2D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				45C5DF0F25635537003F8217 /* config */,
 				45BC5E5D23F64D7300A07A57 /* ui */,
 				45C5CA2B23ECF022000B554D /* factories */,
 				45C5CA1A23ECE54F000B554D /* systems */,
@@ -376,6 +378,14 @@
 				45B947FF2400C5DD0079F1FC /* battle_arena_map_0.png */,
 			);
 			path = assets;
+			sourceTree = "<group>";
+		};
+		45C5DF0F25635537003F8217 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				45C5DF102563557D003F8217 /* constants.hpp */,
+			);
+			path = config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
