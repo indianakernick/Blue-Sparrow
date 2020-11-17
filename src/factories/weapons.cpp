@@ -10,7 +10,6 @@
 
 #include "physics.hpp"
 #include "../comps/ai.hpp"
-#include <SDL2/SDL_timer.h>
 #include "../comps/input.hpp"
 #include "../comps/timers.hpp"
 #include "../comps/graphics.hpp"
@@ -22,7 +21,7 @@ entt::entity makeBolt(entt::registry &reg, const Team team) {
   setSmallBoltPhysics(reg, e, team);
   reg.emplace<SpriteRect>(e);
   reg.emplace<Sprite>(e, Sprite{255, 0, 0});
-  reg.emplace<ExpireTimer>(e, SDL_GetTicks() + 5000);
+  reg.emplace<ExpireTimer>(e, reg.ctx<Now>().time + 5000);
   reg.emplace<Team>(e, team);
   reg.emplace<Type>(e, Type::bullet);
   return e;
@@ -34,7 +33,7 @@ entt::entity makeMissile(entt::registry &reg, const Team team) {
   reg.emplace<MissileAI>(e);
   reg.emplace<SpriteRect>(e);
   reg.emplace<Sprite>(e, Sprite{191, 191, 191});
-  reg.emplace<ExpireTimer>(e, SDL_GetTicks() + 15000);
+  reg.emplace<ExpireTimer>(e, reg.ctx<Now>().time + 15000);
   reg.emplace<Target>(e);
   reg.emplace<MotionCommand>(e);
   reg.emplace<Team>(e, team);

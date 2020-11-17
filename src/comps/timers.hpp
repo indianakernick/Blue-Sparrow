@@ -26,4 +26,14 @@ struct ExpireTimer {
   std::uint32_t done;
 };
 
+/// Context variable for the current time
+struct Now {
+  std::uint32_t time;
+};
+
+// This is basically SDL_TICKS_PASSED
+constexpr bool timePassed(const std::uint32_t now, const std::uint32_t timeout) {
+  return static_cast<std::int32_t>(timeout - now) <= 0;
+}
+
 #endif

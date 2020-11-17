@@ -10,13 +10,13 @@
 
 #include <cmath>
 #include <box2d/b2_body.h>
-#include <SDL2/SDL_timer.h>
 #include <box2d/b2_world.h>
 #include "../utils/each.hpp"
 #include "../comps/arena.hpp"
 #include <box2d/b2_fixture.h>
 #include "../comps/teams.hpp"
 #include "../comps/input.hpp"
+#include "../comps/timers.hpp"
 #include "../comps/params.hpp"
 #include "../comps/physics.hpp"
 #include "../utils/physics.hpp"
@@ -488,11 +488,11 @@ void behaveNavigate(entt::registry &reg) {
     return invScale * pos;
   };
   
-  const std::uint32_t now = SDL_GetTicks();
+  const std::uint32_t now = reg.ctx<Now>().time;
   entt::each(reg, [&](Physics phys, MotionCommand &motion, MotionParams params, NavigateBehaviour &behave) {
     const b2Vec2 shipPos = phys.body->GetPosition();
     
-    if (SDL_TICKS_PASSED(now, behave.timeout)) {
+    if (timePassed(now, behave.timeout)) {
       behave.path.clear();
       behave.timeout = now + 1500;
       

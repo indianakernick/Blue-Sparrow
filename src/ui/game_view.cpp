@@ -8,6 +8,7 @@
 
 #include "game_view.hpp"
 
+#include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_events.h>
 #include <entt/entity/registry.hpp>
@@ -17,6 +18,7 @@
 #include "../utils/resource_path.hpp"
 
 #include "../systems/all.hpp"
+#include "../comps/timers.hpp"
 #include "../comps/graphics.hpp"
 #include "../systems/camera.hpp"
 #include "../systems/render.hpp"
@@ -47,6 +49,7 @@ void GameView::init(SDL_Renderer *ren, FontCache &cache) {
   foreground = makeTexture(ren);
   background = loadTexture(ren, res("stars_dark.png"));
   
+  reg.set<Now>(SDL_GetTicks());
   initializePhysics(reg);
   MapInfo info = makeMap0(reg);
   initializeCamera(camera, info.width, info.height);
@@ -81,6 +84,7 @@ bool GameView::event(const SDL_Event &e) {
 }
 
 void GameView::update(const float delta) {
+  reg.ctx<Now>().time = SDL_GetTicks();
   // TODO: Does this belong here?
   prePhysicsSystems(reg);
   stepPhysics(reg, delta);

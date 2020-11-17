@@ -10,7 +10,6 @@
 
 #include <random>
 #include <box2d/b2_body.h>
-#include <SDL2/SDL_timer.h>
 #include "../utils/each.hpp"
 #include "../comps/ammo.hpp"
 #include "../comps/teams.hpp"
@@ -53,12 +52,12 @@ void applyMotionCommands(entt::registry &reg) {
 
 void applyBlasterCommands(entt::registry &reg) {
   static std::mt19937 gen;
+  const std::uint32_t now = reg.ctx<Now>().time;
   
   entt::each(reg, [&](Physics phys, BlasterParams params, BlasterCommand command, BlasterTimer &timer, Team team) {
     if (!command.fire) return;
     
-    const std::uint32_t now = SDL_GetTicks();
-    if (!SDL_TICKS_PASSED(now, timer.done)) return;
+    if (!timePassed(now, timer.done)) return;
     timer.done = now + 1000 / params.rof;
     
     std::uniform_real_distribution<float> dist{-params.spread, params.spread};
@@ -79,12 +78,12 @@ void applyBlasterCommands(entt::registry &reg) {
 }
 
 void applyMissileCommands(entt::registry &reg) {
+  const std::uint32_t now = reg.ctx<Now>().time;
   entt::each(reg, [&](Physics phys, MissileParams params, MissileCommand command, MissileAmmo &ammo, MissileTimer &timer, Team team, ViewDistance dist) {
     if (!command.fire) return;
     if (ammo.n <= 0) return;
     
-    const std::uint32_t now = SDL_GetTicks();
-    if (!SDL_TICKS_PASSED(now, timer.done)) return;
+    if (!timePassed(now, timer.done)) return;
     timer.done = now + 1000 / params.rof;
     --ammo.n;
     

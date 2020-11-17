@@ -17,11 +17,16 @@ int main() {
 
 // Multiplayer?
 
+// What if we took the game in a completely different direction and gave the
+// control over the AI players? I mean something like age of empires. Would that
+// even work?
+
 // Code
 //   Should we abandon entt::each?
 //   Move constants into one place
 //     1500 milliseconds is one example
 //     there are a lot of them
+//   Don't use SDL2/ directory
 
 // Objects
 //   Turrets
