@@ -164,9 +164,11 @@ void renderBar(entt::registry &reg, const DrawCtx ctx) {
     const int progWidth = scaleBar(rect.progress, rect.width);
     const int antiWidth = rect.width - progWidth;
     if (antiWidth == 0) return;
+    
     const SDL_Rect value = {rect.x, rect.y, progWidth, rect.height};
     const SDL_Rect anti = {rect.x + progWidth, rect.y, antiWidth, rect.height};
     const SDL_Rect outline = {rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2};
+    
     SDL_CHECK(SDL_SetRenderDrawColor(ctx.ren, 0, 255, 0, 255));
     SDL_CHECK(SDL_RenderFillRect(ctx.ren, &value));
     SDL_CHECK(SDL_SetRenderDrawColor(ctx.ren, 255, 0, 0, 255));

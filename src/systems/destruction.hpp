@@ -11,8 +11,8 @@
 
 #include <entt/entity/fwd.hpp>
 
-/// Drop loot from a ship and eventually call reg.destroy
-void destroyShip(entt::registry &, entt::entity);
+/// Give loot to the killer before destroying the ship
+void destroyShip(entt::registry &, entt::entity, entt::entity);
 /// Deal damage to a pair of ships that collided with each other
 void collideShipPair(entt::registry &, entt::entity, entt::entity, float);
 /// Deal damage to a ship that collided with an asteroid or wall

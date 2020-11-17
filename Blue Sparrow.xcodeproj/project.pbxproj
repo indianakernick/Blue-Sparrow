@@ -117,7 +117,6 @@
 		45B947FC2400C3950079F1FC /* load_image.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = load_image.cpp; sourceTree = "<group>"; };
 		45B947FD2400C3950079F1FC /* load_image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = load_image.hpp; sourceTree = "<group>"; };
 		45B947FF2400C5DD0079F1FC /* battle_arena_map_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = battle_arena_map_0.png; sourceTree = "<group>"; };
-		45BC5E4423F37F3B00A07A57 /* drops.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = drops.hpp; sourceTree = "<group>"; };
 		45BC5E4523F3833200A07A57 /* destruction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = destruction.cpp; sourceTree = "<group>"; };
 		45BC5E4623F3833200A07A57 /* destruction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = destruction.hpp; sourceTree = "<group>"; };
 		45BC5E4823F4DBBF00A07A57 /* upgrades.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = upgrades.cpp; sourceTree = "<group>"; };
@@ -309,7 +308,6 @@
 				45C5CA4023EE37FC000B554D /* behaviour.hpp */,
 				45C5CA5C23F0DC85000B554D /* ammo.hpp */,
 				45C5CA6923F25263000B554D /* levels.hpp */,
-				45BC5E4423F37F3B00A07A57 /* drops.hpp */,
 				45DE83E823FF633B000B3F12 /* arena.hpp */,
 				45DE83EC23FF883D000B3F12 /* collisions.hpp */,
 				455EEED524075F1500B340BC /* ai.hpp */,

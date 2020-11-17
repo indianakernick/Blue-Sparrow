@@ -44,7 +44,6 @@ int main() {
 //     Show allies
 //     Show enemies that are visible to player or allies
 //     Indicate whether beacons are being attacked
-//   Should the health bar of a beacon indicate ally/enemy/neutral?
 //   Left panel should be hidden and revealed to cover the game view
 //   Show missile target lock
 
@@ -55,13 +54,11 @@ int main() {
 //   Maybe the ability to grab onto asteroids and move them around
 //   A signal to send to team mates
 //     e.g. "come help me" or "go destroy that thing" or "go defend that thing"
-//   Don't drop items on death. Give items to whoever dealt the final blow
 
 // AIs
 //   (for the different roles of a team)
 //   Avoiding walls (missiles should do this)
 //   Dodging (missiles should do this)
-//   Picking up drops
 //   Defending
 //   Guarding
 //   Attacking
@@ -73,14 +70,6 @@ int main() {
 //       if there are no nearby targets, wander around
 //       if a target is spotted, engage in the target
 //   Can/should we separate aiming behaviours from moving behaviours?
-
-// Drops
-//   AIs that seek out drops
-//   Drops for each team maybe?
-//   Drops only for the player maybe?
-//   Currently, drops are accidently picked up by other ships
-//   Perhaps drops could spawn in a few places
-//     Similar to TF2
 
 // Controls
 //   Should we move away from digital controls and use analog controls?

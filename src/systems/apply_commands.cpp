@@ -54,7 +54,7 @@ void applyBlasterCommands(entt::registry &reg) {
   static std::mt19937 gen;
   const std::uint32_t now = reg.ctx<Now>().time;
   
-  entt::each(reg, [&](Physics phys, BlasterParams params, BlasterCommand command, BlasterTimer &timer, Team team) {
+  entt::each(reg, [&](entt::entity e, Physics phys, BlasterParams params, BlasterCommand command, BlasterTimer &timer, Team team) {
     if (!command.fire) return;
     
     if (!timePassed(now, timer.done)) return;
@@ -73,13 +73,13 @@ void applyBlasterCommands(entt::registry &reg) {
     boltBody->SetTransform(shipPos, shipAngle);
     boltBody->SetLinearVelocity(boltVel);
     phys.body->ApplyLinearImpulseToCenter(-boltBody->GetMass() * boltVel, true);
-    reg.emplace<Damage>(bolt, params.damage);
+    reg.emplace<Damage>(bolt, params.damage, e);
   });
 }
 
 void applyMissileCommands(entt::registry &reg) {
   const std::uint32_t now = reg.ctx<Now>().time;
-  entt::each(reg, [&](Physics phys, MissileParams params, MissileCommand command, MissileAmmo &ammo, MissileTimer &timer, Team team, ViewDistance dist) {
+  entt::each(reg, [&](entt::entity e, Physics phys, MissileParams params, MissileCommand command, MissileAmmo &ammo, MissileTimer &timer, Team team, ViewDistance dist) {
     if (!command.fire) return;
     if (ammo.n <= 0) return;
     
@@ -106,7 +106,7 @@ void applyMissileCommands(entt::registry &reg) {
     // TODO: Set velocity limit like this everywhere
     reg.emplace<SeekBehaviour>(missile, params.speed * 1.25f, params.level);
     reg.emplace<VelocityLimit>(missile, params.speed);
-    reg.emplace<Damage>(missile, params.damage);
+    reg.emplace<Damage>(missile, params.damage, e);
     reg.emplace<ViewDistance>(missile, dist);
   });
 }

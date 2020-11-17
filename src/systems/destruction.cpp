@@ -9,56 +9,36 @@
 #include "destruction.hpp"
 
 #include <random>
-#include <box2d/b2_body.h>
 #include "../comps/ammo.hpp"
-#include "../comps/drops.hpp"
-#include "../comps/physics.hpp"
+#include "../comps/params.hpp"
 #include "../factories/arena.hpp"
 #include <entt/entity/registry.hpp>
 
-namespace {
-
-void setPos(entt::registry &reg, const entt::entity e, const b2Vec2 pos, std::mt19937 &gen) {
-  std::uniform_real_distribution<float> shiftDist{-0.8f, 0.8f};
-  std::uniform_real_distribution<float> angleDist{-b2_pi, b2_pi};
-  std::uniform_real_distribution<float> spinDist{-1.0f, 1.0f};
-  const b2Vec2 shiftedPos = {pos.x + shiftDist(gen), pos.y + shiftDist(gen)};
-  b2Body *body = reg.get<Physics>(e).body;
-  body->SetTransform(shiftedPos, angleDist(gen));
-  body->SetAngularVelocity(spinDist(gen));
-}
-
-}
-
-void destroyShip(entt::registry &reg, const entt::entity e) {
+void destroyShip(entt::registry &reg, const entt::entity ship, entt::entity killer) {
   static std::mt19937 gen;
   
-  if (auto *drops = reg.try_get<Drops>(e)) {
-    const b2Vec2 pos = reg.get<Physics>(e).body->GetPosition();
-    
-    std::uniform_int_distribution coinDist{drops->minCoins, drops->maxCoins};
-    for (int coins = coinDist(gen); coins > 0; --coins) {
-      setPos(reg, makeCoin(reg), pos, gen);
-    }
-    
-    std::uniform_int_distribution ammoDist{drops->minAmmo, drops->maxAmmo};
-    for (int ammo = ammoDist(gen); ammo > 0; --ammo) {
-      setPos(reg, makeAmmo(reg), pos, gen);
-    }
-    
-    std::uniform_int_distribution scrapDist{drops->minScrap, drops->maxScrap};
-    for (int scrap = scrapDist(gen); scrap > 0; --scrap) {
-      setPos(reg, makeScrap(reg), pos, gen);
+  if (reg.valid(killer)) {
+    if (auto *drops = reg.try_get<Drops>(ship)) {
+      if (auto *coins = reg.try_get<Coins>(killer)) {
+        coins->c += std::uniform_int_distribution{drops->minCoins, drops->maxCoins}(gen);
+      }
+      if (auto *ammo = reg.try_get<MissileAmmo>(killer)) {
+        ammo->n += std::uniform_int_distribution{drops->minAmmo, drops->maxAmmo}(gen);
+      }
+      if (auto *hull = reg.try_get<Hull>(killer)) {
+        hull->h += std::uniform_int_distribution{drops->minScrap, drops->maxScrap}(gen);
+        hull->h = std::min(hull->h, reg.get<HullParams>(killer).durability);
+      }
     }
   }
   
-  reg.destroy(e);
+  reg.destroy(ship);
 }
 
 namespace {
 
-const float minImpulse = 100.0f;
-const float damagePerImpulse = 1.0f / 10.0f;
+constexpr float minImpulse = 100.0f;
+constexpr float damagePerImpulse = 1.0f / 10.0f;
 
 int calcDamage(const float impulse) {
   return std::max(0.0f, (impulse - minImpulse) * damagePerImpulse + 0.5f);
@@ -76,15 +56,15 @@ void collideShipPair(
   int &hullA = reg.get<Hull>(a).h;
   int &hullB = reg.get<Hull>(b).h;
   // TODO: Should both ships take the same amount of damage?
-  // Maybe hull params could store the "toughness" as minSpeed and damagePerSpeed
+  // Maybe hull params could store the "toughness" as minImpulse and damagePerImpulse
   hullA -= damage;
   hullB -= damage;
   // This function exists to handle the case where two ships destroy each other
-  if (hullA < 0) {
-    destroyShip(reg, a);
+  if (hullA <= 0) {
+    destroyShip(reg, a, hullB > 0 ? b : entt::null);
   }
-  if (hullB < 0) {
-    destroyShip(reg, b);
+  if (hullB <= 0) {
+    destroyShip(reg, b, hullA > 0 ? a : entt::null);
   }
 }
 
@@ -92,7 +72,7 @@ void collideShip(entt::registry &reg, const entt::entity a, const float impulse)
   const int damage = calcDamage(impulse);
   int &hull = reg.get<Hull>(a).h;
   hull -= damage;
-  if (hull < 0) {
-    destroyShip(reg, a);
+  if (hull <= 0) {
+    destroyShip(reg, a, entt::null);
   }
 }

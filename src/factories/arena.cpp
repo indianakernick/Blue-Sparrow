@@ -10,7 +10,6 @@
 
 #include "physics.hpp"
 #include "../comps/arena.hpp"
-#include "../comps/drops.hpp"
 #include "../comps/graphics.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -27,33 +26,6 @@ entt::entity makeAsteroid(entt::registry &reg) {
   setAsteroidPhysics(reg, e);
   reg.emplace<SpriteRect>(e);
   reg.emplace<Sprite>(e, Sprite{129, 76, 38});
-  return e;
-}
-
-entt::entity makeCoin(entt::registry &reg) {
-  entt::entity e = reg.create();
-  setDropPhysics(reg, e);
-  reg.emplace<Coin>(e);
-  reg.emplace<SpriteRect>(e);
-  reg.emplace<Sprite>(e, Sprite{255, 255, 0});
-  return e;
-}
-
-entt::entity makeAmmo(entt::registry &reg) {
-  entt::entity e = reg.create();
-  setDropPhysics(reg, e);
-  reg.emplace<Ammo>(e);
-  reg.emplace<SpriteRect>(e);
-  reg.emplace<Sprite>(e, Sprite{191, 191, 191});
-  return e;
-}
-
-entt::entity makeScrap(entt::registry &reg) {
-  entt::entity e = reg.create();
-  setDropPhysics(reg, e);
-  reg.emplace<Scrap>(e);
-  reg.emplace<SpriteRect>(e);
-  reg.emplace<Sprite>(e, Sprite{63, 63, 63});
   return e;
 }
 

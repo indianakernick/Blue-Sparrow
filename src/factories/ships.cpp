@@ -12,7 +12,6 @@
 #include "upgrades.hpp"
 #include "../comps/ai.hpp"
 #include "../comps/ammo.hpp"
-#include "../comps/drops.hpp"
 #include "../comps/input.hpp"
 #include "../comps/timers.hpp"
 #include "../comps/params.hpp"
