@@ -10,7 +10,7 @@
 
 #include <string>
 #include "sdl_check.hpp"
-#include <SDL2/SDL_filesystem.h>
+#include <SDL_filesystem.h>
 
 const char *res(const char *name) {
   static std::string path;

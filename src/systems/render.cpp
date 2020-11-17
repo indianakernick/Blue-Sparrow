@@ -8,8 +8,8 @@
 
 #include "render.hpp"
 
+#include <SDL_render.h>
 #include "sdl_check.hpp"
-#include <SDL2/SDL_render.h>
 #include "../utils/each.hpp"
 #include "../comps/input.hpp"
 #include "../comps/arena.hpp"

@@ -9,7 +9,7 @@
 #ifndef systems_handle_input_hpp
 #define systems_handle_input_hpp
 
-#include <SDL2/SDL_scancode.h>
+#include <SDL_scancode.h>
 #include <entt/entity/fwd.hpp>
 
 /// Respond to key-down events by setting MotionCommand when KeyInput is present

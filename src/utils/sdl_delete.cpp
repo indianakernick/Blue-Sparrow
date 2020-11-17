@@ -8,8 +8,8 @@
 
 #include "sdl_delete.hpp"
 
+#include <SDL_render.h>
 #include <SDL_FontCache.h>
-#include <SDL2/SDL_render.h>
 
 void SDL::DeleteFont::operator()(FC_Font *ptr) const noexcept {
   FC_FreeFont(ptr);

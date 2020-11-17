@@ -8,7 +8,7 @@
 
 #include "frame_cap.hpp"
 
-#include <SDL2/SDL_timer.h>
+#include <SDL_timer.h>
 
 FrameCap::FrameCap(const int fps) {
   const std::uint64_t freq = SDL_GetPerformanceFrequency();

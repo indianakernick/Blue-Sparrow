@@ -8,8 +8,8 @@
 
 #include "load_texture.hpp"
 
+#include <SDL_render.h>
 #include "sdl_check.hpp"
-#include <SDL2/SDL_render.h>
 
 SDL::Texture loadTexture(SDL_Renderer *renderer, const char *path) {
   return loadTexture(renderer, loadImage(path));

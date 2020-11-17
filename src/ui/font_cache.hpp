@@ -10,8 +10,8 @@
 #define ui_font_cache_hpp
 
 #include <vector>
+#include <SDL_pixels.h>
 #include <SDL_FontCache.h>
-#include <SDL2/SDL_pixels.h>
 #include "../utils/sdl_delete.hpp"
 
 struct SDL_Renderer;

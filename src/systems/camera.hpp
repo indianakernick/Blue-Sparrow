@@ -9,7 +9,7 @@
 #ifndef systems_camera_hpp
 #define systems_camera_hpp
 
-#include <SDL2/SDL_rect.h>
+#include <SDL_rect.h>
 #include <entt/entity/fwd.hpp>
 
 struct Camera;

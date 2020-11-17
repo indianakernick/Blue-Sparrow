@@ -8,9 +8,9 @@
 
 #include "game_view.hpp"
 
-#include <SDL2/SDL_timer.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_events.h>
+#include <SDL_timer.h>
+#include <SDL_render.h>
+#include <SDL_events.h>
 #include <entt/entity/registry.hpp>
 
 #include "../utils/sdl_check.hpp"

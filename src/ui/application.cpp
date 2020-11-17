@@ -8,7 +8,7 @@
 
 #include "application.hpp"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "window.hpp"
 #include "map_view.hpp"
 #include "game_view.hpp"

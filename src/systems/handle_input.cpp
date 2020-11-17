@@ -8,7 +8,7 @@
 
 #include "handle_input.hpp"
 
-#include <SDL2/SDL_mouse.h>
+#include <SDL_mouse.h>
 #include "../utils/each.hpp"
 #include "../comps/input.hpp"
 #include <entt/entity/registry.hpp>

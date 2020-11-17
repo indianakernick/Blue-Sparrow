@@ -8,7 +8,7 @@
 
 #include "view.hpp"
 
-#include <SDL2/SDL_render.h>
+#include <SDL_render.h>
 #include "../utils/sdl_check.hpp"
 
 void View::init(SDL_Renderer *ren, FontCache &cache) {

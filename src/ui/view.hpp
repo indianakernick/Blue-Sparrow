@@ -11,7 +11,7 @@
 
 #include <memory>
 #include <vector>
-#include <SDL2/SDL_rect.h>
+#include <SDL_rect.h>
 
 union SDL_Event;
 struct SDL_Renderer;

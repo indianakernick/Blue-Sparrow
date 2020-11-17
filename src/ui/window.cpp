@@ -8,7 +8,7 @@
 
 #include "window.hpp"
 
-#include <SDL2/SDL_events.h>
+#include <SDL_events.h>
 
 Window::Window(SDL_Window *window)
   : window{window} {}

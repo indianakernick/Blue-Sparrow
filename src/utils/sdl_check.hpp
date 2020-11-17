@@ -10,7 +10,7 @@
 #define utils_sdl_check_hpp
 
 #include <stdexcept>
-#include <SDL2/SDL_error.h>
+#include <SDL_error.h>
 
 namespace SDL {
 
